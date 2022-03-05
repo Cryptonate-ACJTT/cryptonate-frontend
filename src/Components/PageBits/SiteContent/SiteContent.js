@@ -1,6 +1,8 @@
 import React from "react";
 
-const SiteHeader = (props) => {
+const SiteContent = (props) => {
 
     return;
 }
+
+export default SiteContent;
