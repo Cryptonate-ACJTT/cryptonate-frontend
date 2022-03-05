@@ -1,0 +1,23 @@
+.site-hdr-btn {
+    height: inherit;
+    border: none;
+    font-size: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    transition-duration: 0.2s;
+    cursor: pointer;
+
+    color: white;
+    background-color:rgba(0, 0, 0, 0);
+    text-shadow: 1px 1px gray;
+}
+
+.site-hdr-btn:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 1px black;
+}
+
+.site-hdr-btn:active {
+    background-color: rgba(1, 1, 1, 0.1);
+}
