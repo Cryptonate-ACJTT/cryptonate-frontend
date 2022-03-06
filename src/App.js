@@ -1,23 +1,29 @@
+
 //import logo from './logo.svg';
-import './App.css';
-import SiteHeader from './Components/PageBits/SiteHeader/SiteHeader.js';
-import BackgroundCanvas from './Components/PageBits/BackgroundCanvas/BackgroundCanvas.js'
-import SiteContent from './Components/PageBits/SiteContent/SiteContent';
 import React from 'react';
+import './App.css';
+
+// import BackgroundCanvas from './Components/PageBits/BackgroundCanvas/BackgroundCanvas.js'
+import SiteHeader from './Components/PageBits/SiteHeader/SiteHeader.js';
+import SiteContent from './Components/PageBits/SiteContent/SiteContent';
+
+import HomePage from './Components/Pages/Home/HomePage';
 
 //const pages = ["Home", "Explore", "About", "Why Crypto?"];
 
 
 class App extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      content: "Home"
+      content: <HomePage/>
     }
   }
 
   changePage = (page) => {
+    /*let content = (
+      {page}
+    );*/
     this.setState({content: page});
   }
 
@@ -32,7 +38,7 @@ class App extends React.Component {
 }
 /*
 function App() {
-  return ( 
+  return ( 6
     <div className="App">
       <BackgroundCanvas/>
       <SiteHeader onClick={changePage}/>

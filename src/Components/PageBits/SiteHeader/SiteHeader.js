@@ -1,4 +1,5 @@
 import React from "react";
+import HomePage from "../../Pages/Home/HomePage";
 import './SiteHeader.css';
 
 import SiteHeaderButton from "./SiteHeaderButton/SiteHeaderButton";
@@ -9,7 +10,7 @@ const SiteHeader = (props) => {
         <header className="site-hdr">
             <div className="site-hdr-logo-div"/>
             <div className="site-hdr-btn-div">
-                <SiteHeaderButton btnText="Home" onClick={props.onClick}/>
+                <SiteHeaderButton btnText="Home" onClick={props.onClick} page={<HomePage/>}/>
                 <SiteHeaderButton btnText="Explore" onClick={props.onClick}/>
                 <SiteHeaderButton btnText="About" onClick={props.onClick}/>
                 <SiteHeaderButton btnText="Why Crypto?" onClick={props.onClick}/>

@@ -1,8 +1,6 @@
-import React from "react";
+import React from 'react';
 
 const SiteContent = (props) => {
-
-
     return (
         <div className="site-contains">
             {props.content}
