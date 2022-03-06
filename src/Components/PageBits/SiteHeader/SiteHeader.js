@@ -9,11 +9,11 @@ const SiteHeader = (props) => {
         <header className="site-hdr">
             <div className="site-hdr-logo-div"/>
             <div className="site-hdr-btn-div">
-                <SiteHeaderButton btnText="Home"/>
-                <SiteHeaderButton btnText="Explore"/>
-                <SiteHeaderButton btnText="About"/>
-                <SiteHeaderButton btnText="Why Crypto?"/>
-                <SiteHeaderButton btnText="Login | Sign Up"/>
+                <SiteHeaderButton btnText="Home" onClick={props.onClick}/>
+                <SiteHeaderButton btnText="Explore" onClick={props.onClick}/>
+                <SiteHeaderButton btnText="About" onClick={props.onClick}/>
+                <SiteHeaderButton btnText="Why Crypto?" onClick={props.onClick}/>
+                <SiteHeaderButton btnText="Login | Sign Up" onClick={props.onClick}/>
             </div>
         </header>
     );
