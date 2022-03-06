@@ -29,25 +29,5 @@ class App extends React.Component {
     );
   }
 }
-/*
-function App() {
-  return ( 6
-    <div className="App">
-      <BackgroundCanvas/>
-      <SiteHeader onClick={changePage}/>
-      <SiteContent/>
-    </div>
-  );
-}
-
-const contentMagager = (props) => {
-  return <SiteContent content={props.content}/>
-}
-
-const changePage = (page) => {
-  console.log(page);
-}
-*/
-
 
 export default App;
