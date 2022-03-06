@@ -1,5 +1,3 @@
-
-//import logo from './logo.svg';
 import React from 'react';
 import './App.css';
 
@@ -7,9 +5,7 @@ import './App.css';
 import SiteHeader from './Components/PageBits/SiteHeader/SiteHeader.js';
 import SiteContent from './Components/PageBits/SiteContent/SiteContent';
 
-import HomePage from './Components/Pages/Home/HomePage';
-
-//const pages = ["Home", "Explore", "About", "Why Crypto?"];
+import HomePage from './Components/Pages/Home';
 
 
 class App extends React.Component {
@@ -21,9 +17,6 @@ class App extends React.Component {
   }
 
   changePage = (page) => {
-    /*let content = (
-      {page}
-    );*/
     this.setState({content: page});
   }
 

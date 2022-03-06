@@ -27,6 +27,3 @@ yarn-error.log*
 
 # left out because they may not be necessary
 /src/Components/Commons
-
-/src/Components/Pages/
-/src/Components/Pages/Home/
