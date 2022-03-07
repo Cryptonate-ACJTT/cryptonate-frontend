@@ -13,7 +13,7 @@
 
 .explore-tiling {
     width: 75%;
-    margin-left: 25%;
+    margin-left: 20%;
     display: grid;
     gap: 2em;
     grid-template-columns: auto auto auto;

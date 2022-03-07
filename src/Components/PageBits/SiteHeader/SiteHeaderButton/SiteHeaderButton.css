@@ -8,9 +8,9 @@
     transition-duration: 0.2s;
     cursor: pointer;
 
-    color: white;
+    color: black;
     background-color:rgba(0, 0, 0, 0);
-    text-shadow: 1px 1px gray;
+    
 }
 
 .site-hdr-btn:hover {
