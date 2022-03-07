@@ -1,0 +1,26 @@
+.container-center {
+    align-items: flex-start;
+    background-color: #cbdffc;
+    display: flex;
+    flex-direction: column;
+    height: 1024px;
+
+}
+
+.about-title {
+    margin-top: 310px;
+    margin-left: 600px;
+    font-size: 50px; 
+    font-weight: 50;
+}
+
+.about {
+  font-weight: 400;
+  left: 100px;
+  letter-spacing: 0;
+  position: absolute;
+  text-align: center;
+  top: 130px;
+  width: 1200px;
+  font-size: 20px;
+}
