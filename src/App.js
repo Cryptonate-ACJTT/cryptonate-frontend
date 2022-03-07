@@ -6,13 +6,14 @@ import SiteHeader from './Components/PageBits/SiteHeader/SiteHeader.js';
 import SiteContent from './Components/PageBits/SiteContent/SiteContent';
 
 import HomePage from './Components/Pages/Home';
+import Explore from './Components/Pages/Explore';
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: <HomePage/>
+      content: <Explore/>
     }
   }
 

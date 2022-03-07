@@ -1,0 +1,41 @@
+.explore-search {
+    display: inline-flex;
+}
+
+.explore-search-piece {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.explore-filter {
+    width: 25%;
+}
+
+.explore-tiling {
+    width: 75%;
+    margin-left: 25%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.explore-tile {
+    text-align: left;
+    background-color: lightblue;
+    margin: 25px;
+}
+
+.explore-tile-title {
+    margin: 10px;
+}
+
+.explore-tile-img {
+    margin: 10px;
+}
+
+.explore-tile-desc {
+    margin: 10px;
+}
+
+.explore-tile-prog {
+    
+}
