@@ -15,13 +15,13 @@
     width: 75%;
     margin-left: 25%;
     display: grid;
+    gap: 2em;
     grid-template-columns: auto auto auto;
 }
 
 .explore-tile {
     text-align: left;
     background-color: lightblue;
-    margin: 25px;
 }
 
 .explore-tile-title {
@@ -37,5 +37,8 @@
 }
 
 .explore-tile-prog {
-    
+    width: 100%;
+}
+.explore-tile-prog-desc {
+    margin: 10px;
 }

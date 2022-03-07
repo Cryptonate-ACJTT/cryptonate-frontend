@@ -25,24 +25,29 @@ const ExploreContent = (props) => {
 const ExploreTile = (props) => {
     return (
         <div className="explore-tile">
-            <h4 className="explore-tile-title">Title</h4>
-            <img src="./" class="explore-tile-img"/>
-            <p className="explore-tile-desc">Blah</p>
-            <progress className="explore-tile-prog"/>
+            <h4 className="explore-tile-title">{props.title}</h4>
+            <img src={props.img} class="explore-tile-img"/>
+            <p className="explore-tile-desc">{props.desc}</p>
+            <p className="explore-tile-prog-desc">{props.progress}%</p>
+            <progress value={props.progress} max="100" className="explore-tile-prog"/>
         </div>
     );
+}
+
+function rBetween(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 const ExploreTiling = (props) => {
 
     return (
         <div className="explore-tiling">
-            <ExploreTile/>
-            <ExploreTile/>
-            <ExploreTile/>
-            <ExploreTile/>
-            <ExploreTile/>
-            <ExploreTile/>
+            <ExploreTile title="Title" img="ee" desc="description" progress={rBetween(1, 100)}/>
+            <ExploreTile title="Title" img="ee" desc="description" progress={rBetween(1, 100)}/>
+            <ExploreTile title="Title" img="ee" desc="description" progress={rBetween(1, 100)}/>
+            <ExploreTile title="Title" img="ee" desc="description" progress={rBetween(1, 100)}/>
+            <ExploreTile title="Title" img="ee" desc="description" progress={rBetween(1, 100)}/>
+            <ExploreTile title="Title" img="ee" desc="description" progress={rBetween(1, 100)}/>
         </div>
     );
 }
