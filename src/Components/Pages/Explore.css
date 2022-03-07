@@ -27,11 +27,12 @@
 
 .explore-tile:hover {
     cursor: pointer;
-    box-shadow: -5px 5px rgba(0, 0, 0, 0.2)
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .explore-tile:active {
     background-color: lightblue;
+    box-shadow: 8px 8px rgba(0, 0, 0, 0.3);
 }
 
 .explore-tile-title {
