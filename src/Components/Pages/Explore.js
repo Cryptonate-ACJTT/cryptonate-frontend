@@ -24,16 +24,18 @@ const ExploreContent = (props) => {
 const ExploreTile = (props) => {
   return (
     <div className="explore-tile">
-      <h4 className="explore-tile-title">{props.title}</h4>
-      {/* <img src={props.img} class="explore-tile-img"/> */}
-      <img src={image} class="explore-tile-img" style={{ width: "300px" }} />
-      <p className="explore-tile-desc">{props.desc}</p>
-      <p className="explore-tile-prog-desc">{props.progress}%</p>
-      <progress
-        value={props.progress}
-        max="100"
-        className="explore-tile-prog"
-      />
+        <h4 className="explore-tile-title">{props.title}</h4>
+        {/* <img src={props.img} class="explore-tile-img"/> */}
+        <div class="explore-tile-img-contain">
+            <img src={image} class="explore-tile-img" style={{ width: "300px" }} />
+        </div>
+        <p className="explore-tile-desc">{props.desc}</p>
+        <p className="explore-tile-prog-desc">{props.progress}%</p>
+        <progress
+            value={props.progress}
+            max="100"
+            className="explore-tile-prog"
+        />
     </div>
   );
 };

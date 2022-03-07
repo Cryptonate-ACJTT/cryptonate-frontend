@@ -22,14 +22,31 @@
 .explore-tile {
     text-align: left;
     background-color: #cbdffc;
+    transition: 0.2s;
+}
+
+.explore-tile:hover {
+    cursor: pointer;
+    box-shadow: -5px 5px rgba(0, 0, 0, 0.2)
+}
+
+.explore-tile:active {
+    background-color: lightblue;
 }
 
 .explore-tile-title {
     margin: 10px;
 }
 
+.explore-tile-img-contain {
+    width: 100%;
+    height: 200px;
+}
+
 .explore-tile-img {
     margin: 10px;
+    width: 100%;
+    height: 100%;
 }
 
 .explore-tile-desc {
