@@ -1,0 +1,31 @@
+.container-center {
+    align-items: flex-start;
+    background-color: #cbdffc;
+    display: flex;
+    flex-direction: column;
+    height: 1024px;
+
+}
+
+.home-screen-image {
+    height: 650px;
+    left: 55%;
+    object-fit: cover;
+    position: absolute;
+    top: 10%;
+    width: 650px;
+}
+
+.title {
+    margin-top: 200px;
+    margin-left: 50px;
+    font-size: 70px;
+
+}
+
+.tagline {
+
+    margin-left: 60px;
+    font-size: 30px;
+    font-weight: 100;
+}
