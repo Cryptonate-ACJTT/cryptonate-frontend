@@ -5,16 +5,14 @@ import './App.css';
 import SiteHeader from './Components/PageBits/SiteHeader/SiteHeader.js';
 import SiteContent from './Components/PageBits/SiteContent/SiteContent';
 
-import HomePage from './Components/Pages/Home';
-//import Explore from './Components/Pages/Explore';
-
-
+//import HomePage from './Components/Pages/Home';
+import Explore from './Components/Pages/Explore';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: <HomePage/>
+      content: <Explore/>
     }
   }
 
@@ -26,7 +24,7 @@ class App extends React.Component {
     return ( //background canvas later
       <div className="App">
         <SiteHeader onClick={this.changePage}/>
-        <SiteContent content={this.state.content}/>
+        <SiteContent content={this.state.content} passDownOnClick={this.changePage}/>
       </div>
     );
   }

@@ -1,13 +1,14 @@
 import React from "react";
 import "./Explore.css";
+import Home from "./Home";
 import image from "./Images/temp.jpg";
 
 const Explore = (props) => {
   return (
-    <div className="search-container">
+    <div className="explore-container">
       <h1>Explore and Discover</h1>
       <ExploreSearch />
-      <ExploreContent />
+      <ExploreContent passDownOnClick={props.passDownOnClick}/>
     </div>
   );
 };
@@ -16,18 +17,22 @@ const ExploreContent = (props) => {
   return (
     <div className="explore-content">
       <ExploreFilter />
-      <ExploreTiling />
+      <ExploreTiling passDownOnClick={props.passDownOnClick} />
     </div>
   );
 };
 
 const ExploreTile = (props) => {
+
+  const tileClick = () => { // temporary testing for sending project links down through
+    console.log(props.link);
+  }
+
   return (
-    <div className="explore-tile">
+    <div className="explore-tile" onClick={() => tileClick()}>
         <h4 className="explore-tile-title">{props.title}</h4>
-        {/* <img src={props.img} class="explore-tile-img"/> */}
-        <div class="explore-tile-img-contain">
-            <img src={image} class="explore-tile-img" style={{ width: "300px" }} />
+        <div className="explore-tile-img-contain">
+            <img src={props.image} alt={props.imageAlt} className="explore-tile-img" style={{ width: "300px" }} />
         </div>
         <p className="explore-tile-desc">{props.desc}</p>
         <p className="explore-tile-prog-desc">{props.progress}%</p>
@@ -45,43 +50,15 @@ function rBetween(min, max) {
 }
 
 const ExploreTiling = (props) => {
+  // need to set this up to work with filtering
   return (
     <div className="explore-tiling">
       <ExploreTile
         title="Title"
-        img="ee"
+        image={image}
         desc="description"
         progress={rBetween(1, 100)}
-      />
-      <ExploreTile
-        title="Title"
-        img="ee"
-        desc="description"
-        progress={rBetween(1, 100)}
-      />
-      <ExploreTile
-        title="Title"
-        img="ee"
-        desc="description"
-        progress={rBetween(1, 100)}
-      />
-      <ExploreTile
-        title="Title"
-        img="ee"
-        desc="description"
-        progress={rBetween(1, 100)}
-      />
-      <ExploreTile
-        title="Title"
-        img="ee"
-        desc="description"
-        progress={rBetween(1, 100)}
-      />
-      <ExploreTile
-        title="Title"
-        img="ee"
-        desc="description"
-        progress={rBetween(1, 100)}
+        link="ebebebe"
       />
     </div>
   );

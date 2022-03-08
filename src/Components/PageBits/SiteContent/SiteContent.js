@@ -1,9 +1,9 @@
 import React from 'react';
 
 const SiteContent = (props) => {
-    return (
+    return (    // clone element thank you
         <div className="site-contains">
-            {props.content}
+            {React.cloneElement(props.content, {passDownOnClick: props.passDownOnClick})}
         </div>
     );
 }
