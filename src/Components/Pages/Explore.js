@@ -1,7 +1,7 @@
 import React from "react";
 import "./Explore.css";
-import Home from "./Home";
 import image from "./Images/temp.jpg";
+import Project from "./Project";
 
 const Explore = (props) => {
   return (
@@ -26,6 +26,7 @@ const ExploreTile = (props) => {
 
   const tileClick = () => { // temporary testing for sending project links down through
     console.log(props.link);
+    props.passDownOnClick(<Project/>)
   }
 
   return (
@@ -59,6 +60,7 @@ const ExploreTiling = (props) => {
         desc="description"
         progress={rBetween(1, 100)}
         link="ebebebe"
+        passDownOnClick={props.passDownOnClick}
       />
     </div>
   );
