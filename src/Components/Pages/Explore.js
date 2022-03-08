@@ -3,21 +3,71 @@ import "./Explore.css";
 import image from "./Images/temp.jpg";
 import Project from "./Project";
 
+class Explore extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchTarget: "",
+      matchingProjects: []
+    };
+  }
+
+  exploreSearch = (e) => {
+    e.preventDefault();
+
+    let val = e.target.searchy.value;
+    this.setState({searchTarget: val});
+    e.target.searchy.value = "";
+    
+    console.log(val);
+  };
+
+  exploreFilter = () => {
+
+  }
+
+  getProjectPage = (projectID) => {
+    console.log(projectID);
+    this.props.passDownOnClick(<Project id={projectID}/>);
+  }
+
+  render = () => {
+    return (
+      <div className="explore-container">
+        <h1>Explore and Discover</h1>
+        <ExploreSearch searchFunction={this.exploreSearch}/>
+        <ExploreContent getProject={this.getProjectPage}/>
+      </div>
+    );
+  }
+}
+
+/*
 const Explore = (props) => {
+
+  const exploreProjects = {};
+
+  const exploreSearch = (e) => {
+    e.preventDefault();
+    let val = e.target.searchy.value;
+    e.target.searchy.value = "";
+    console.log(val);
+  };
+
   return (
     <div className="explore-container">
       <h1>Explore and Discover</h1>
-      <ExploreSearch />
+      <ExploreSearch searchFunction={exploreSearch}/>
       <ExploreContent passDownOnClick={props.passDownOnClick}/>
     </div>
   );
 };
-
+*/
 const ExploreContent = (props) => {
   return (
     <div className="explore-content">
       <ExploreFilter />
-      <ExploreTiling passDownOnClick={props.passDownOnClick} />
+      <ExploreTiling getProject={props.getProject} />
     </div>
   );
 };
@@ -26,7 +76,7 @@ const ExploreTile = (props) => {
 
   const tileClick = () => { // temporary testing for sending project links down through
     console.log(props.link);
-    props.passDownOnClick(<Project/>)
+    props.getProject(props.id);
   }
 
   return (
@@ -50,7 +100,7 @@ function rBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const genExploreTile = (props) => {
+const genExploreTile = (props, id) => {
   // simulate getting data from database
   let titles = ["Title", "Project", "Organization", "Assist"]
   let images = [image];
@@ -65,7 +115,8 @@ const genExploreTile = (props) => {
         progress={rBetween(1, 100)}
         link={links[rBetween(0, links.length-1)]}
         tags={tags[rBetween(0, tags.length-1)]}
-        passDownOnClick={props.passDownOnClick}
+        id={id}
+        getProject={props.getProject}
       />
   );
 }
@@ -74,7 +125,7 @@ const ExploreTiling = (props) => {
   // need to set this up to work with filtering
   let tiles = [];
   for(let i = 0; i < rBetween(1, 20); i++) {
-    tiles.push(genExploreTile(props));
+    tiles.push(genExploreTile(props, i));
   }
   return (
     <div className="explore-tiling">
@@ -95,17 +146,12 @@ const ExploreFilter = (props) => {
 const ExploreSearch = (props) => {
   //const [searchTerm, setSearchTerm] = React.useState("");
 
-  const searchInput = (e) => {
-    e.preventDefault();
-    let val = e.target.searchy.value;
-    e.target.searchy.value = "";
-    console.log(val);
-  };
+
 
   return (
     <div className="explore-search">
       <div className="explore-search-piece">
-        <form onSubmit={searchInput}>
+        <form onSubmit={props.searchFunction}>
           <input type="text" name="searchy" />
           <input type="submit" value="Search" />
         </form>
