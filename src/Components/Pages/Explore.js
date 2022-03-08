@@ -50,18 +50,35 @@ function rBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const ExploreTiling = (props) => {
-  // need to set this up to work with filtering
+const genExploreTile = (props) => {
+  // simulate getting data from database
+  let titles = ["Title", "Project", "Organization", "Assist"]
+  let images = [image];
+  let links = ["proj1", "proj2"];
+  let tags = ["animal", "children", "education", "environment", "international", "women"];
+
   return (
-    <div className="explore-tiling">
       <ExploreTile
-        title="Title"
-        image={image}
+        title={titles[rBetween(0, titles.length-1)]}
+        image={images[rBetween(0, images.length-1)]}
         desc="description"
         progress={rBetween(1, 100)}
-        link="ebebebe"
+        link={links[rBetween(0, links.length-1)]}
+        tags={tags[rBetween(0, tags.length-1)]}
         passDownOnClick={props.passDownOnClick}
       />
+  );
+}
+
+const ExploreTiling = (props) => {
+  // need to set this up to work with filtering
+  let tiles = [];
+  for(let i = 0; i < rBetween(1, 20); i++) {
+    tiles.push(genExploreTile(props));
+  }
+  return (
+    <div className="explore-tiling">
+      {[...tiles]}
     </div>
   );
 };
