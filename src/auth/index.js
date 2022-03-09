@@ -1,9 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import api from '../api'
 
 const AuthContext = createContext();
 console.log("create AuthContext: " + AuthContext);
+
+
 
 // THESE ARE ALL THE TYPES OF UPDATES TO OUR AUTH STATE THAT CAN BE PROCESSED
 export const AuthActionType = {
@@ -21,7 +23,7 @@ function AuthContextProvider(props) {
         loggedIn: false,
         errMsg: ""
     });
-    const history = useHistory();
+    const history = useNavigate();
 
     useEffect(() => {
         auth.getLoggedIn();
@@ -113,7 +115,7 @@ function AuthContextProvider(props) {
         }
     }
 
-    auth.loginUser = async function(userData, store){
+    auth.loginUser = async function(userData){
         let response = null;
         let err = null;
         try{
@@ -127,14 +129,6 @@ function AuthContextProvider(props) {
             err = error;
             console.log("error encountered in login");
         }
-        // authReducer({
-        //     type: AuthActionType.LOGIN_USER,
-        //     payload: {
-        //         user: response.data.user
-        //     }
-        // })
-        // history.push("/");
-        // store.loadIdNamePairs();
 
         console.log(response.data);
         if (response !== null && response.status === 200) {
@@ -144,15 +138,7 @@ function AuthContextProvider(props) {
                     user: response.data.user
                 }
             })
-            if(response.data.user.userName === "lolak"){
-                console.log("guest")
-                history.push("/alllistsviews/");
-                store.loadIdNamePairs();
-            }
-            else{
-                history.push("/");
-                store.loadIdNamePairs();
-            }
+            history.push('/')
             
         }
         else {
@@ -191,7 +177,7 @@ function AuthContextProvider(props) {
         }
     }
 
-    auth.logoutUser = async function(store) {
+    auth.logoutUser = async function() {
         console.log("logging out")
         let response = null;
         let err = null;
@@ -216,7 +202,7 @@ function AuthContextProvider(props) {
         }
     }
 
-    auth.registerUser = async function(userData, store) {
+    auth.registerUser = async function(userData) {
         let response = null;
         let err = null;
         try{
@@ -236,7 +222,6 @@ function AuthContextProvider(props) {
                 }
             })
             history.push("/");
-            store.loadIdNamePairs();
         }
         else{
             console.log("user creation error");//alert
