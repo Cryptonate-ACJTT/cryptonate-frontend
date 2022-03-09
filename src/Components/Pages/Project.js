@@ -3,6 +3,7 @@ import "./Project.css"
 
 import Visualizer from './Visualizer';
 import logo from "./Images/algorand_logo_mark_black.svg";
+import image from "./Images/temp.jpg"
 
 function rBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -11,10 +12,10 @@ function rBetween(min, max) {
 const Project = (props) => {
     return (
         <div className="project-container">
-            <ProjectDescription title={props.title} image={props.image}/>
+            <ProjectDescription title="Example Project" image={image}/>
 
             <div className="project-ality-container">
-                <DonateButton progress={props.progress} goal={rBetween(100, 20000)} title={props.title}/>
+                <DonateButton progress={rBetween(1, 100)} goal={rBetween(100, 20000)} title="Example Project"/>
                 <div className="project-tracker-container">
                     <Visualizer/>
                 </div>
