@@ -5,7 +5,7 @@ import vis from "./Images/vis.png"
 const Visualizer = () => {
     return (
         <div className="vis-container">
-            <img src={vis} alt="visualizer" style={{"border-radius": "15px"}}/>
+            <img src={vis} alt="visualizer" style={{"border-radius": "15px", "width":"100%"}}/>
         </div>
     );
 }
