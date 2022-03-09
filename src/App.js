@@ -15,7 +15,7 @@ import About from './Components/Pages/About'
 import Crypto from './Components/Pages/WhyCrypto'
 import SignupLogin from './Components/Pages/SignUpLogin'
 import TestRegister from './Components/Pages/TestRegister';
-import Project from './Components/Pages/Project'
+import Project from './Components/Pages/Project';
 
 const App = () => {
   return (
@@ -30,8 +30,8 @@ const App = () => {
         <Route path="/about" element={<About/>} />
         <Route path="/why-crypto" element={<Crypto/>} />
         <Route path="/login-signup" element={<SignupLogin/>} />
-        <Route path="/test-register" element={<TestRegister/>}/>
-        <Route path="/project/:id" element={<Project/>}/>
+        <Route path="test-register" element={<TestRegister/>}/>
+        <Route path="/explore/project-example" element={<Project/>}/>
       </Routes>
       </div>
     </AuthContextProvider>

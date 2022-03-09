@@ -2,6 +2,7 @@ import React from "react";
 import "./Explore.css";
 import image from "./Images/temp.jpg";
 import Project from "./Project";
+import { Link } from 'react-router-dom'
 
 class Explore extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Explore extends React.Component {
 
   getProjectPage = (projectID, projectTitle, projectImage, projectProgress) => {
     console.log(projectID);
+    
     this.props.passDownOnClick(<Project id={projectID} title={projectTitle} image={projectImage} progress={projectProgress}/>);
   }
 
@@ -80,6 +82,7 @@ const ExploreTile = (props) => {
   }
 
   return (
+    <Link to="/explore/project-example">
     <div className="explore-tile" onClick={() => tileClick()}>
         <h4 className="explore-tile-title">{props.title}</h4>
         <div className="explore-tile-img-contain">
@@ -93,6 +96,7 @@ const ExploreTile = (props) => {
             className="explore-tile-prog"
         />
     </div>
+    </Link>
   );
 };
 
