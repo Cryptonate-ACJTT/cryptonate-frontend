@@ -46,7 +46,7 @@ const SignUpLogin = (props) => {
                 <div class="email">EMAIL</div>
                 <input class="email-input"></input>
                 <div class="password">PASSWORD</div>
-                <input class="password-input"></input>
+                <input class="password-input" type="password"></input>
 
                 <div class="flex-row-2">
                     <div class="are-you-an-organization">Are you an organization?</div>

@@ -26,9 +26,9 @@ class Explore extends React.Component {
 
   }
 
-  getProjectPage = (projectID) => {
+  getProjectPage = (projectID, projectTitle, projectImage, projectProgress) => {
     console.log(projectID);
-    this.props.passDownOnClick(<Project id={projectID}/>);
+    this.props.passDownOnClick(<Project id={projectID} title={projectTitle} image={projectImage} progress={projectProgress}/>);
   }
 
   render = () => {
@@ -76,7 +76,7 @@ const ExploreTile = (props) => {
 
   const tileClick = () => { // temporary testing for sending project links down through
     console.log(props.link);
-    props.getProject(props.id);
+    props.getProject(props.id, props.title, props.image, props.progress);
   }
 
   return (
