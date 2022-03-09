@@ -2,15 +2,19 @@ import React from 'react';
 import "./Project.css"
 
 import Visualizer from './Visualizer';
-import image from "./Images/temp.jpg"
+import logo from "./Images/algorand_logo_mark_black.svg";
+
+function rBetween(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
 const Project = (props) => {
     return (
         <div className="project-container">
-            <ProjectDescription title={props.title}/>
+            <ProjectDescription title={props.title} image={props.image}/>
 
             <div className="project-ality-container">
-                <DonateButton progress={props.progress}/>
+                <DonateButton progress={props.progress} goal={rBetween(100, 20000)} title={props.title}/>
                 <div className="project-tracker-container">
                     <Visualizer/>
                 </div>
@@ -19,12 +23,10 @@ const Project = (props) => {
     );
 }
 
-const ProjectSocials = (props) => {
-
+const ProjectSocial = (props) => {
     return (
         <div className="project-social">
-            <img className="project-social-logo"/>
-            <a href="social media">Social Media</a>
+            <img className="project-social-logo" src={props.logo} style={{"height":"3em"}}/>   <a href={props.link}>{props.site}</a>
         </div>
     )
 }
@@ -33,11 +35,13 @@ const ProjectDescription = (props) => {
     return (
         <div className="project-description-container">
             <h1 className="project-description-title">{props.title}</h1>
-            <div className="project-description-image">
-                <img src={props.image} style={{width: "300px", "border-radius": "15px"}}/>
-            </div>
-            <div className="project-description-socials">
-                <ProjectSocials/>
+            <div className="project-description-top">
+                <div className="project-description-image">
+                    <img src={props.image} style={{width: "300px", "border-radius": "15px"}}/>
+                </div>
+                <div className="project-description-socials">
+                    <ProjectSocial logo={logo} link="https://www.algorand.com" site="Social Media Example"/>
+                </div>
             </div>
             <div className="project-description-text">
                 <p className="project-description-text-box">
@@ -52,10 +56,16 @@ const DonateButton = (props) => {
     return (
         <div className="project-donate-container">
             <div className="project-donate-tracker">
+                <div className="project-goal">
+                    <h2>{props.title}'s Goal:  <img src={logo} style={{"height":"2.5em", "display":"inline-block"}}/> {props.goal}</h2> 
+                    <h2>Total Raised:  <img src={logo} style={{"height":"2.5em", "display":"inline-block"}}/> {props.goal * (props.progress/100)}</h2>
+                </div>
                 <progress value={props.progress} max="100"/>
             </div>
+            
+        
             <div className="project-donate-button">
-                <button>DONATE</button>
+                <button className="donate-button">DONATE</button>
             </div>
         </div>
     );

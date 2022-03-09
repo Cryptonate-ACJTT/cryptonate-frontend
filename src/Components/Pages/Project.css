@@ -4,32 +4,79 @@
     background-image: linear-gradient(130deg, rgba(111,218,215,0.2528361686471463) 0%, rgba(102,110,254,0.23883056640625) 50%, rgba(219,69,252,0.19961488013174022) 100%);
 }
 
+/*=== PROJECT DESCRIPTION ===*/
+
 .project-description-container {
     width: 70%;
     background-color: white;
     border-radius: 15px;
     margin: 2em;
+    height: 1024px;
+}
+
+.project-description-top {
+    display: flex;
+    align-items: flex-end;
 }
 
 .project-description-image {
     width: 70%;
-    display: inline-block;
     margin: 2em;
 }
 
 .project-description-socials {
     width: 30%;
-    display: inline-block;
 }  
 
-.project-donate-container {
-    background-color: white;
-    width: 30%;
-    border-radius: 15px;
-    margin: 2em;
+.project-social {
+    top: 1em;
 }
 
-.vis-container {
+.project-description-text-box {
+    margin: 1em;
+}
+
+/*=== PROJECT DONATE ===*/
+
+.project-ality-container {
+    margin: 1em;
     width: 30%;
+}
+
+.project-donate-tracker {
+    background-color: white;
+    width: 100%;
     border-radius: 15px;
+}
+
+.project-goal {
+    white-space: nowrap;
+    display: inline;
+}
+
+.project-tracker-container {
+    border-radius: 15px;
+    margin-top: 3em;
+}
+
+.project-donate-button {
+    width: 100%;
+    height: 3em;
+}
+
+.donate-button {
+    width: 100%;
+    height: 3em;
+    margin-top: 0.5em;
+    margin-bottom: 3em;
+    border-radius: 15px;
+    background-color: rgb(85, 85, 139);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.donate-button:hover {
+    cursor: pointer;
+    background-color: rgb(90, 90, 155);
 }
