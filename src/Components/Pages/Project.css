@@ -1,7 +1,8 @@
 .project-container {
     display: flex;
     align-items: flex-start;
-    background-image: linear-gradient(130deg, rgba(111,218,215,0.2528361686471463) 0%, rgba(102,110,254,0.23883056640625) 50%, rgba(219,69,252,0.19961488013174022) 100%);
+    background-color: #cbdffc;
+    /* background-image: linear-gradient(130deg, rgba(111,218,215,0.2528361686471463) 0%, rgba(102,110,254,0.23883056640625) 50%, rgba(219,69,252,0.19961488013174022) 100%); */
 }
 
 /*=== PROJECT DESCRIPTION ===*/
