@@ -34,7 +34,7 @@ class Explore extends React.Component {
   render = () => {
     return (
       <div className="explore-container">
-        <h1>Explore and Discover</h1>
+        <h1>Explore & Discover</h1>
         <ExploreSearch searchFunction={this.exploreSearch}/>
         <ExploreContent getProject={this.getProjectPage}/>
       </div>
@@ -138,6 +138,14 @@ const ExploreFilter = (props) => {
   return (
     <div className="explore-filter">
       <h2>Filter</h2>
+
+      <div className="explore-search-piece">
+        <label htmlFor="sort-select">Sort By: </label>
+        <select id="sort-select">
+          <option>Close to Goal</option>
+        </select>
+      </div>
+
       <h3>Categories</h3>
     </div>
   );
@@ -156,12 +164,12 @@ const ExploreSearch = (props) => {
           <input type="submit" value="Search" />
         </form>
       </div>
-      <div className="explore-search-piece">
+      {/* <div className="explore-search-piece">
         <label htmlFor="sort-select">Sort By: </label>
         <select id="sort-select">
           <option>Close to Goal</option>
         </select>
-      </div>
+      </div> */}
     </div>
   );
 };
