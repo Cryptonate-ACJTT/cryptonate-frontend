@@ -1,6 +1,7 @@
-.container-center {
-    align-items: flex-start;
+.about-container {
+    align-items: center;
     background-color: #cbdffc;
+    background-image: linear-gradient(130deg, rgba(111,218,215,0.2528361686471463) 0%, rgba(102,110,254,0.23883056640625) 50%, rgba(219,69,252,0.19961488013174022) 100%);
     display: flex;
     flex-direction: column;
     height: 1024px;
@@ -8,19 +9,30 @@
 }
 
 .about-title {
-    margin-top: 310px;
-    margin-left: 625px;
-    font-size: 50px; 
-    font-weight: 50;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    font-size: 45px; 
+    font-weight: Bold;
 }
 
 .about {
   font-weight: 400;
-  left: 125px;
+  padding-left: 125px;
+  padding-right: 125px;
+
   letter-spacing: 0;
-  position: absolute;
   text-align: center;
   top: 130px;
   width: 1200px;
-  font-size: 20px;
+  font-size: 23px;
+}
+
+
+.about-us-image {
+  height: 300px;
+  object-fit: cover;
+  position: absolute;
+  top: 55%;
+  left:40%;
+  width: 300px;
 }

@@ -35,6 +35,9 @@ const SiteHeader = (props) => {
                 </Link>
                 
                 {/* <SiteHeaderButton btnText="About" onClick={props.onClick} page={<About/>}/>
+                <SiteHeaderButton btnText="Home" onClick={props.onClick} page={<Home/>}/>
+                <SiteHeaderButton btnText="Explore" onClick={props.onClick} page={<Explore/>}/>
+                <SiteHeaderButton btnText="About Us" onClick={props.onClick} page={<About/>}/>
                 <SiteHeaderButton btnText="Why Crypto?" onClick={props.onClick} page={<WhyCrypto/>}/>
                 <SiteHeaderButton btnText="Login | Sign Up" onClick={props.onClick} page={<SignUpLogin/>}/> */}
             </div>
