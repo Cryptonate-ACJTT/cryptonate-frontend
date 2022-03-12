@@ -23,11 +23,11 @@ function AuthContextProvider(props) {
         loggedIn: false,
         errMsg: ""
     });
-    const history = useNavigate();
+    let navigate = useNavigate();
 
-    useEffect(() => {
-        auth.getLoggedIn();
-    }, []);
+    // useEffect(() => {
+    //     auth.getLoggedIn();
+    // }, []);
 
     const authReducer = (action) => {
         const { type, payload } = action;
@@ -138,7 +138,7 @@ function AuthContextProvider(props) {
                     user: response.data.user
                 }
             })
-            history.push('/')
+            navigate('/')
             
         }
         else {
@@ -195,7 +195,7 @@ function AuthContextProvider(props) {
             authReducer({
                 type: AuthActionType.LOGOUT_USER
             })
-            history.push("/");
+            //history.push("/");
         }
         else{
             console.log("ERROR")
@@ -221,7 +221,7 @@ function AuthContextProvider(props) {
                     user: response.data.user
                 }
             })
-            history.push("/");
+            //history.push("/");
         }
         else{
             console.log("user creation error");//alert
