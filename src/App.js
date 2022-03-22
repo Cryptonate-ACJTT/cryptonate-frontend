@@ -3,7 +3,7 @@ import './App.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { AuthContextProvider } from './auth';
 
-
+import 'bootstrap/dist/css/bootstrap.css';
 
 import SiteHeader from './Components/PageBits/SiteHeader/SiteHeader.js';
 import SiteContent from './Components/PageBits/SiteContent/SiteContent';
@@ -13,7 +13,7 @@ import Home from './Components/Pages/Home'
 import Explore from './Components/Pages/Explore'
 import About from './Components/Pages/About'
 import Crypto from './Components/Pages/WhyCrypto'
-import SignupLogin from './Components/Pages/SignUpLogin'
+import SignUpLogin from './Components/Pages/SignUpLogin'
 import TestRegister from './Components/Pages/TestRegister';
 import Project from './Components/Pages/Project';
 
@@ -29,7 +29,7 @@ const App = () => {
         <Route path="/explore" element={<Explore/>} />
         <Route path="/about" element={<About/>} />
         <Route path="/why-crypto" element={<Crypto/>} />
-        <Route path="/login-signup" element={<SignupLogin/>} />
+        <Route path="/login-signup" element={<SignUpLogin/>} />
         <Route path="test-register" element={<TestRegister/>}/>
         <Route path="/explore/project-example" element={<Project/>}/>
       </Routes>

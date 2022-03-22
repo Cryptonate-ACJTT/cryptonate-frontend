@@ -147,6 +147,7 @@ const ExploreFilter = (props) => {
         <label htmlFor="sort-select">Sort By: </label>
         <select id="sort-select">
           <option>Close to Goal</option>
+          <option>Recently Added</option>
         </select>
       </div>
 

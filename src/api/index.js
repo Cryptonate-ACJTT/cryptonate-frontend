@@ -10,6 +10,9 @@
     @author McKilla Gorilla
 */
 
+import 'bootstrap/dist/css/bootstrap.css';
+
+
 import axios from 'axios'
 axios.defaults.withCredentials = true;
 const api = axios.create({
