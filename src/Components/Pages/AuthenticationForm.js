@@ -1,10 +1,10 @@
 import React from "react";
-import "./Form.css";
+import "./AuthenticationForm.css";
 import { Link } from 'react-router-dom'
 
 // import login information?
 
-const Form = (props) => {
+const AuthenticationForm = (props) => {
 
     return (
         <div class="form-screen">
@@ -58,4 +58,4 @@ const Form = (props) => {
     );
 }
 
-export default Form;
+export default AuthenticationForm;

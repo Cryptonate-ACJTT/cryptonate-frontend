@@ -17,6 +17,11 @@ import SignUpLogin from './Components/Pages/SignUpLogin'
 import TestRegister from './Components/Pages/TestRegister';
 import Project from './Components/Pages/Project';
 
+import Profile from './Components/Pages/Profile';
+import AuthenticationForm from './Components/Pages/AuthenticationForm';
+import ProjectForm from './Components/Pages/ProjectForm';
+
+
 const App = () => {
   return (
     <BrowserRouter>

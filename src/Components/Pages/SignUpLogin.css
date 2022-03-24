@@ -52,7 +52,7 @@
     justify-content: flex-end;
     margin-top: 31px;
     min-width: 140px;
-    padding: 0 47px;
+    padding: 0 40px;
   }
   
   .sign-up-button {
@@ -61,9 +61,9 @@
     font-size: 20pt;
     font-weight: 700;
     letter-spacing: 0;
-    min-height: 28px;
-    width: 109px;
-    margin-right: 13px;
+    min-height: 23px;
+
+
   }
 
   .user-name {

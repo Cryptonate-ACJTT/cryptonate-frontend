@@ -1,0 +1,33 @@
+.profile-screen {
+    align-items: center;
+    background-color: 
+  #cbdffc;
+    display: flex;
+    flex-direction: column;
+    height: 1024px;
+    padding: 30px 39px;
+}
+
+.profile-container {
+    background-color: 
+  #859df23b;
+    border-radius: 25px;
+    min-height: 786px;
+    left: 0;
+    width: 1201px;
+    padding: 43px 40px;
+  }
+
+.approved-project-container {
+    background-color: #859DF2;
+    border-radius: 10px;
+    height: 136px;
+    left: 205px;
+    position: absolute;
+    top: 298px;
+    width: 846px;
+  }
+  
+.profile-user-name{
+    font-weight: bold;
+}
