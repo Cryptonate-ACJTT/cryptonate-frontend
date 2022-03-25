@@ -20,6 +20,7 @@ import Project from './Components/Pages/Project';
 import Profile from './Components/Pages/Profile';
 import AuthenticationForm from './Components/Pages/AuthenticationForm';
 import ProjectForm from './Components/Pages/ProjectForm';
+import WhyCrypto from './Components/Pages/WhyCrypto';
 
 
 const App = () => {
@@ -33,7 +34,7 @@ const App = () => {
         <Route path="/" element={<Home/>} />
         <Route path="/explore" element={<Explore/>} />
         <Route path="/about" element={<About/>} />
-        <Route path="/why-crypto" element={<Crypto/>} />
+        <Route path="/why-crypto" element={<WhyCrypto/>} />
         <Route path="/login-signup" element={<SignUpLogin/>} />
         <Route path="test-register" element={<TestRegister/>}/>
         <Route path="/explore/project-example" element={<Project/>}/>

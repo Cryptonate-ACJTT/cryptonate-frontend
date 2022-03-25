@@ -5,29 +5,74 @@
     display: flex;
     flex-direction: column;
     height: 1024px;
-    padding: 30px 39px;
+    padding: 15px 39px;
+    text-align: left;
+
 }
 
 .profile-container {
     background-color: 
   #859df23b;
     border-radius: 25px;
-    min-height: 786px;
+    min-height: fit-content;
     left: 0;
-    width: 1201px;
-    padding: 43px 40px;
+    width: fit-content;
+    padding: 43px 80px;
+
+    display: grid; 
+    grid-template-columns: auto auto; 
+    grid-template-rows: min-content min-content min-content min-content min-content; 
+    gap: 15px 35px; 
+    grid-template-areas: 
+      "p-user-name-area user-status"
+      "project-inprogress project-inprogress-box"
+      "project-completed project-completed-box"
+      "email-label p-email"
+      "password-label password"; 
   }
 
-.approved-project-container {
-    background-color: #859DF2;
+
+.p-user-name-area { 
+  grid-area: p-user-name-area;
+
+}
+.user-status { 
+  grid-area: user-status; 
+}
+.edit-button { 
+  text-align: center;
+  grid-area: edit-button; }
+.project-inprogress { grid-area: project-inprogress; }
+.project-completed { grid-area: project-completed; }
+.project-inprogress-box { grid-area: project-inprogress-box; }
+.project-completed-box { grid-area: project-completed-box; }
+.email-label { grid-area: email-label; }
+.p-email { grid-area: p-email; }
+.password-label { grid-area: password-label; }
+.password { grid-area: password; }
+
+
+.active-project-container {
+    background-color: #859df29f;
     border-radius: 10px;
-    height: 136px;
-    left: 205px;
-    position: absolute;
-    top: 298px;
-    width: 846px;
+    min-height: 136px;
+    width:700px;
+  }
+
+.non-active-project-container {
+    background-color: #a8a4a4b0;
+    border-radius: 10px;
+    min-height: 136px;
+    width:700px;
+
   }
   
-.profile-user-name{
+.profile-label{
     font-weight: bold;
+}
+
+.edit-info{
+  margin-left: 20px;
+  color: #0063D2;
+
 }

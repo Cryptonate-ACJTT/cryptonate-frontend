@@ -5,12 +5,13 @@
   display: flex;
   flex-direction: column;
   height: 1024px;
-  padding: 30px 39px;
+  padding: 15px 39px;
 }
 
-.information-form-title{
+.page-title{
   font-size: 20pt;
   font-weight: 700;
+  margin-bottom: 10px;
 }
 
 .input-box {
@@ -31,8 +32,6 @@
   border-radius: 25px;
   display: flex;
   flex-direction: column;
-  margin-left: 21px;
-  margin-top: 10px;
   min-height: 320px;
   padding: 43px 40px;
   text-align: left;
@@ -112,7 +111,6 @@
 }
 
 .approve-tag{
-  margin-left: 20px;
   background-color: lightgreen;
   border-radius: 15px;
   width: 100px;
@@ -126,6 +124,10 @@
 
 .edit-info-button-group{
   text-align: right;
+}
+
+#org-username{
+  margin-right: 10px;
 }
 
 #category-select{

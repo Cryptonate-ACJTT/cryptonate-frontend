@@ -36,7 +36,7 @@ class Explore extends React.Component {
   render = () => {
     return (
       <div className="explore-container">
-        <h1>Explore & Discover</h1>
+        <h1 className="about-title">Explore & Discover</h1>
         <ExploreSearch searchFunction={this.exploreSearch}/>
         <ExploreContent getProject={this.getProjectPage}/>
       </div>
@@ -165,7 +165,7 @@ const ExploreSearch = (props) => {
     <div className="explore-search">
       <div className="explore-search-piece">
         <form onSubmit={props.searchFunction}>
-          <input type="text" name="searchy" />
+          <input type="text" name="searchy" placeholder="Search by Keyword" />
           <input type="submit" value="Search" />
         </form>
       </div>

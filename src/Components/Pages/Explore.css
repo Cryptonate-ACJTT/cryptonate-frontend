@@ -29,6 +29,7 @@
     text-align: left;
     background-color: white;
     transition: 0.2s;
+    padding: 10px;
 }
 
 .explore-tile:hover {
@@ -47,6 +48,7 @@
 
 .explore-tile-img-contain {
     width: 100%;
+    text-align: center;
 }
 
 .explore-tile-img {

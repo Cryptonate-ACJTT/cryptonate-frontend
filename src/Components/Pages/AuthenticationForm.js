@@ -8,15 +8,13 @@ const AuthenticationForm = (props) => {
 
     return (
         <div class="form-screen">
-            <div class="form-container">
-                <h class="information-form-title">Information Form for Authentication</h>
-            </div>
+                <h class="page-title">Information Form for Authentication</h>
             <div class="form-group">
 
                 <div class="input-container">
                     <div class="input-tag-group">
                         <div>
-                            <h>Organization's user name</h>
+                            <label id="org-username">Organization's user name</label>
                             <h class="approve-tag">Approved</h>
                         </div>
                         <h class="input-tag">1. Organization Name*</h>

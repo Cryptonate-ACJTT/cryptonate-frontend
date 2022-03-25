@@ -3,37 +3,29 @@ import './SignUpLogin.css'
 const SignUpLogin = (props) => {
 
     const [loginTabClicked, toggleLoginTabClicked] = useState(false);
-    const [signUpTabClicked, toggleSignUpTabClicked] = useState(true);
+    const [signUpTabClicked, toggleSignUpTabClicked] = useState(false);
 
     const handleLoginTabClicked = async (e) => {
 
-        if (loginTabClicked) {
-            toggleSignUpTabClicked(false);
-            console.log("LOGIN CLICKED")
-        }
-        else {
-            toggleLoginTabClicked(true);
-        }
+        toggleSignUpTabClicked(false);
+        toggleLoginTabClicked(true);
     }
 
     const handleSignUpTabClicked = async (e) => {
 
-        if (signUpTabClicked) {
-            toggleLoginTabClicked(false);
-        }
-        else {
-            toggleSignUpTabClicked(true);
-        }
+        toggleLoginTabClicked(false);
+        toggleSignUpTabClicked(true);
     }
 
-    if (signUpTabClicked) {
+    if (signUpTabClicked || (!signUpTabClicked && !loginTabClicked)) {
+
         return (
             <div class="sign-up-login-screen">
 
                 <div id="signup">
                     <div class="tab-container">
-                        <h id="login-tab" class="not-active" onClick={handleLoginTabClicked} ><a href="#login">LOGIN</a></h>
-                        <h id="signup-tab" class="active" onClick={handleSignUpTabClicked}> <a href="#signup">SIGN UP</a></h>
+                        <h id="login-tab" class="not-active" onClick={handleLoginTabClicked} >LOGIN</h>
+                        <h id="signup-tab" class="active" onClick={handleSignUpTabClicked}> SIGN UP</h>
                     </div>
 
                     <div class="signup-group">
@@ -58,14 +50,16 @@ const SignUpLogin = (props) => {
             </div>);
     }
     else if (loginTabClicked) {
+
+
         return (
             <div class="sign-up-login-screen">
 
                 <div id="login" >
 
                     <div class="tab-container">
-                        <h id="login-tab" class="active" onClick={handleLoginTabClicked} ><a href="#login">LOGIN</a></h>
-                        <h id="signup-tab" class="not-active" onClick={handleSignUpTabClicked} > <a href="#signup">SIGN UP</a></h>
+                        <h id="login-tab" class="active" onClick={handleLoginTabClicked} >LOGIN</h>
+                        <h id="signup-tab" class="not-active" onClick={handleSignUpTabClicked} >SIGN UP</h>
                     </div>
 
                     <div class="login-group">
@@ -86,6 +80,7 @@ const SignUpLogin = (props) => {
         );
 
     }
+    
 
 
 

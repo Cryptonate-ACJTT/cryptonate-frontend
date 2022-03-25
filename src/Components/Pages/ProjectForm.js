@@ -7,7 +7,7 @@ const ProjectForm = (props) => {
     return (
 
         <div class="project-form-screen">
-            <div class="project-form-title">Project Form</div>
+            <div class="page-title">Project Form</div>
             <div class="project-form-group">
                 <div class="project-form-container">
 
@@ -31,7 +31,14 @@ const ProjectForm = (props) => {
                             </div>
 
                             <div class="form-input-group">
-                                <h id="img-label">Image</h> <button id="image-input" name="project-image">Upload Image</button>
+                                <label for="goal-input" class="form-label">Goal Amount</label>
+                                <input type={"number"} min="0" step="any" id="goal-input" name="project-goal" required=""  placeholder="Enter the goal in $ or Algo"/>
+                            </div>
+
+                            <div class="form-input-group">
+                                <h id="img-label">Image</h> 
+                                {/* <button id="image-input" name="project-image">Upload Image</button> */}
+                                <input type={"file"} id="selectedFile" ></input>
                             </div>
 
                         </div>
@@ -47,8 +54,8 @@ const ProjectForm = (props) => {
                             </div>
 
                             <div class="form-input-group">
-                                <label for="goal-input" class="form-label">Goal</label>
-                                <textarea id="goal-input" name="project-goal" required="" rows="6" cols="50" placeholder="Explain the project goal" />
+                                <label for="solution-input" class="form-label">Solution</label>
+                                <textarea id="solution-input" name="project-solution" required="" rows="6" cols="50" placeholder="Explain the project solution" />
                             </div>
 
                         </div>
