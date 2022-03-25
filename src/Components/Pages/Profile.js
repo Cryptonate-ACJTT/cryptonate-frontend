@@ -4,11 +4,24 @@ import './Profile.css'
 
 const Profile = (props) => {
 
-    const [editing, toggleEditing] = useState(false);
+    const [passwordEditing, togglePasswordEditing] = useState(false);
+    const [nameEditing, toggleNameEditing] = useState(false);
+    const [emailEditing, toggleEmailEditing] = useState(false);
 
-    const handleEditing = async (e) => {
-        toggleEditing(!editing);
-        console.log(editing);
+
+    const handlePasswordEditing = async (e) => {
+        togglePasswordEditing(!passwordEditing);
+        console.log(passwordEditing);
+    }
+
+    const handleNameEditing = async (e) => {
+        toggleNameEditing(!nameEditing);
+        console.log(nameEditing);
+    }
+
+    const handleEmailEditing = async (e) => {
+        toggleEmailEditing(!emailEditing);
+        console.log(emailEditing);
     }
 
     return (
@@ -18,8 +31,12 @@ const Profile = (props) => {
             <h class="page-title">My Profile</h>
             <div class="profile-container">
                 <div class="p-user-name-area ">
+                    {nameEditing ? 
+                    <input id="p-user-name-input" onBlur={handleNameEditing}></input>
+                    :
                     <h class="profile-label" id="p-user-name">[ USER NAME ]</h>
-                    <text onClick={handleEditing} class="edit-info">edit</text>
+                    }
+                    <text onClick={handleNameEditing} class="edit-info">edit</text>
                 </div>
 
                 <div class="user-status"> <h class="approve-tag">Donor</h> </div>
@@ -33,17 +50,21 @@ const Profile = (props) => {
                 </div>
                 <div class="email-label profile-label">Email</div>
                 <div class="p-email">
-                    {editing ?
-                        <input type={"text"} id="p-email">USEREMAIL@EMAIL.COM</input>
+                    {emailEditing ?
+                        <input id="p-email-input" onBlur={handleEmailEditing}></input>
                         :
                         <h id="p-email">USEREMAIL@EMAIL.COM</h>
                     }
-                    <text onClick={handleEditing} class="edit-info">edit</text>
+                    <text onClick={handleEmailEditing} class="edit-info">edit</text>
                 </div>
                 <div class="password-label profile-label">Password</div>
                 <div class="p-password">
-                    <password id="p-email-input">SOME PASSWORD</password>
-                    <text onClick={handleEditing} class="edit-info">edit</text>
+                    {passwordEditing ?
+                        <input id="p-password-input" type={"password"} onBlur={handlePasswordEditing}></input>
+                        :
+                        <h id="p-password">SOME PASSWORD</h>
+                    }
+                    <text onClick={handlePasswordEditing} class="edit-info">edit</text>
                 </div>
 
             </div>
