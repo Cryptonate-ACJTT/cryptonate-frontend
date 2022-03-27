@@ -1,47 +1,84 @@
-import React from "react";
+import React, { useState } from "react";
 import './SiteHeader.css';
 
 import Home from "../../Pages/Home";
 import Explore from "../../Pages/Explore";
 import About from "../../Pages/About";
+import Profile from "../../Pages/Profile";
+import AuthenticationForm from "../../Pages/AuthenticationForm";
+// import Wallet from "../../Pages/Wallet";
+
 
 
 import SiteHeaderButton from "./SiteHeaderButton/SiteHeaderButton";
 import WhyCrypto from "../../Pages/WhyCrypto";
 import SignUpLogin from "../../Pages/SignUpLogin";
+import image from '../../Pages/Images/cryptonate-logo.png'
+
 
 import { Link } from 'react-router-dom'
 
+
+
 const SiteHeader = (props) => {
 
+    const [loggedIn, toggleloggedIn] = useState(true);
+
+    const handleLogout = async (e) => {
+        toggleloggedIn(false);
+        console.log(loggedIn);
+    }
+
+
     return (
-        <header className="site-hdr">
-            <div className="site-hdr-logo-div"/>
-            <div className="site-hdr-btn-div">
+        <nav className="site-hdr">
+            <div className="site-hdr-logo-div">
+                <img class="site-hdr-logo" src={image} alt="img" />
                 <Link to="/">
-                    <SiteHeaderButton btnText="Home" page={Home}/>
+                    <div id="site-hdr-name" page={Home} >CRYPTONATE</div>
+                </Link>
+
+            </div>
+            <div className="site-hdr-btn-div">
+                <Link to="/home">
+                    <SiteHeaderButton btnText="Home" page={Home} />
                 </Link>
                 <Link to="/explore">
-                    <SiteHeaderButton btnText="Explore" page={Explore}/>
+                    <SiteHeaderButton btnText="Explore" page={Explore} />
                 </Link>
                 <Link to="/about">
-                    <SiteHeaderButton btnText="About" page={About}/>
+                    <SiteHeaderButton btnText="About" page={About} />
                 </Link>
                 <Link to="/why-crypto">
-                    <SiteHeaderButton btnText="Why Crypto" page={WhyCrypto}/>
+                    <SiteHeaderButton btnText="Why Crypto" page={WhyCrypto} />
                 </Link>
-                <Link to="/login-signup">
-                    <SiteHeaderButton btnText="Login | Sign Up" page={SignUpLogin}/>
-                </Link>
-                
-                {/* <SiteHeaderButton btnText="About" onClick={props.onClick} page={<About/>}/>
-                <SiteHeaderButton btnText="Home" onClick={props.onClick} page={<Home/>}/>
-                <SiteHeaderButton btnText="Explore" onClick={props.onClick} page={<Explore/>}/>
-                <SiteHeaderButton btnText="About Us" onClick={props.onClick} page={<About/>}/>
-                <SiteHeaderButton btnText="Why Crypto?" onClick={props.onClick} page={<WhyCrypto/>}/>
-                <SiteHeaderButton btnText="Login | Sign Up" onClick={props.onClick} page={<SignUpLogin/>}/> */}
+                {loggedIn ?
+                    <div class="dropdown">
+                        <div class="dropbtn">My Account</div>
+                        {/* <i class="far fa-user-circle"></i>  <b class="caret"></b> */}
+
+                        <div class="dropdown-content">
+                            <Link to ="/profile"> Profile</Link>
+                            <Link to ="/home"> Wallet</Link>
+                            <Link to ="/authentication-form"> Form</Link>
+                            <a href="#" onClick={handleLogout}>Log Out</a>
+                        </div>
+                    </div>
+                    :
+                    <Link to="/login-signup">
+                        <SiteHeaderButton btnText="Login | Sign Up" page={SignUpLogin} />
+                    </Link>
+
+                }
+
+
+
+
+
             </div>
-        </header>
+        </nav>
+
+
     );
 }
 

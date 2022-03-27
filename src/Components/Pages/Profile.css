@@ -4,7 +4,6 @@
   #cbdffc;
     display: flex;
     flex-direction: column;
-    height: 1024px;
     padding: 15px 39px;
     text-align: left;
 
@@ -75,4 +74,8 @@
   margin-left: 20px;
   color: #0063D2;
 
+}
+
+html, body {
+  background-color: #cbdffc;
 }

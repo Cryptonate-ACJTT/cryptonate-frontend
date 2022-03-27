@@ -30,13 +30,19 @@ const App = () => {
        <SiteHeader/>
       
       <Routes>
-        <Route path="/" element={<Home/>} />
+        <Route path="/home" element={<Home/>} />
         <Route path="/explore" element={<Explore/>} />
         <Route path="/about" element={<About/>} />
         <Route path="/why-crypto" element={<Crypto/>} />
         <Route path="/login-signup" element={<SignUpLogin/>} />
         <Route path="test-register" element={<TestRegister/>}/>
         <Route path="/explore/project-example" element={<Project/>}/>
+        <Route path="/profile" element={<Profile/>} />
+        <Route path="/authentication-form" element={<AuthenticationForm/>} />
+        <Route path="/project-form" element={<ProjectForm/>} />
+
+
+
       </Routes>
       </div>
     </AuthContextProvider>

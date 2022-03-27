@@ -3,7 +3,7 @@ import './SiteHeaderButton.css'
 
 const SiteHeaderButton = (props) => {
     return (
-        <button className="site-hdr-btn" onClick={(e) => {props.onClick(props.page)}}>{props.btnText}</button>
+        <button className="site-hdr-btn" >{props.btnText}</button>
     );
 }
 

@@ -30,11 +30,11 @@ const SignUpLogin = (props) => {
 
                     <div class="signup-group">
 
-                        <div class="user-name">USER NAME</div>
+                        <div class="user-name input-label">USER NAME</div>
                         <input class="user-name-input"></input>
-                        <div class="email">EMAIL</div>
+                        <div class="email input-label">EMAIL</div>
                         <input class="email-input"></input>
-                        <div class="password">PASSWORD</div>
+                        <div class="password input-label">PASSWORD</div>
                         <input class="password-input" type="password"></input>
 
                         <div class="question-container">
@@ -64,9 +64,9 @@ const SignUpLogin = (props) => {
 
                     <div class="login-group">
 
-                        <div class="email">EMAIL</div>
+                        <div class="email input-label">EMAIL</div>
                         <input class="email-input"></input>
-                        <div class="password">PASSWORD</div>
+                        <div class="password input-label">PASSWORD</div>
                         <input class="password-input"></input>
 
                         <div class="forgot-password">Forgot password?</div>

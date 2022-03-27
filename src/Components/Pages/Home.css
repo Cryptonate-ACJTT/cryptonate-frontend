@@ -1,35 +1,40 @@
 .container-center {
     align-items: flex-start;
-    background-color: #cbdffc;
-    /* background-image: linear-gradient(130deg, rgba(111,218,215,0.2528361686471463) 0%, rgba(102,110,254,0.23883056640625) 50%, rgba(219,69,252,0.19961488013174022) 100%); */
-    
     display: flex;
     flex-direction: column;
-    height: 1024px;
 
 }
 
 .home-screen-image {
     height: 650px;
-    left: 55%;
+    left: 50%;
     object-fit: cover;
     position: absolute;
-    top: 10%;
+    top: 5%;
     width: 650px;
 }
 
 .title {
-    margin-top: 200px;
-    margin-left: 50px;
-    font-size: 70px;
+    margin-top: 210px;
+    margin-left: 130px;
+    font-size: 60px;
+    color: #1C3E64;
+
 
 }
 
 .tagline {
 
-    margin-left: 60px;
+    margin-left: 110px;
     font-size: 30px;
-    font-weight: 100;
+    font-weight: 10;
+
 }
+
+html, body {
+    background-size:cover; 
+    background-color: #cbdffc;
+  }
+
 
 
