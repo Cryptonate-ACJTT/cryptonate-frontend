@@ -56,29 +56,7 @@ export const phoneNumber = value =>
         </div>
       </div>
     )
-    const handleSubmitt = (event) => {
-      console.log("submit pressed")
-      event.preventDefault();
-      const formData = new FormData(event.target);
-      // eslint-disable-next-line no-console
-      console.log({
-        userName: formData.get('uname'),
-        password: formData.get('password'),
-        role: 'donor'
-      });
-
-      // auth.registerUser({
-      //     userName: formData.get('userName'),
-      //     email: formData.get('email'),
-      //     password: formData.get('password'),
-      //     role: 'donor'
-      // });
-      auth.loginUser({
-        username: formData.get('uname'),
-        password: formData.get('password'),
-        role: 'donor'
-      })
-  }  
+   
 
 
 
