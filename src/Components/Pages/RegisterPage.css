@@ -1,0 +1,393 @@
+:root {
+    --black: 
+  rgba(0, 0, 0, 1);
+    --blueberry: 
+  rgba(103, 135, 248, 1);
+    --soapstone: 
+  rgba(253, 251, 251, 1);
+    --white: 
+  rgba(255, 255, 255, 1);
+  
+    --font-size-s: 18px;
+    --font-size-m: 20px;
+    --font-size-l: 24px;
+    --font-size-xl: 36px;
+  
+    --font-family-roboto: "Roboto";
+  }
+  
+  
+  
+  .roboto-normal-black-18px {
+    color: var(--black);
+    font-family: var(--font-family-roboto);
+    font-size: var(--font-size-s);
+    font-weight: 400;
+    font-style: normal;
+  }
+  .roboto-bold-black-24px {
+    color: var(--black);
+    font-family: var(--font-family-roboto);
+    font-size: var(--font-size-l);
+    font-weight: 700;
+    font-style: normal;
+  }
+  .roboto-bold-black-18px {
+    color: var(--black);
+    font-family: var(--font-family-roboto);
+    font-size: var(--font-size-s);
+    font-weight: 700;
+    font-style: normal;
+  }
+  .roboto-bold-black-20px {
+    color: var(--black);
+    font-family: var(--font-family-roboto);
+    font-size: var(--font-size-m);
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
+
+.screen a {
+  display: contents;
+  text-decoration: none;
+}
+
+.container-center-horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  pointer-events: none;
+  width: 100%;
+}
+
+.container-center-horizontal > * {
+  flex-shrink: 0;
+  pointer-events: auto;
+}
+
+.information-form-screen {
+  background-color: 
+#cbdffc;
+  height: 1024px;
+  position: relative;
+  width: 1440px;
+}
+
+.overlap-group1 {
+  height: 891px;
+  left: 119px;
+  position: absolute;
+  top: 58px;
+  width: 1285px;
+}
+
+.rectangle-1 {
+  background-color: 
+#859df23b;
+  border-radius: 25px;
+  height: 786px;
+  left: 0;
+  position: absolute;
+  top: 105px;
+  width: 1201px;
+}
+
+.frame {
+  height: 37px;
+  left: 1247px;
+  position: absolute;
+  top: 1px;
+  width: 37px;
+}
+
+.rectangle-28 {
+  background-color: 
+#eba39fbd;
+  border-radius: 10px;
+  height: 30px;
+  left: 379px;
+  position: absolute;
+  top: 198px;
+  width: 223px;
+}
+
+.not-approved {
+  left: 433px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 203px;
+  width: 315px;
+}
+
+.organizations-user-name {
+  left: 59px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 202px;
+  width: 320px;
+}
+
+.information-form-for-authentication {
+  left: 447px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 132px;
+  width: 340px;
+}
+
+.name-of-organization {
+  left: 45px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 299px;
+  width: 269px;
+}
+
+.rectangle-32 {
+  background-color: var(--soapstone);
+  border-radius: 10px;
+  height: 41px;
+  left: 417px;
+  position: absolute;
+  top: 296px;
+  width: 400px;
+}
+
+.x4-email-address-of-organization {
+  left: 45px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 591px;
+  width: 334px;
+}
+
+.rectangle-38 {
+  background-color: var(--soapstone);
+  border-radius: 10px;
+  height: 41px;
+  left: 417px;
+  position: absolute;
+  top: 584px;
+  width: 400px;
+}
+
+.x5-phone-number-of-organization {
+  left: 45px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 687px;
+  width: 330px;
+}
+
+.rectangle-39 {
+  background-color: var(--soapstone);
+  border-radius: 10px;
+  height: 41px;
+  left: 417px;
+  position: absolute;
+  top: 680px;
+  width: 400px;
+}
+
+.x2-employer-identification-number {
+  left: 45px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 399px;
+  width: 446px;
+}
+
+.rectangle-37 {
+  background-color: var(--soapstone);
+  border-radius: 10px;
+  height: 41px;
+  left: 417px;
+  position: absolute;
+  top: 392px;
+  width: 400px;
+}
+
+.x3-category-of-organization {
+  left: 45px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 495px;
+  width: 269px;
+}
+
+.rectangle-35 {
+  background-color: var(--soapstone);
+  border-radius: 10px;
+  height: 41px;
+  left: 417px;
+  position: absolute;
+  top: 488px;
+  width: 400px;
+}
+
+.rectangle-36 {
+  background-color: var(--blueberry);
+  border-radius: 10px;
+  height: 41px;
+  left: 779px;
+  position: absolute;
+  top: 488px;
+  width: 38px;
+}
+
+.arrow-1 {
+  height: 28px;
+  left: 786px;
+  position: absolute;
+  top: 496px;
+  width: 22px;
+}
+
+.animals {
+  left: 446px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 497px;
+  width: 238px;
+}
+
+.mandatory-fields {
+  left: 918px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 819px;
+  width: 204px;
+}
+
+.frame-1 {
+  align-items: flex-end;
+  display: flex;
+  height: 198px;
+  left: 1122px;
+  padding: 0px 0;
+  position: absolute;
+  top: 0;
+  width: 163px;
+}
+
+.overlap-group {
+  align-items: flex-start;
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 152px;
+  padding: 13.3px 17px;
+  width: 163px;
+}
+
+.profile {
+  letter-spacing: 0;
+  margin-top: 2px;
+  min-height: 24px;
+  width: 65px;
+}
+
+.wallet {
+  letter-spacing: 0;
+  margin-top: 8px;
+  min-height: 24px;
+  width: 65px;
+}
+
+.info-form {
+  letter-spacing: 0;
+  margin-top: 9px;
+  min-height: 24px;
+  text-decoration: underline;
+  width: 95px;
+}
+
+.logout {
+  letter-spacing: 0;
+  margin-top: 11px;
+  min-height: 24px;
+  width: 65px;
+}
+
+.rectangle-44 {
+  background-color: var(--white);
+  border-radius: 10px;
+  height: 26px;
+  left: 985px;
+  position: absolute;
+  top: 202px;
+  width: 114px;
+}
+
+.edit-info {
+  left: 1008px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 204px;
+  width: 83px;
+}
+
+.about-us {
+  left: 811px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 72px;
+}
+
+.home {
+  height: 18px;
+  left: 541px;
+  position: absolute;
+  top: 76px;
+  width: 66px;
+}
+
+.why-crypto {
+  left: 976px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 72px;
+}
+
+.explore {
+  left: 659px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 72px;
+}
+
+.title {
+  color: var(--black);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  left: 50px;
+  letter-spacing: 0;
+  position: absolute;
+  top: 67px;
+}
+
+.submit-button {
+  align-items: center;
+  background-color: var(--blueberry);
+  border-radius: 10px;
+  display: flex;
+  height: 72px;
+  left: 504px;
+  min-width: 225px;
+  padding: 0 68px;
+  position: absolute;
+  top: 789px;
+}
+
+.submit {
+  color: var(--white);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-l);
+  font-weight: 700;
+  letter-spacing: 0;
+  min-height: 28px;
+  min-width: 89px;
+}
