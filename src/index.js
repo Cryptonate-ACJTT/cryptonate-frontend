@@ -2,7 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Store from './Redux/Store';
+import ExampleSlice from './Redux/Slices/ExampleSlice';	// for testing purposes, remember to remove
 // import reportWebVitals from './reportWebVitals';
+
+// initialize the store
+Store.getInstance();
 
 ReactDOM.render(
   <React.StrictMode>
