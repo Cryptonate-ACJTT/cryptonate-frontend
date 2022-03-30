@@ -34,6 +34,14 @@ const buildPost = (data) => {
 }
 
 /**
+ * Injects 'credentials'="include" into a header
+ * @param {string} header 
+ */
+const injectCredentialHeader = (header) => {
+	header.credentials = "include";
+}
+
+/**
  * given a fetchtype, use either buildPost or buildGet helper methods
  * @param {FETCH_TYPE} fetchType 
  * @param {string} data 
@@ -52,7 +60,7 @@ const buildFetchType = (fetchType, data = null) => {
  * @param {*} response 
  * @returns json 
  */
-const fetchResHandler = async (response) => {
+const buildFetchDefaultHandler = async (response) => {
 	if(response.ok) {
 		return await response.json();
 	} else {
@@ -66,28 +74,40 @@ const fetchResHandler = async (response) => {
  * @param {*} json 
  * @returns json
  */
-const buildFetchDefaultHandler = (json) => {
-	//console.log(json);
+const buildFetchDefaultCallback = (json) => {
 	return json
 }
 
 /**
- * Builds a fetch request! Usually is wrapped in another function, see ./ApiFetches.js
+ * Builds a fetch request! Usually is wrapped in another function, see ./ApiFetches.js 
+ * -- OPTIONS:	-resHandler handles the response object,
+ * 				-data is for POST requests
+ * 				-credentials injects a credentials header for auth functionality
+ * 				-callback replaces default callback function (which returns res.json()) 
  * @param {FETCH_TYPE} fetchType 
  * @param {string} path 
- * @param {string} data 
- * @param {function} callback 
- * @returns Promise that should resolve to JSON given a callback function
+ * @param {*} options
+ * @returns Promise
  */
-export const buildFetch = async (fetchType, path, data = null, callback = null) => {
-	if(callback === null) {
-		callback = buildFetchDefaultHandler;
+export const buildFetch = async (fetchType, path, {callback, credentials, data, resHandler} = {}) => {
+	if(callback === undefined) {
+		callback = buildFetchDefaultCallback;
 	}
-	
-	return await fetch(path, buildFetchType(fetchType, data))
-		.then(fetchResHandler)
-		.then(json => buildFetchDefaultHandler(json))
+
+	if(resHandler === undefined) {
+		resHandler = buildFetchDefaultHandler;
+	}
+
+	const fetchHeader = buildFetchType(fetchType, data);
+
+	if(credentials !== undefined) {
+		injectCredentialHeader(fetchHeader);
+	}
+
+	return await fetch(path, fetchHeader)
+		.then(resHandler)
+		.then(json => callback(json))
 		.catch(err => {
-			console.error("ERROR:", err);
-		});
+			console.error("ERROR", err);
+		})
 }

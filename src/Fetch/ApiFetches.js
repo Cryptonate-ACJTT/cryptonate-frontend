@@ -6,37 +6,44 @@ const algoIndexerAddress = "https://algoindexer.algoexplorerapi.io/";
 /* ====== BACKEND ====== */
 
 /**
- * Send a GET request to the backend at /'path'
+ * Send a GET request to the backend at /'path'.
+ * -- OPTIONS:	-resHandler handles the response object,
+ * 				-credentials injects a credentials header for auth functionality
+ * 				-callback replaces default callback function (which returns res.json()) 
  * @param {string} path 
- * @param {function} callback 
+ * @param {*} options
  * @returns Promise
  */
-export const getFromBackend = (path, callback = null) => {
-	return buildFetch(FETCH_TYPE.GET, backendBase + path, null, callback);
+export const getFromBackend = (path, {callback, credentials, resHandler} = {}) => {
+	return buildFetch(FETCH_TYPE.GET, backendBase + path, {callback, credentials, resHandler})
 }
 
 
 /**
- * Send a POST request to the backend at /'path' containing 'data'
+ * Send a POST request to the backend at /'path' containing 'data'.
+ * -- OPTIONS:	-resHandler handles the response object,
+ * 				-credentials injects a credentials header for auth functionality
+ * 				-callback replaces default callback function (which returns res.json()) 
  * @param {string} path 
- * @param {*} data 
- * @param {function} callback 
+ * @param {*} data
+ * @param {*} options
  * @returns Promise
  */
-export const postToBackend = (path, data, callback = null) => {
-	return buildFetch(FETCH_TYPE.POST, backendBase + path, data, callback);
+export const postToBackend = (path, data, {callback, credentials, resHandler} = {}) => {
+	return buildFetch(FETCH_TYPE.POST, backendBase + path, {callback, credentials, data, resHandler});
 }
-
-
 
 /* ====== ALGOEXPLORER ====== */
 
 /**
  * Send a GET request to AlgoExplorer at /'path'
+ * -- OPTIONS:	-resHandler handles the response object,
+ * 				-credentials injects a credentials header for auth functionality
+ * 				-callback replaces default callback function (which returns res.json()) 
  * @param {string} path 
- * @param {function} callback 
+ * @param {*} options
  * @returns Promise
  */
-export const getFromIndexer = (path, callback = null) => {
-	return buildFetch(FETCH_TYPE.GET, algoIndexerAddress + path, null, callback);
+export const getFromIndexer = (path, {callback, credentials, resHandler} = {}) => {
+	return buildFetch(FETCH_TYPE.GET, algoIndexerAddress + path, {callback, credentials, resHandler});
 }
