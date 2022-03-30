@@ -34,7 +34,7 @@ ExampleSlice.reducerFxns.addExampleFxn("thing");
 console.log(ExampleSlice.getState());
 
 (async () => {	// testing getting data via fetch request
-	const data = await getFromIndexer("/health");
+	const data = await getFromIndexer("/health")
 
 	ExampleSlice.reducerFxns.addExampleFxn(data);
 	console.log(ExampleSlice.getState());
