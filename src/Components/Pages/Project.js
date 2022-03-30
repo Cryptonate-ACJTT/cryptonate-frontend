@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from "react";
 import "./Project.css"
 
 import Visualizer from './Visualizer';
 import logo from "./Images/algorand_logo_mark_black.svg";
 import image from "./Images/temp.jpg"
+import Donate from "../Modals/Donate"
 
 function rBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -54,6 +55,17 @@ const ProjectDescription = (props) => {
 }
 
 const DonateButton = (props) => {
+
+	const [showDonate, toggleShowDonate] = useState(false);
+
+    const setShowDonate = (props) => {
+		toggleShowDonate(!showDonate);
+        console.log(showDonate)
+	};
+    // let modal = <></>
+    // if (showDonate){modal = <Donate  handleShowDonate={setShowDonate} showDonate={showDonate} />}
+
+
     return (
         <div className="project-donate-container">
             <div className="project-donate-tracker">
@@ -66,8 +78,12 @@ const DonateButton = (props) => {
             
         
             <div className="project-donate-button">
-                <button className="donate-button">DONATE</button>
+                <button className="donate-button" onClick={setShowDonate}>DONATE</button>
             </div>
+            {
+                (<Donate handleShowDonate={setShowDonate} showDonate={showDonate}/>)
+            // modal
+            }
         </div>
     );
 }

@@ -52,14 +52,16 @@
 
 
 .active-project-container {
-    background-color: #859df29f;
+    background-color: #9FC4FB;
+    /* background-color: #859df29f; */
+
     border-radius: 10px;
     min-height: 136px;
     width:700px;
   }
 
 .non-active-project-container {
-    background-color: #a8a4a4b0;
+    background-color: #a8a4a44a;
     border-radius: 10px;
     min-height: 136px;
     width:700px;
@@ -72,10 +74,15 @@
 
 .edit-info{
   margin-left: 20px;
-  color: #0063D2;
+  color: #1C3E64;
 
 }
 
 html, body {
   background-color: #cbdffc;
+}
+
+#edit-icon{
+  vertical-align: middle;
+  margin-left: 10px;
 }

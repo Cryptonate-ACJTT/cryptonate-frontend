@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import './SiteHeader.css';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+
 
 import Home from "../../Pages/Home";
 import Explore from "../../Pages/Explore";
@@ -54,12 +56,13 @@ const SiteHeader = (props) => {
                 </Link>
                 {loggedIn ?
                     <div class="dropdown">
-                        <div class="dropbtn">My Account</div>
-                        {/* <i class="far fa-user-circle"></i>  <b class="caret"></b> */}
+                        {/* <div class="dropbtn">My Account</div> */}
+                        <AccountCircleOutlinedIcon sx={{ml:1, mr:1}}></AccountCircleOutlinedIcon>
+
 
                         <div class="dropdown-content">
                             <Link to ="/profile"> Profile</Link>
-                            <Link to ="/home"> Wallet</Link>
+                            <Link to ="/wallet"> Wallet</Link>
                             <Link to ="/authentication-form"> Form</Link>
                             <a href="#" onClick={handleLogout}>Log Out</a>
                         </div>

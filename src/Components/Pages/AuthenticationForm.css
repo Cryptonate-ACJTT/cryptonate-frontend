@@ -112,7 +112,9 @@
 .approve-tag{
   background-color: lightgreen;
   border-radius: 15px;
-  width: 100px;
+  width: fit-content;
+    padding-left: 25px;
+    padding-right: 25px;
   display: inline-block;
   text-align: center;
 }

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import './Profile.css'
 
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+
 
 const Profile = (props) => {
 
@@ -64,7 +66,8 @@ const Profile = (props) => {
                         :
                         <h id="p-password">SOME PASSWORD</h>
                     }
-                    <text onClick={handlePasswordEditing} class="edit-info">edit</text>
+                    {/* <text onClick={handlePasswordEditing} class="edit-info">edit</text> */}
+                    <EditOutlinedIcon id="edit-icon"  onClick={handlePasswordEditing}></EditOutlinedIcon>
                 </div>
 
             </div>

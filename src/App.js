@@ -16,6 +16,8 @@ import Crypto from './Components/Pages/WhyCrypto'
 import SignUpLogin from './Components/Pages/SignUpLogin'
 import TestRegister from './Components/Pages/TestRegister';
 import Project from './Components/Pages/Project';
+import Wallet from './Components/Pages/Wallet';
+
 
 import Profile from './Components/Pages/Profile';
 import AuthenticationForm from './Components/Pages/AuthenticationForm';
@@ -40,6 +42,8 @@ const App = () => {
         <Route path="/profile" element={<Profile/>} />
         <Route path="/authentication-form" element={<AuthenticationForm/>} />
         <Route path="/project-form" element={<ProjectForm/>} />
+        <Route path="/wallet" element={<Wallet/>} />
+
 
 
 
