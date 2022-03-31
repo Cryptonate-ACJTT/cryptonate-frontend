@@ -61,10 +61,12 @@ const buildFetchType = (fetchType, data = null) => {
  * @returns json 
  */
 const buildFetchDefaultHandler = async (response) => {
+	//console.log(await response.json())
 	if(response.ok) {
 		return await response.json();
 	} else {
-		console.log("Response not ok: code " + response.status);
+		const errres = await response.json();
+		console.log("RESPONSE ERROR: code " + response.status + "; " + errres.msg);
 		return Promise.reject(response.status);
 	}
 }
@@ -81,9 +83,9 @@ const buildFetchDefaultCallback = (json) => {
 /**
  * Builds a fetch request! Usually is wrapped in another function, see ./ApiFetches.js 
  * -- OPTIONS:	-resHandler handles the response object,
- * 				-data is for POST requests
- * 				-credentials injects a credentials header for auth functionality
- * 				-callback replaces default callback function (which returns res.json()) 
+ * 				-data is for POST requests,
+ * 				-credentials injects a credentials header for auth functionality,
+ * 				-callback replaces default callback function (which returns res.json()).
  * @param {FETCH_TYPE} fetchType 
  * @param {string} path 
  * @param {*} options
@@ -109,5 +111,5 @@ export const buildFetch = async (fetchType, path, {callback, credentials, data, 
 		.then(json => callback(json))
 		.catch(err => {
 			console.error("ERROR", err);
-		})
+		});
 }
