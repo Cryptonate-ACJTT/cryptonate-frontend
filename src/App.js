@@ -6,7 +6,6 @@ import { AuthContextProvider } from './auth';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import SiteHeader from './Components/PageBits/SiteHeader/SiteHeader.js';
-import SiteContent from './Components/PageBits/SiteContent/SiteContent';
 
 
 import Home from './Components/Pages/Home'

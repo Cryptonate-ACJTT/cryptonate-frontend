@@ -61,11 +61,6 @@ const SiteHeader = (props) => {
                     </Link>
 
                 }
-
-
-
-
-
             </div>
         </nav>
 
