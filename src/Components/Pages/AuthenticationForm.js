@@ -2,14 +2,12 @@ import React from "react";
 import "./AuthenticationForm.css";
 import { Link } from 'react-router-dom'
 
-// import login information?
-
 const AuthenticationForm = (props) => {
 
     return (
-        <div class="form-screen">
-                <h class="page-title">Information Form for Authentication</h>
-            <div class="form-group">
+        <div class="basic-div basic-form">
+                <h class="account-page-title">Information Form for Authentication</h>
+            <div class="form-group basic-group">
 
                 <div class="input-container">
                     <div class="input-tag-group">
@@ -45,7 +43,7 @@ const AuthenticationForm = (props) => {
                     </div>
 
                 </div>
-                <div class="warning"> * fields are mandatory</div>
+                <div id="warning"> * fields are mandatory</div>
 
                 <div class="button-group">
                     <div class="submit-button">SUBMIT</div>

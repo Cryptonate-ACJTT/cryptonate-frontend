@@ -4,7 +4,7 @@ import image from './Images/image1.png'
 
 const Home = (props) => {
     return (
-        <div className="container-center">
+        <div className="basic-div container-center">
             <div>
                 <h1 className="title">CHANGE THE WORLD <br/>WITH CRYPTONATE</h1>
                 <h className="tagline">blockchain for a better tomorrow</h>

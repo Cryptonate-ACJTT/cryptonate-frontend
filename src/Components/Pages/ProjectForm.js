@@ -6,8 +6,8 @@ const ProjectForm = (props) => {
 
     return (
 
-        <div class="project-form-screen">
-            <div class="page-title">Project Form</div>
+        <div class="basic-div basic-form">
+            <div class="account-page-title">Project Form</div>
             <div class="project-form-group">
                 <div class="project-form-container">
 
@@ -32,7 +32,7 @@ const ProjectForm = (props) => {
 
                             <div class="form-input-group">
                                 <label for="goal-input" class="form-label">Goal Amount</label>
-                                <input type={"number"} min="0" step="any" id="goal-input" name="project-goal" required=""  placeholder="Enter the goal in $ or Algo"/>
+                                <input type={"number"} min="0" step="any" id="goal-input" name="project-goal" required=""  placeholder="Enter the goal in Algo"/>
                             </div>
 
                             <div class="form-input-group">
@@ -46,7 +46,6 @@ const ProjectForm = (props) => {
                     <div class="form-right">
 
                         <div id="the-form" action="#" method="POST" name="project-form">
-
 
                             <div class="form-input-group">
                                 <label for="detail-input" class="form-label">Detail</label>

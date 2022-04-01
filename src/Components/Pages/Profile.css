@@ -1,46 +1,23 @@
-.profile-screen {
-    align-items: center;
-    background-color: 
-  #cbdffc;
-    display: flex;
-    flex-direction: column;
-    padding: 15px 39px;
-    text-align: left;
-
-}
+.profile-screen {   text-align: left;  }
 
 .profile-container {
-    background-color: 
-  #859df23b;
-    border-radius: 25px;
-    min-height: fit-content;
-    left: 0;
-    width: fit-content;
-    padding: 43px 80px;
-
-    display: grid; 
-    grid-template-columns: auto auto; 
-    grid-template-rows: min-content min-content min-content min-content min-content; 
-    gap: 15px 35px; 
-    grid-template-areas: 
-      "p-user-name-area user-status"
-      "project-inprogress project-inprogress-box"
-      "project-completed project-completed-box"
-      "email-label p-email"
-      "password-label password"; 
-  }
-
-
-.p-user-name-area { 
-  grid-area: p-user-name-area;
-
+    
+  padding: 43px 80px;
+  display: grid; 
+  grid-template-columns: auto auto; 
+  grid-template-rows: min-content min-content min-content min-content min-content; 
+  gap: 15px 35px; 
+  grid-template-areas: 
+    "p-user-name-area user-status"
+    "project-inprogress project-inprogress-box"
+    "project-completed project-completed-box"
+    "email-label p-email"
+    "password-label password"; 
 }
-.user-status { 
-  grid-area: user-status; 
-}
-.edit-button { 
-  text-align: center;
-  grid-area: edit-button; }
+
+.p-user-name-area { grid-area: p-user-name-area;}
+.user-status {  grid-area: user-status;}
+.edit-button {  text-align: center;   grid-area: edit-button; }
 .project-inprogress { grid-area: project-inprogress; }
 .project-completed { grid-area: project-completed; }
 .project-inprogress-box { grid-area: project-inprogress-box; }
@@ -50,36 +27,20 @@
 .password-label { grid-area: password-label; }
 .password { grid-area: password; }
 
-
-.active-project-container {
-    background-color: #9FC4FB;
-    /* background-color: #859df29f; */
-
-    border-radius: 10px;
-    min-height: 136px;
-    width:700px;
-  }
-
-.non-active-project-container {
-    background-color: #a8a4a44a;
-    border-radius: 10px;
-    min-height: 136px;
-    width:700px;
-
-  }
-  
-.profile-label{
-    font-weight: bold;
+.project-container{
+  border-radius: 10px;
+  min-height: 136px;
+  width:700px;
 }
+.active-project-container {   background-color: #9FC4FB;  }
+
+.non-active-project-container {    background-color: #a8a4a44a;   }
+  
+.profile-label{  font-weight: bold;   }
 
 .edit-info{
   margin-left: 20px;
   color: #1C3E64;
-
-}
-
-html, body {
-  background-color: #cbdffc;
 }
 
 #edit-icon{

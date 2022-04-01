@@ -36,7 +36,7 @@ class Explore extends React.Component {
   render = () => {
     return (
       <div className="explore-container">
-        <h1 className="about-title">Explore & Discover</h1>
+        <h1 className="page-title">Explore & Discover</h1>
         <ExploreSearch searchFunction={this.exploreSearch}/>
         <ExploreContent getProject={this.getProjectPage}/>
       </div>

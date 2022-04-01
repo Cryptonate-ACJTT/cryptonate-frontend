@@ -1,5 +1,7 @@
 import React from "react";
 import './About.css'
+import '../../App.css'
+
 import image from './Images/AboutUsImage.png'
 
 
@@ -9,14 +11,13 @@ const About = (props) => {
     }
 
     return(
-        <div className="about-container">
+        <div className="basic-div">
             <div>
-               <div className="about-title">About Us</div>
-               <div className="about">{aboutData.about}</div>
-                <img className="about-us-image" src={image} alt="img" />
+               <div className="page-title">About Us</div>
+               <div className="basic-description">{aboutData.about}</div>
+                <img id="about-us-image" src={image} alt="img" />
 
             </div>
-           
         </div>
     
         );

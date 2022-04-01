@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import './SignUpLogin.css'
+// import auth from '../auth/index.js'
+// import store from '../../Redux/Store.js'
+// import AuthContext from "../../auth";
+// import GlobalStoreContext from "../../Redux/GlobalStoreContext";
+
 const SignUpLogin = (props) => {
 
     const [loginTabClicked, toggleLoginTabClicked] = useState(false);
     const [signUpTabClicked, toggleSignUpTabClicked] = useState(false);
+    // const { auth } = useContext(AuthContext);
+    // const { store } = useContext(GlobalStoreContext);
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+    // const [role, setRole] = useState("");
+
 
     const handleLoginTabClicked = async (e) => {
 
@@ -17,33 +28,44 @@ const SignUpLogin = (props) => {
         toggleSignUpTabClicked(true);
     }
 
+    // const handleLogin = (e) =>{
+    //     e.preventDefault();
+    //     auth.loginUser({
+    //         email: email,
+    //         password: password,
+    //         role: role
+
+    //     }, store)
+    // }
+
+
     if (signUpTabClicked || (!signUpTabClicked && !loginTabClicked)) {
 
         return (
-            <div class="sign-up-login-screen">
+            <div class="basic-div basic-form">
 
                 <div id="signup">
                     <div class="tab-container">
-                        <h id="login-tab" class="not-active" onClick={handleLoginTabClicked} >LOGIN</h>
-                        <h id="signup-tab" class="active" onClick={handleSignUpTabClicked}> SIGN UP</h>
+                        <h id="login-tab" class="basic-tab not-active" onClick={handleLoginTabClicked} >LOGIN</h>
+                        <h id="signup-tab" class="basic-tab active" onClick={handleSignUpTabClicked}> SIGN UP</h>
                     </div>
 
-                    <div class="signup-group">
+                    <div class="signup-login-group basic-group">
 
                         <div class="user-name input-label">USER NAME</div>
-                        <input class="user-name-input"></input>
+                        <input class="basic-input"></input>
                         <div class="email input-label">EMAIL</div>
-                        <input class="email-input"></input>
+                        <input class="basic-input"></input>
                         <div class="password input-label">PASSWORD</div>
-                        <input class="password-input" type="password"></input>
+                        <input class="basic-input" type="password"></input>
 
                         <div class="question-container">
-                            <div class="are-you-an-organization">Are you an organization?</div>
-                            <input type="checkbox" class="rectangle-7"></input>
+                            <div class="warning">Are you an organization?</div>
+                            <input id="signup-checkbox" type="checkbox"></input>
                         </div>
 
                         <div class="button-group">
-                            <div class="sign-up-button">SIGN UP</div>
+                            <div class="submit-button">SIGN UP</div>
                         </div>
                     </div>
                 </div>
@@ -53,26 +75,26 @@ const SignUpLogin = (props) => {
 
 
         return (
-            <div class="sign-up-login-screen">
+            <div class="basic-div basic-form">
 
                 <div id="login" >
 
                     <div class="tab-container">
-                        <h id="login-tab" class="active" onClick={handleLoginTabClicked} >LOGIN</h>
-                        <h id="signup-tab" class="not-active" onClick={handleSignUpTabClicked} >SIGN UP</h>
+                        <h class="basic-tab active" onClick={handleLoginTabClicked} >LOGIN</h>
+                        <h class="basic-tab not-active" onClick={handleSignUpTabClicked} >SIGN UP</h>
                     </div>
 
-                    <div class="login-group">
+                    <div class="signup-login-group basic-group">
 
                         <div class="email input-label">EMAIL</div>
-                        <input class="email-input"></input>
+                        <input class="basic-input"></input>
                         <div class="password input-label">PASSWORD</div>
-                        <input class="password-input"></input>
+                        <input class="basic-input"></input>
 
-                        <div class="forgot-password">Forgot password?</div>
+                        <div class="warning">Forgot password?</div>
 
                         <div class="button-group">
-                            <div class="sign-up-button">LOGIN</div>
+                            <div class="submit-button">LOGIN</div>
                         </div>
                     </div>
                 </div>

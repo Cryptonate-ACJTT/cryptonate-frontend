@@ -1,8 +1,5 @@
 .container-center {
     align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-
 }
 
 .home-screen-image {
@@ -19,22 +16,11 @@
     margin-left: 130px;
     font-size: 60px;
     color: #1C3E64;
-
-
 }
 
 .tagline {
-
     margin-left: 110px;
     font-size: 30px;
-    font-weight: 10;
-
+    font-weight: 100;
 }
-
-html, body {
-    background-size:cover; 
-    background-color: #cbdffc;
-  }
-
-
 

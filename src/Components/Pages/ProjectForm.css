@@ -1,46 +1,26 @@
-.project-form-screen {
-    align-items: center;
-    background-color: 
-  #cbdffc;
-    display: flex;
-    flex-direction: column;
-    padding: 15px 39px;
-  }
-
-
 #the-form{
     padding: 20px;
     text-align: left;
-    display: inline-grid;
 }
 
-
 .project-form-container {
-
-    left: 0;
     max-width: 1201px;
     display: grid; 
     grid-template-columns: 1fr 1fr; 
     grid-template-rows: 1fr; 
-    gap: 0px 0px; 
     grid-template-areas: 
       "form-left form-right"; 
   }
- .form-left { grid-area: form-left; }
+.form-left { grid-area: form-left; }
 .form-right { grid-area: form-right; }
 
 .form-label{
-    flex: none;
-    width: 100px;
     display: flex;
     margin-bottom: 0;
     font-weight: 600;
-
 }
 
-.form-input-group{
-    margin-bottom: 17px;
-}
+.form-input-group{  margin-bottom: 17px;    }
 
 #img-label{
     font-weight: 600;
@@ -59,7 +39,3 @@
 #goal-input{
     width: 300px;
 }
-
-html, body {
-    background-color: #cbdffc;
-  }

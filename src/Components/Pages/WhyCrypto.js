@@ -9,10 +9,10 @@ const WhyCrypto = (props) => {
 
 
     return(
-        <div className="about-container">
+        <div className="basic-div">
             <div>
-               <div className="about-title" >Why Crypto?</div>
-               <div className="about">{aboutData.about}</div>
+               <div className="page-title" >Why Crypto?</div>
+               <div className="basic-description">{aboutData.about}</div>
 
             </div>
            

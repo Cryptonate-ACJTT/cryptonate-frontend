@@ -1,13 +1,5 @@
 .wallet-container {
-
-    background-color: 
-  #859df23b;
-    border-radius: 25px;
-    min-height: fit-content;
-    left: 0;
-    width: fit-content;
     padding: 43px 50px;
-
     display: grid; 
     grid-template-columns: 0.35fr 1.6fr 0.35fr; 
     grid-template-rows: 0.1fr 0.2fr 0.8fr 0.2fr 1.5fr; 
@@ -21,9 +13,7 @@
       "transaction-container transaction-container transaction-container"; 
   }
   .w-user-name-area { grid-area: w-user-name-area; }
-  .balance-tag-area { grid-area: balance-tag-area; 
-    
-    text-align: center;  }
+  .balance-tag-area { grid-area: balance-tag-area;  text-align: center;  }
   .balance-area { grid-area: balance-area; }
   .transaction-tag-area { grid-area: transaction-tag-area; text-align: center;  margin-top: 20px;}
   .transaction-container { grid-area: transaction-container;  padding-left: 30px;  padding-right: 30px;}
@@ -31,24 +21,24 @@
   .change-wallet { grid-area: change-wallet; text-align: end;}
   
 
+.wallet-box{
+  background-color: #9FC4FB;
+  border-radius: 5px;
+}
+.balance-box{
+  min-height: 100px;
+  width:600px;
+}
 
-  .balance-box{
-    background-color: #9FC4FB;
-    border-radius: 5px;
-    min-height: 100px;
-    width:600px;
-  }
-  .transaction-box{
-    background-color: #9FC4FB;
-    border-radius: 5px;
-    min-height: 200px;
-  }
+.transaction-box{
+  min-height: 200px;
+}
 
-  .tag-box{
-    background-color: #859df29f;
-    border-radius: 15px;
-    width: fit-content;
-    padding-left: 20px;
-    padding-right: 20px;
-    display: inline-block;
-  }
+.tag-box{
+  background-color: #859df29f;
+  border-radius: 15px;
+  width: fit-content;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: inline-block;
+ }

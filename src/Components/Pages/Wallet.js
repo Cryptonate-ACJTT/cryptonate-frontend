@@ -6,10 +6,10 @@ import './Wallet.css'
 const Wallet = (props) => {
 
     return (
-        <div class="profile-screen">
+        <div class="basic-div profile-screen">
 
-            <h class="page-title">My Wallet</h>
-            <div class="wallet-container">
+            <h class="account-page-title">My Wallet</h>
+            <div class="wallet-container basic-group">
                 <div class="w-user-name-area ">
                     <div class="profile-label" id="p-user-name" >[ USER NAME ]'s Wallet</div>
                 </div>
@@ -18,11 +18,11 @@ const Wallet = (props) => {
 
                 <div class="balance-tag-area"> <div class="tag-box">Balance</div></div>
                 <div class="balance-area">
-                    <div class="balance-box"></div>
+                    <div class="balance-box wallet-box"></div>
                 </div>
                 <div class="transaction-tag-area"><div class="tag-box">Transactions</div></div>
                 <div class="transaction-container">
-                    <div class="transaction-box"></div>
+                    <div class="transaction-box wallet-box"></div>
 
                 </div>
                 {/* <div class="project-inprogress profile-label">Donated Project In Progress</div>
