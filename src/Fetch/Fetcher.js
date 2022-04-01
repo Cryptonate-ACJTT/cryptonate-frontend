@@ -66,7 +66,7 @@ const buildFetchDefaultHandler = async (response) => {
 		return await response.json();
 	} else {
 		const errres = await response.json();
-		console.log("RESPONSE ERROR: code " + response.status + "; " + errres.msg);
+		console.error("RESPONSE ERROR: code " + response.status + "; " + errres.msg);
 		return Promise.reject(response.status);
 	}
 }
