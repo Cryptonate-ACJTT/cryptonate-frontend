@@ -45,10 +45,10 @@ const Profile = (props) => {
                 <div class="project-inprogress profile-label">Donated Project In Progress</div>
                 <div class="project-completed profile-label">Donated Project Completed</div>
                 <div class="project-inprogress-box">
-                    <div class="active-project-container project-container"></div>
+                    <div class="active-project-container my-project-container"></div>
                 </div>
                 <div class="project-completed-box">
-                    <div class="non-active-project-container project-container"></div>
+                    <div class="non-active-project-container my-project-container"></div>
                 </div>
                 <div class="email-label profile-label">Email</div>
                 <div class="p-email">
