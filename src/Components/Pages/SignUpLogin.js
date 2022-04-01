@@ -1,19 +1,10 @@
 import React, { useContext, useState } from "react";
 import './SignUpLogin.css'
-// import auth from '../auth/index.js'
-// import store from '../../Redux/Store.js'
-// import AuthContext from "../../auth";
-// import GlobalStoreContext from "../../Redux/GlobalStoreContext";
 
 const SignUpLogin = (props) => {
 
     const [loginTabClicked, toggleLoginTabClicked] = useState(false);
     const [signUpTabClicked, toggleSignUpTabClicked] = useState(false);
-    // const { auth } = useContext(AuthContext);
-    // const { store } = useContext(GlobalStoreContext);
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
-    // const [role, setRole] = useState("");
 
 
     const handleLoginTabClicked = async (e) => {
@@ -27,17 +18,6 @@ const SignUpLogin = (props) => {
         toggleLoginTabClicked(false);
         toggleSignUpTabClicked(true);
     }
-
-    // const handleLogin = (e) =>{
-    //     e.preventDefault();
-    //     auth.loginUser({
-    //         email: email,
-    //         password: password,
-    //         role: role
-
-    //     }, store)
-    // }
-
 
     if (signUpTabClicked || (!signUpTabClicked && !loginTabClicked)) {
 

@@ -27,7 +27,7 @@
 .password-label { grid-area: password-label; }
 .password { grid-area: password; }
 
-.project-container{
+.my-project-container{
   border-radius: 10px;
   min-height: 136px;
   width:700px;
