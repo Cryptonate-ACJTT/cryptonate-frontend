@@ -31,6 +31,7 @@ const App = () => {
        <SiteHeader/>
       
       <Routes>
+		<Route path="/" element={<Home/>}/>
         <Route path="/home" element={<Home/>} />
         <Route path="/explore" element={<Explore/>} />
         <Route path="/about" element={<About/>} />
