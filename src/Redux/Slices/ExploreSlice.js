@@ -1,4 +1,4 @@
-import { postToBackend } from "../../Fetch/ApiFetches";
+import { API_ROUTES, getFromBackend } from "../../Fetch/ApiFetches";
 import Store from "../Store";
 import StoreSlice from "../StoreSlice";
 
@@ -8,16 +8,22 @@ import StoreSlice from "../StoreSlice";
 
 // Sort types
 export const SORTINGS = {
-	CLOSE_TO_GOAL: "Close to Goal"
+	CLOSE_TO_GOAL: "Close to Goal",
+	RECENTLY_ADDED: "Recently Added"
+}
+
+export const CATEGORIES = [{name: "Animal", checked: false}];
+
+const initState = {
+	sorting: SORTINGS.CLOSE_TO_GOAL,
+	search: "",
+	categories: [],
+	projects: []
 }
 
 
-/**
- * 
- * @param {*} state 
- * @param {*} options 
- * @returns 
- */
+// REDUCERS
+
 const exploreSortReducer = (state, options) => {
 	return Object.assign({}, state, {
 		sorting: options
@@ -28,6 +34,7 @@ const exploreSortFxn = (sorting) => {
 	Store.dispatch({type: "exploreSortReducer", payload: sorting});
 }
 
+
 const exploreSearchReducer = (state, search) => {
 	return Object.assign({}, state, {
 		search: search
@@ -36,7 +43,28 @@ const exploreSearchReducer = (state, search) => {
 
 const exploreSearchFxn = (search) => {
 	Store.dispatch({type: "exploreSearchReducer", payload: search});
-	console.log(Store.getState());
+}
+
+
+const exploreProjectsReducer = (state, projects) => {
+	return Object.assign({}, state, {
+		projects: projects
+	})
+}
+
+const exploreProjectsFxn = (projects) => {
+	Store.dispatch({type: "exploreProjectsReducer", payload: projects});
+}
+
+
+const exploreCategoriesReducer = (state, categories) => {
+	return Object.assign({}, state, {
+		categories: categories
+	});
+}
+
+const exploreCategoriesFxn = (categories) => {
+	Store.dispatch({type: "exploreCategoriesReducer", payload: categories});
 }
 
 /*
@@ -55,11 +83,8 @@ const exploreSearchFxn = (search) => {
 
 
 export const storeKey = "EXPLORE_PROJECTS";
-const initialState = {
-	sorting: null
-};
-const reducers = {exploreSortReducer, exploreSearchReducer};
-const reducerFxns = {exploreSortFxn, exploreSearchFxn};
+const reducers = {exploreSortReducer, exploreSearchReducer, exploreProjectsReducer, exploreCategoriesReducer};
+export const reducerFxns = {exploreSortFxn, exploreSearchFxn, exploreProjectsFxn, exploreCategoriesFxn};
 
-const ExploreSlice = new StoreSlice(storeKey, initialState, reducers, reducerFxns);
+const ExploreSlice = new StoreSlice(storeKey, initState, reducers, reducerFxns);
 export default ExploreSlice;

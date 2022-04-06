@@ -61,7 +61,6 @@ const buildFetchType = (fetchType, data = null) => {
  * @returns json 
  */
 const buildFetchDefaultHandler = async (response) => {
-	//console.log(await response.json())
 	if(response.ok) {
 		return await response.json();
 	} else {

@@ -51,7 +51,7 @@ class StoreSlice {
 		const [state, setState] = useState(this.getState());
 		useEffect(() => {
 			this.subscribe(setState)},
-			[setState]
+			[state]
 		);
 		return state;
 	}
