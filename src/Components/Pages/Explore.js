@@ -8,11 +8,18 @@ const PROJECTS_PER_PAGE = 20;
 
 const Explore = () => {
 	const slice = ExploreSlice.useSlice();
-	//console.log(slice);
 
 	
 	useEffect(() => {
-		exploreSearchBackend();//{search:"Third+Project", category:"Animals"});
+		let search = slice.search.replace(/\s/g, "+");
+		let categories = "";
+		
+		for(const cat of slice.categories) {
+			categories += cat.name;
+		}
+
+		exploreSearchBackend({search: search, categories: categories});//{search:"Third+Project", category:"Animals"});
+		console.log(slice);
 	}, [slice.search, slice.categories]);
 	
 	
@@ -34,22 +41,20 @@ const Explore = () => {
 				route += "search=" + search;
 			}
 		}
+
+		console.log(route);
 		
 		getFromBackend(route, { callback: (data) => {
-			ExploreSlice.reducerFxns.exploreProjectsFxn(data.projects);
+			reducerFxns.exploreProjectsFxn(data.projects);
 		}});
 	}
-
-	//postToBackend()
-
-	//exploreSearchBackend({search:"Third+Project", category:"Animal"});
 
 	return (
 		<div className="explore-container">
         	<h1 className="page-title">Explore & Discover</h1>
 			<ExploreSearch slice={slice}/>
 			<ExploreFilter slice={slice} sorts={Object.values(SORTINGS)} categories={CATEGORIES}/>
-			<ExploreTiling />
+			<ExploreTiling slice={slice}/>
 		</div>
 	);
 }
@@ -63,15 +68,15 @@ const Explore = () => {
 const ExploreSearch = (props) => {
 
 	/**
-	 * Intercepts onSubmit; mostly here to prevent the default behavior.
+	 * Intercepts onSubmit; cleans input and
 	 * @param {*} e 
 	 */
 	const exploreSearchIntercept = (e) => {
 		e.preventDefault();
-		let val = e.target.searchy.value;
+		let val = "" + e.target.searchy.value;	// string for safety
 		e.target.searchy.value = "";
 
-		ExploreSlice.reducerFxns.exploreSearchFxn(val);
+		reducerFxns.exploreSearchFxn(val);
 	}
 
 	return (
@@ -121,7 +126,7 @@ const ExploreFilter = (props) => {
 
 		const checkBoxHandler = (e, i) => {
 			categories[i].checked = e.target.checked;
-			reducerFxns.exploreCategoriesFxn(categories);
+			reducerFxns.exploreCategoriesFxn(categories.filter(cat => cat.checked == true));
 		}
 
 		for(let i = 0; i < categories.length; i++) {
@@ -141,7 +146,7 @@ const ExploreFilter = (props) => {
 	 * @param {*} e 
 	 */
 	const exploreSortIntercept = (e) => {
-		ExploreSlice.reducerFxns.exploreSortFxn(e.target.value);
+		reducerFxns.exploreSortFxn(e.target.value);
 	}
 
 	return (

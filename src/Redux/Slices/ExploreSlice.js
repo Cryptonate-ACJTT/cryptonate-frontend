@@ -32,6 +32,7 @@ const exploreSortReducer = (state, options) => {
 
 const exploreSortFxn = (sorting) => {
 	Store.dispatch({type: "exploreSortReducer", payload: sorting});
+	// TODO: SORT THE PROJECTS
 }
 
 
@@ -66,20 +67,6 @@ const exploreCategoriesReducer = (state, categories) => {
 const exploreCategoriesFxn = (categories) => {
 	Store.dispatch({type: "exploreCategoriesReducer", payload: categories});
 }
-
-/*
-	How should projects be stored on the front end? Data structure wise?
-*/
-
-// only request what the client needs?
-
-// send request to backend: search / categorize
-
-// add project(s) to state
-
-// remove project(s) from state
-
-// sort projects in state according to sorting priority
 
 
 export const storeKey = "EXPLORE_PROJECTS";
