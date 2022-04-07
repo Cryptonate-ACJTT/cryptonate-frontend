@@ -22,7 +22,7 @@
 
 .form-input-group{  margin-bottom: 17px;    }
 
-#img-label{
+.header-label{
     font-weight: 600;
     margin-right: 10px;
 }
@@ -36,6 +36,4 @@
     padding: 25px 40px;
 }
 
-#goal-input{
-    width: 300px;
-}
+#goal-input{    width: 300px;   }

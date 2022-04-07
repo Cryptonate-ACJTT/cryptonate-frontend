@@ -35,159 +35,156 @@ const alphaNumeric = value =>
 const employeeIdentificationNumber = value =>
   value && /^(0[1-6]|1[0-6]|2[0-7]|[345]\d|[68][0-8]|7[1-7]|9[0-58-9])-?\d{7}$/.test(value)
     ? 'Invalid EIN'
-    :undefined
+    : undefined
 export const phoneNumber = value =>
   value && !/^(0|[1-9][0-9]{9})$/i.test(value)
     ? 'Invalid phone number, must be 10 digits'
     : undefined
-    const renderField = ({
-      input,
-      label,
-      type,
-      meta: { touched, error, warning }
-    }) => (
-      <div>
-        <label>{label}</label>
-        <div>
-          <input {...input} placeholder={label} type={type} />
-          {touched &&
-            ((error && <span>{error}</span>) ||
-              (warning && <span>{warning}</span>))}
-        </div>
-      </div>
-    )
-   
+const renderField = ({
+  input,
+  label,
+  type,
+  meta: { touched, error, warning }
+}) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} placeholder={label} type={type} />
+      {touched &&
+        ((error && <span>{error}</span>) ||
+          (warning && <span>{warning}</span>))}
+    </div>
+  </div>
+)
 
 
 
 
-class RegisterPage extends React.Component{
+
+class RegisterPage extends React.Component {
 
 
   constructor(props) {
     super(props); // 
     this.state = {
-            
+
       Organization_Name: '',
       employeeID: '',
       email: '',
       Category: '',
       Location: '',
       SnsOrg: '',
-  
-};
+
+    };
 
 
-  handleSubmitt = (e) => {
-     e.preventDefault();
-  const { OrganizationName, employeeID, email, Category, Location,SnsOrg } = this.state;
-  fetch('http://localhost:4000/api/users/register' , {
-  method: "POST",
-  headers: {
-    'Content-type': 'application/json'
-  },
-  body: JSON.stringify(this.state)
-})
-.then((result) => result.json())
-.then((info) => { console.log(info); })
-      
-
-        }
+    handleSubmitt = (e) => {
+      e.preventDefault();
+      const { OrganizationName, employeeID, email, Category, Location, SnsOrg } = this.state;
+      fetch('http://localhost:4000/api/users/register', {
+        method: "POST",
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(this.state)
+      })
+        .then((result) => result.json())
+        .then((info) => { console.log(info); })
 
 
-        render = () =>{
-          return (
-            <form onSubmit={handleSubmitt}>
-              <Field
-                name="OrganizationName"
-                type="text"
-                component={renderField}
-                label="OrganizationName"
-                validate={[required, maxLength15, minLength2]}
-                warn={alphaNumeric}
-              />
-              <Field
-                name="employeeID"
-                type="number"
-                component={renderField}
-                label="employeeID"
-                validate={employeeIdentificationNumber}
-                
-              />
-              <Field
-        
-                name="Category"
-                component={Multiselect}
-                defaultValue={[]}
-                onBlur={() => props.onBlur()}
-                data={[ 'animal', 'children', 'education','environment','women', 'international' ]}
-        
-        
-              />
-              <Field
-                name="email"
-                type="email"
-                component={renderField}
-                label="Email"
-                validate={[required, email]}
-                warn={aol}
-        
-              /> 
-              
-              <Field
-                name="phone"
-                type="number"
-                component={renderField}
-                label="Phone number"
-        
-        
-        
-        
-                validate={[required, phoneNumber]}
-              />
-        
-        
-              <Field
-                name="Location"
-                type="text"
-                component={renderField}
-                label="location"
-                validate={[ minLength2]}
-                warn={alphaNumeric}
-              />
-        
-              <Field
-                name="SnsOrg"
-                type="text"
-                component={renderField}
-                label="SnsOrg"
-                validate={[ minLength2]}
-                warn={alphaNumeric}
-              />
-        
-             
-        
-        
-        
-              <div>
-                <button type="submit" disabled={submitting}>
-                  Submit
-                </button>
-                <button type="button" disabled={pristine || submitting} onClick={reset}>
-                  Clear Values
-                </button>
-              </div>
-            </form>
-          );
+    }
+
+
+    render = () => {
+      return (
+        <form onSubmit={handleSubmitt}>
+          <Field
+            name="OrganizationName"
+            type="text"
+            component={renderField}
+            label="OrganizationName"
+            validate={[required, maxLength15, minLength2]}
+            warn={alphaNumeric}
+          />
+          <Field
+            name="employeeID"
+            type="number"
+            component={renderField}
+            label="employeeID"
+            validate={employeeIdentificationNumber}
+
+          />
+          <Field
+
+            name="Category"
+            component={Multiselect}
+            defaultValue={[]}
+            onBlur={() => props.onBlur()}
+            data={['animal', 'children', 'education', 'environment', 'women', 'international']}
+
+
+          />
+          <Field
+            name="email"
+            type="email"
+            component={renderField}
+            label="Email"
+            validate={[required, email]}
+            warn={aol}
+
+          />
+
+          <Field
+            name="phone"
+            type="number"
+            component={renderField}
+            label="Phone number"
+
+            validate={[required, phoneNumber]}
+          />
+
+
+          <Field
+            name="Location"
+            type="text"
+            component={renderField}
+            label="location"
+            validate={[minLength2]}
+            warn={alphaNumeric}
+          />
+
+          <Field
+            name="SnsOrg"
+            type="text"
+            component={renderField}
+            label="SnsOrg"
+            validate={[minLength2]}
+            warn={alphaNumeric}
+          />
 
 
 
-        }
+
+
+          <div>
+            <button type="submit" disabled={submitting}>
+              Submit
+            </button>
+            <button type="button" disabled={pristine || submitting} onClick={reset}>
+              Clear Values
+            </button>
+          </div>
+        </form>
+      );
+
+
+
+    }
 
   }
 
 
-// import login information?
+  // import login information?
 
 
 }

@@ -43,6 +43,7 @@ const App = () => {
         <Route path="/authentication-form" element={<AuthenticationForm/>} />
         <Route path="/project-form" element={<ProjectForm/>} />
         <Route path="/wallet" element={<Wallet/>} />
+        <Route path="organization-form" element={<OrganizationForm/>}/>
 
 
 
