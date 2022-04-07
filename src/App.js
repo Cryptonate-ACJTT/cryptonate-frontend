@@ -43,7 +43,6 @@ const App = () => {
         <Route path="/organization-auth-form" element={<OrgAuthForm/>} />
         <Route path="/project-form" element={<ProjectForm/>} />
         <Route path="/wallet" element={<Wallet/>} />
-        <Route path="organization-form" element={<OrganizationForm/>}/>
 
 
 
