@@ -1,8 +1,8 @@
 import React from "react";
-import "./AuthenticationForm.css";
+import "./OrgAuthForm.css";
 import { Link } from 'react-router-dom'
 
-const AuthenticationForm = (props) => {
+const OrgAuthForm = (props) => {
 
     return (
         <div class="basic-div basic-form">
@@ -54,4 +54,4 @@ const AuthenticationForm = (props) => {
     );
 }
 
-export default AuthenticationForm;
+export default OrgAuthForm;

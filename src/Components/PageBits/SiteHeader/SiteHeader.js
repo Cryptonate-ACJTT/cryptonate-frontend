@@ -51,7 +51,7 @@ const SiteHeader = (props) => {
                         <div className="dropdown-content">
                             <Link to ="/profile"> Profile</Link>
                             <Link to ="/wallet"> Wallet</Link>
-                            <Link to ="/authentication-form"> Form</Link>
+                            <Link to ="/organization-auth-form"> Form</Link>
                             <a href="#" onClick={handleLogout}>Log Out</a>
                         </div>
                     </div>

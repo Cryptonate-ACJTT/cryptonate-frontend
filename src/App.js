@@ -19,7 +19,7 @@ import Wallet from './Components/Pages/Wallet';
 
 
 import Profile from './Components/Pages/Profile';
-import AuthenticationForm from './Components/Pages/AuthenticationForm';
+import OrgAuthForm from './Components/Pages/OrgAuthForm';
 import ProjectForm from './Components/Pages/ProjectForm';
 
 
@@ -40,7 +40,7 @@ const App = () => {
         <Route path="test-register" element={<TestRegister/>}/>
         <Route path="/explore/project-example" element={<Project/>}/>
         <Route path="/profile" element={<Profile/>} />
-        <Route path="/authentication-form" element={<AuthenticationForm/>} />
+        <Route path="/organization-auth-form" element={<OrgAuthForm/>} />
         <Route path="/project-form" element={<ProjectForm/>} />
         <Route path="/wallet" element={<Wallet/>} />
         <Route path="organization-form" element={<OrganizationForm/>}/>
