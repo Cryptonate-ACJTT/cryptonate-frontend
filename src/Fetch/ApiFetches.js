@@ -18,15 +18,16 @@ const ADDRESSES = {
  */
 export const API_ROUTES = {
 	BACKEND: {
-		FRONTPAGE_STATS: "/frontpage",
-		EXPLORE_SEARCH: "/explore/search",
+		FRONTPAGE_STATS: "/project/frontpage",
+		EXPLORE_SEARCH: "/project/explore/search",
 
 		REGISTER_USER: "/user",
 		LOGIN_USER: "/user/login",
 		GET_LOGGED_IN: "/user/loggedIn",
 		LOGOUT_USER: "/user/logout",
 
-		GET_PROJECT: "/project"
+		GET_PROJECT: "/project",
+		ALL_PROJECT: "/project/explore"
 	},
 
 	INDEXER: {
@@ -82,59 +83,3 @@ export const postToBackend = (path, data, {callback, credentials, resHandler} = 
 export const getFromIndexer = (path, {callback, credentials, resHandler} = {}) => {
 	return buildFetch(FETCH_TYPE.GET, ADDRESSES.INDEXER + path, {callback, credentials, resHandler});
 }
-
-
-
-/* ====== FRONT PAGE ====== */
-
-/**
- * 
- * @returns Promise
- 
-export const getFrontpageStats = () => {
-	return getFromBackend(API_ROUTES.FRONTPAGE_STATS);
-}
-*/
-
-
-/* ====== AUTHORIZATION ====== */
-
-/*
-        let response = null;
-        let err = null;
-        try{
-            console.log("at index auth.getloggedin");
-            response = await api.getLoggedIn();
-        }
-        catch(error){
-            console.log("GETLOGGEDIN DIDNT WORK");
-            //console.log(error);
-            err = error
-        }
-        if (response !== null && response.status === 200) {
-            authReducer({
-                type: AuthActionType.GET_LOGGED_IN,
-                payload: {
-                    loggedIn: response.data.loggedIn,
-                    user: response.data.user
-                }
-            });
-        }
-        else{
-            console.log("get loggedin error");//alert
-            console.log(response===null);
-        }
-    }
-*/
-
-/*
-const getLoggedInResHandler = async (response) => {
-	if(response.ok) {
-
-	}
-}*/
-
-//export const getLoggedIn = (path, data, {callback, credentials, resHandler} = {}) => {
-
-
-//}

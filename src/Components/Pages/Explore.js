@@ -1,30 +1,64 @@
-import { API_ROUTES, postToBackend } from "../../Fetch/ApiFetches";
-import ExploreSlice from "../../Redux/Slices/ExploreSlice"
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
+import ExploreSlice, { CATEGORIES, reducerFxns, SORTINGS } from "../../Redux/Slices/ExploreSlice"
+
+const PROJECTS_PER_PAGE = 20;
 
 
 const Explore = () => {
 	const slice = ExploreSlice.useSlice();
 
-	/**
-	 * 
-	 * @param {*} searchTerm 
-	 * @returns 
-	 */
-	const searchRequest = (searchTerm) => {
-		searchTerm = "" + searchTerm; // make sure it's a string juuuuust in case
-		let searchJson = {};
-		return postToBackend(API_ROUTES.EXPLORE_SEARCH, searchJson);
-	}
+	
+	useEffect(() => {
+		let search = slice.search.replace(/\s/g, "+");
+		let categories = "";
+		
+		for(const cat of slice.categories) {
+			categories += cat.name;
+		}
 
+		exploreSearchBackend({search: search, categories: categories});//{search:"Third+Project", category:"Animals"});
+		console.log(slice);
+	}, [slice.search, slice.categories]);
+	
+	
+	const exploreSearchBackend = ({search, categories} = {}) => {
+		let route = API_ROUTES.BACKEND.ALL_PROJECT;
+		if(search || categories){ 
+			route = API_ROUTES.BACKEND.EXPLORE_SEARCH;
+			route += "?";
+
+			if(categories) {
+				route += "category=" + categories;
+			}
+	
+			if(categories && search) {
+				route += "&";
+			}
+		
+			if(search) {
+				route += "search=" + search;
+			}
+		}
+
+		console.log(route);
+		
+		getFromBackend(route, { callback: (data) => {
+			reducerFxns.exploreProjectsFxn(data.projects);
+		}});
+	}
 
 	return (
 		<div className="explore-container">
         	<h1 className="page-title">Explore & Discover</h1>
-			<ExploreSearch/>
-			<ExploreFilter sorts={["hello", "ahgh", "priaij"]}/>
-      	</div>
+			<ExploreSearch slice={slice}/>
+			<ExploreFilter slice={slice} sorts={Object.values(SORTINGS)} categories={CATEGORIES}/>
+			<ExploreTiling slice={slice}/>
+		</div>
 	);
 }
+
 
 
 /**
@@ -34,15 +68,15 @@ const Explore = () => {
 const ExploreSearch = (props) => {
 
 	/**
-	 * Intercepts onSubmit; mostly here to prevent the default behavior.
+	 * Intercepts onSubmit; cleans input and
 	 * @param {*} e 
 	 */
 	const exploreSearchIntercept = (e) => {
 		e.preventDefault();
-		let val = e.target.searchy.value;
+		let val = "" + e.target.searchy.value;	// string for safety
 		e.target.searchy.value = "";
 
-		ExploreSlice.reducerFxns.exploreSearchFxn(val);
+		reducerFxns.exploreSearchFxn(val);
 	}
 
 	return (
@@ -56,6 +90,7 @@ const ExploreSearch = (props) => {
 		</div>
 	)
 }
+
 
 
 /**
@@ -87,7 +122,23 @@ const ExploreFilter = (props) => {
 	 * @returns 
 	 */
 	const addCategories = (categories) => {
-		return null;
+		let categoriesReturned = [];
+
+		const checkBoxHandler = (e, i) => {
+			categories[i].checked = e.target.checked;
+			reducerFxns.exploreCategoriesFxn(categories.filter(cat => cat.checked == true));
+		}
+
+		for(let i = 0; i < categories.length; i++) {
+			categoriesReturned.push(
+				<div className="explore-category" key={"checkbox" + i} >
+					<input className="explore-category-checkbox" type="checkbox" id={"checkbox-" + categories[i].name} name={categories[i].name} onChange={(e) => {checkBoxHandler(e, i)}}/>
+					<label className="explore-category-label" htmlFor={"checkbox-" + categories[i].name}>{categories[i].name}</label>
+				</div>
+			)
+		}
+
+		return categoriesReturned;
 	}
 
 	/**
@@ -95,7 +146,7 @@ const ExploreFilter = (props) => {
 	 * @param {*} e 
 	 */
 	const exploreSortIntercept = (e) => {
-		ExploreSlice.reducerFxns.exploreSortFxn(e.target.value);
+		reducerFxns.exploreSortFxn(e.target.value);
 	}
 
 	return (
@@ -115,11 +166,56 @@ const ExploreFilter = (props) => {
 	);
 }
 
-const ExploreContent = () => {
 
+const ExploreTiling = (props) => {
+	// pagination
+
+	let page = 1;
+	let maxPages = 1;	// pagination
+
+	let tiles = props.projects;	// projects on page
+
+	const makeTiles = (projects) => {
+
+	}
+
+	const getNextTiles = () => {
+
+	}
+	
+	const reloadTiles = () => {
+
+	}
+
+	return (
+		<div className="explore-content">
+			<div className="explore-tiling">
+				{tiles}
+			</div>
+		</div>
+	)
 }
 
-const ExploreTile = () => {
+
+
+const ExploreTile = (props) => {
+	const tileClick = (e) => {
+
+	}
+
+	return (
+		<Link to={"/explore/" + props.id}>
+			<div className="explore-tile" onClick={tileClick}>
+				<h4 className="explore-tile-title">{props.title}</h4>
+				<div className="explore-tile-img-contains">
+					<img src={props.image} alt={props.imageAlt} className="explore-tile-img"/>
+				</div>
+				<p className="explore-tile-desc">{props.desc}</p>
+				<p className="explore-tile-prog-desc">{props.progress}%</p>
+				<progress value={props.progress} max="100" className="explore-tile-prog"/>
+			</div>
+		</Link>
+	)
 
 }
 
