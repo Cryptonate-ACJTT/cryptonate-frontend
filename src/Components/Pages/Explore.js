@@ -60,7 +60,7 @@ const Explore = () => {
         	<h1 className="page-title">Explore & Discover</h1>
 			<ExploreSearch slice={slice}/>
 			<div>
-				<ExploreFilter slice={slice} sorts={Object.values(SORTINGS)} categories={CATEGORIES}/>
+				<ExploreFilter slice={slice} sorts={SORTINGS} categories={CATEGORIES}/>
 				<ExploreTiling slice={slice}/>
 			</div>
 		</div>
@@ -118,7 +118,7 @@ const ExploreFilter = (props) => {
 		
 		for(let i = 0; i < sortOptions.length; i++) {
 			sortOptionsReturned.push(
-				<option key={"option" + i}>{sortOptions[i]}</option>
+				<option key={"option" + i}>{sortOptions[i].name}</option>
 			)
 		}
 		return sortOptionsReturned;
@@ -159,7 +159,8 @@ const ExploreFilter = (props) => {
 	 * @param {*} e 
 	 */
 	const exploreSortIntercept = (e) => {
-		reducerFxns.exploreSortFxn(e.target.value);
+		let sorting = SORTINGS.filter(s => s.name == e.target.value)[0];
+		reducerFxns.exploreSortFxn(sorting);
 	}
 
 	return (
@@ -204,6 +205,14 @@ const ExploreTiling = (props) => {
 
 
 	/**
+	 * Listen for changes to sorting fxn and update tiles accordingly. New sorting functions can be added in ExploreSlice
+	 */
+	useEffect(() => {
+		sortTiles();
+	}, [props.slice.sorting]);
+
+
+	/**
 	 * Create a set of tiles given project data (from slice);
 	 * @param {*} projects 
 	 * @returns 
@@ -227,12 +236,12 @@ const ExploreTiling = (props) => {
 	}
 
 	/**
-	 * Sort the tiles, given a sorting directive.
-	 * @param {*} tiles 
-	 * @param {*} sort 
+	 * Sort the tiles! Called when slice.sorting updates (see useeffect above);
 	 */
-	const sortTiles = (tiles, sort) => {
-		// TODO	
+	const sortTiles = () => {
+		let sorted = [...props.slice.projects].sort(props.slice.sorting.fxn);
+		console.log(sorted);
+		reducerFxns.exploreProjectsFxn(sorted);
 	}
 
 

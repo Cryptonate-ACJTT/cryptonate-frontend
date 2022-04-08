@@ -7,15 +7,15 @@ import StoreSlice from "../StoreSlice";
 */
 
 // Sort types
-export const SORTINGS = {
-	CLOSE_TO_GOAL: "Close to Goal",
-	RECENTLY_ADDED: "Recently Added"
-}
+export const SORTINGS = [
+	{name: "Close to Goal", fxn: ((a, b) => { return (Math.floor(a.totalSaved / a.goalAmount) - Math.floor(b.totalSaved / b.totalAmount)) })},
+	{name: "Recently Added", fxn: ((a, b) => { return (new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()) })}
+];
 
 export const CATEGORIES = [{name: "Animal", checked: false}];
 
 const initState = {
-	sorting: SORTINGS.CLOSE_TO_GOAL,
+	sorting: SORTINGS[0],
 	search: "",
 	categories: [],
 	projects: []
@@ -24,9 +24,9 @@ const initState = {
 
 // REDUCERS
 
-const exploreSortReducer = (state, options) => {
+const exploreSortReducer = (state, sort) => {
 	return Object.assign({}, state, {
-		sorting: options
+		sorting: sort
 	})
 }
 
