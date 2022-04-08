@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "./Project.css"
+import ExploreSlice from "../../Redux/Slices/ExploreSlice";
 
+
+const Project = (props) => {
+	const { id } = useParams();
+	const slice = ExploreSlice.useSlice();
+	console.log(slice.projects);
+
+	useEffect(() => {
+		return(() => {
+
+			
+			ExploreSlice.unsubscribe();
+		});
+	});
+
+	return (
+		<p>{id}</p>
+	)
+}
+/*
 import Visualizer from './Visualizer';
 import logo from "./Images/algorand_logo_mark_black.svg";
 import image from "./Images/temp.jpg"
 import Donate from "../Modals/Donate"
-
-function rBetween(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
+*/
+/*
 const Project = (props) => {
     return (
         <div className="project-container">
@@ -87,5 +105,5 @@ const DonateButton = (props) => {
         </div>
     );
 }
-
+*/
 export default Project;

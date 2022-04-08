@@ -13,6 +13,7 @@ class StoreSlice {
 		this.initState = initState;
 		this.reducers = reducers;
 		this.reducerFxns = reducerFxns;
+		this.unsubscribe = null;
 
 		// register reducers with Store entity
 		Store.injectReducer(this.storeKey, (state = this.initState, {type, payload}) => {
@@ -50,7 +51,7 @@ class StoreSlice {
 	useSlice = () => {
 		const [state, setState] = useState(this.getState());
 		useEffect(() => {
-			this.subscribe(setState)},
+			this.unsubscribe = this.subscribe(setState)},
 			[state]
 		);
 		return state;

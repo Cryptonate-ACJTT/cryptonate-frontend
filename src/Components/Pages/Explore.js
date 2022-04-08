@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
 import ExploreSlice, { CATEGORIES, reducerFxns, SORTINGS } from "../../Redux/Slices/ExploreSlice"
+import "./Explore.css";
 
 const PROJECTS_PER_PAGE = 20;
 
@@ -9,7 +10,9 @@ const PROJECTS_PER_PAGE = 20;
 const Explore = () => {
 	const slice = ExploreSlice.useSlice();
 
-	
+	/**
+	 * Watches for changes in slice.search, slice.categories and then searches based on that!
+	 */
 	useEffect(() => {
 		let search = slice.search.replace(/\s/g, "+");
 		let categories = "";
@@ -18,8 +21,11 @@ const Explore = () => {
 			categories += cat.name;
 		}
 
-		exploreSearchBackend({search: search, categories: categories});//{search:"Third+Project", category:"Animals"});
-		console.log(slice);
+		exploreSearchBackend({search: search, categories: categories});
+
+		return (() => {	// runs on unmount
+			ExploreSlice.unsubscribe();
+		});
 	}, [slice.search, slice.categories]);
 	
 	
@@ -74,7 +80,7 @@ const ExploreSearch = (props) => {
 	const exploreSearchIntercept = (e) => {
 		e.preventDefault();
 		let val = "" + e.target.searchy.value;	// string for safety
-		e.target.searchy.value = "";
+		//e.target.searchy.value = "";
 
 		reducerFxns.exploreSearchFxn(val);
 	}
@@ -124,6 +130,11 @@ const ExploreFilter = (props) => {
 	const addCategories = (categories) => {
 		let categoriesReturned = [];
 
+		/**
+		 * Handles what happens when a checkbox is clicked
+		 * @param {*} e 
+		 * @param {*} i 
+		 */
 		const checkBoxHandler = (e, i) => {
 			categories[i].checked = e.target.checked;
 			reducerFxns.exploreCategoriesFxn(categories.filter(cat => cat.checked == true));
@@ -170,21 +181,47 @@ const ExploreFilter = (props) => {
 const ExploreTiling = (props) => {
 	// pagination
 
-	let page = 1;
-	let maxPages = 1;	// pagination
+	const page = useRef(1);
+	const maxPages = useRef(1);	// pagination
+	let [tiles, setTiles] = useState([]);
 
-	let tiles = props.projects;	// projects on page
+	/**
+	 * Listen for changes in props.slice.projects and set tiles appropriately.
+	 */
+	useEffect(() => {
+		setTiles(makeTiles(props.slice.projects));
+	}, [props.slice.projects]);
 
+	/**
+	 * Create a set of tiles given project data (from slice);
+	 * @param {*} projects 
+	 * @returns 
+	 */
 	const makeTiles = (projects) => {
+		let tiling = [];
+		for(const project of projects) {
+			tiling.push(
+				<ExploreTile
+					key = {project._id}
+					id = {project._id}
+					title = {project.projectName}
+					image = {project.image}
+					desc = {project.summary}
+					progress = {Math.floor(project.totalSaved/project.goalAmount) * 100}
+				/>
+			);
+		}
 
+		return tiling;
 	}
 
-	const getNextTiles = () => {
-
-	}
-	
-	const reloadTiles = () => {
-
+	/**
+	 * Sort the tiles, given a sorting directive.
+	 * @param {*} tiles 
+	 * @param {*} sort 
+	 */
+	const sortTiles = (tiles, sort) => {
+		
 	}
 
 	return (
@@ -204,11 +241,11 @@ const ExploreTile = (props) => {
 	}
 
 	return (
-		<Link to={"/explore/" + props.id}>
+		<Link to={"/explore/project/" + props.id}>
 			<div className="explore-tile" onClick={tileClick}>
 				<h4 className="explore-tile-title">{props.title}</h4>
-				<div className="explore-tile-img-contains">
-					<img src={props.image} alt={props.imageAlt} className="explore-tile-img"/>
+				<div className="explore-tile-img-contain">
+					<img src={props.image} alt={""} className="explore-tile-img"/>
 				</div>
 				<p className="explore-tile-desc">{props.desc}</p>
 				<p className="explore-tile-prog-desc">{props.progress}%</p>
