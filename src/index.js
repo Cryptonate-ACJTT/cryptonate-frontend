@@ -8,6 +8,16 @@ import Store from './Redux/Store';
 // initialize the store
 Store.getInstance();
 
+console.log(
+    "  ______                             __                           __       \n" +
+      "  / ____/   _____   __  __    ____   / /_  ____    ____   ____ _  / /_  ___ \n" +
+      " / /       / ___/  / / / /   / __ \\ / __/ / __ \\  / __ \\ / __ `/ / __/ / _ \\\n" +
+      "/ /___    / /     / /_/ /   / /_/ // /_  / /_/ / / / / // /_/ / / /_  /  __/\n" +
+      "\\____/   /_/      \\__, /   / .___/ \\__/  \\____/ /_/ /_/ \\__,_/  \\__/  \\___/ \n" +
+      "                 /____/   /_/                                               \n" +
+	  "                                                             frontend v0.1    "
+  );	// yes thank you I love startup logos
+
 ReactDOM.render(
   <React.StrictMode>
     <App/>

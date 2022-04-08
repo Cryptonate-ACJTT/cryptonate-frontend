@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
+import { ADDRESSES, API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
 import ExploreSlice, { CATEGORIES, reducerFxns, SORTINGS } from "../../Redux/Slices/ExploreSlice"
 import "./Explore.css";
 
-const PROJECTS_PER_PAGE = 20;
+const PROJECTS_PER_PAGE = 9; // multiple of three please
 
 
 const Explore = () => {
@@ -59,8 +59,10 @@ const Explore = () => {
 		<div className="explore-container">
         	<h1 className="page-title">Explore & Discover</h1>
 			<ExploreSearch slice={slice}/>
-			<ExploreFilter slice={slice} sorts={Object.values(SORTINGS)} categories={CATEGORIES}/>
-			<ExploreTiling slice={slice}/>
+			<div>
+				<ExploreFilter slice={slice} sorts={Object.values(SORTINGS)} categories={CATEGORIES}/>
+				<ExploreTiling slice={slice}/>
+			</div>
 		</div>
 	);
 }
@@ -137,7 +139,7 @@ const ExploreFilter = (props) => {
 		 */
 		const checkBoxHandler = (e, i) => {
 			categories[i].checked = e.target.checked;
-			reducerFxns.exploreCategoriesFxn(categories.filter(cat => cat.checked == true));
+			reducerFxns.exploreCategoriesFxn(categories.filter(cat => cat.checked === true));
 		}
 
 		for(let i = 0; i < categories.length; i++) {
@@ -179,18 +181,27 @@ const ExploreFilter = (props) => {
 
 
 const ExploreTiling = (props) => {
-	// pagination
 
-	const page = useRef(1);
-	const maxPages = useRef(1);	// pagination
+	let maxPages = useRef();
+	let [page, setPage] = useState(1);
 	let [tiles, setTiles] = useState([]);
 
 	/**
 	 * Listen for changes in props.slice.projects and set tiles appropriately.
 	 */
 	useEffect(() => {
-		setTiles(makeTiles(props.slice.projects));
+		maxPages.current = Math.ceil(props.slice.projects.length / PROJECTS_PER_PAGE);
+		console.log(maxPages.current)
 	}, [props.slice.projects]);
+
+
+	/**
+	 * Listen for page change and update tiles accordingly.
+	 */
+	useEffect(() => {		
+		setTiles(makeTiles(props.slice.projects.slice((page - 1) * PROJECTS_PER_PAGE, page * PROJECTS_PER_PAGE)));
+	}, [page, props.slice.projects]);
+
 
 	/**
 	 * Create a set of tiles given project data (from slice);
@@ -221,31 +232,54 @@ const ExploreTiling = (props) => {
 	 * @param {*} sort 
 	 */
 	const sortTiles = (tiles, sort) => {
-		
+		// TODO	
+	}
+
+
+	const nextPage = (e) => {
+		if(page < maxPages.current) {
+			setPage(page + 1);
+		}
+	}
+
+	const prevPage = (e) => {
+		if(page > 1) {
+			setPage(page - 1);
+		}
 	}
 
 	return (
 		<div className="explore-content">
+			<div className="create-project">
+				<Link to="/project-form">
+					<button className="create-project-btn">Create Project</button>
+				</Link>
+			</div>
+			<div className="explore-tiling-pages">
+				<button className="explore-paginate-previous" onClick={prevPage}>{"<"}</button>
+				<span className="explore-paginate-desc">{"Page " + page + " of " + maxPages.current}</span>
+				<button className="explore-paginate-next" onClick={nextPage}>{">"}</button>
+			</div>
 			<div className="explore-tiling">
 				{tiles}
 			</div>
 		</div>
-	)
+	);
 }
 
 
-
+/**
+ * Tile used to display a project.
+ * @param {*} props 
+ * @returns 
+ */
 const ExploreTile = (props) => {
-	const tileClick = (e) => {
-
-	}
-
 	return (
 		<Link to={"/explore/project/" + props.id}>
-			<div className="explore-tile" onClick={tileClick}>
+			<div className="explore-tile">
 				<h4 className="explore-tile-title">{props.title}</h4>
 				<div className="explore-tile-img-contain">
-					<img src={props.image} alt={""} className="explore-tile-img"/>
+					<img src={ADDRESSES.BACKEND + props.image} alt={""} className="explore-tile-img"/>
 				</div>
 				<p className="explore-tile-desc">{props.desc}</p>
 				<p className="explore-tile-prog-desc">{props.progress}%</p>

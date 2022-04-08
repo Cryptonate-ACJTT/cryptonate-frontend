@@ -10,12 +10,17 @@
 }
 
 .explore-filter {
-    width: 25%;
+    width: 20vw;
+	float: left;
+}
+
+.explore-content {
+	width: 80vw;
+	margin-left: 20vw;
+	position: absolute;
 }
 
 .explore-tiling {
-    width: 75%;
-    margin-left: 20%;
     display: grid;
     gap: 2em;
     grid-template-columns: auto auto auto;
@@ -49,9 +54,11 @@
 }
 
 .explore-tile-img {
+	object-fit: cover;
     margin: 10px;
     width: 100%;
-    height: 100%;
+	max-width: 600px;
+    max-height: 400px;
 }
 
 .explore-tile-desc {

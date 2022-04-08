@@ -7,7 +7,7 @@ import { buildFetch, FETCH_TYPE } from "./Fetcher";
 /**
  * The APIs we're using
  */
-const ADDRESSES = {
+export const ADDRESSES = {
 	BACKEND: "http://localhost:4000/api/v1",
 	INDEXER: "https://algoindexer.algoexplorerapi.io"
 }
