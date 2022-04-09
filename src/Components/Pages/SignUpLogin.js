@@ -32,16 +32,17 @@ const SignUpLogin = (props) => {
 
   const onSubmitHandler1 = (e) => {
     e.preventDefault();
-    console.log(e);
     
-		fetch('http://localhost:4000/api/v1/user',{
-			method: 'POST',
-			headers:{'Content-Type': "application/json"},
-			body: e
-		})
+
+		let formData1 = new FormData(e.currentTarget);
+		postToBackend(API_ROUTES.BACKEND.REGISTER_USER, formData1, {contentType: CONTENT_TYPES.FORM_DATA});
 	}
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    
+
+		let formData2 = new FormData(e.currentTarget);
+		postToBackend(API_ROUTES.BACKEND.LOGIN_USER, formData2, {contentType: CONTENT_TYPES.FORM_DATA});
   }
     const handleLoginTabClicked = async (e) => {
 
@@ -138,3 +139,4 @@ const SignUpLogin = (props) => {
 }
 
 export default SignUpLogin;
+
