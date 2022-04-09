@@ -27,7 +27,8 @@ export const API_ROUTES = {
 		LOGOUT_USER: "/user/logout",
 
 		GET_PROJECT: "/project",
-		ALL_PROJECT: "/project/explore"
+		ALL_PROJECT: "/project/explore",
+		CREATE_PROJECT: "/project/create"
 	},
 
 	INDEXER: {
@@ -63,8 +64,8 @@ export const getFromBackend = (path, {callback, credentials, resHandler} = {}) =
  * @param {*} options
  * @returns Promise
  */
-export const postToBackend = (path, data, {callback, credentials, resHandler} = {}) => {
-	return buildFetch(FETCH_TYPE.POST, ADDRESSES.BACKEND + path, {callback, credentials, data: data, resHandler});
+export const postToBackend = (path, data, {callback, credentials, resHandler, contentType} = {}) => {
+	return buildFetch(FETCH_TYPE.POST, ADDRESSES.BACKEND + path, {callback, credentials, data: data, resHandler, contentType: contentType});
 }
 
 

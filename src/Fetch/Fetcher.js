@@ -6,6 +6,12 @@ export const FETCH_TYPE = {
 	POST: "POST"
 }
 
+export const CONTENT_TYPES = {
+	FORM_DATA: "multipart/form-data",
+	JSON: "application/json"
+}
+
+
 /**
  * Basic function to create a GET request header
  * @returns json
@@ -22,14 +28,22 @@ const buildGet = () => {
  * @param {string} data 
  * @returns json
  */
-const buildPost = (data) => {
+const buildPost = (data, contentType) => {
 	return {
 		method: "POST",
 		mode: "cors",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(data)
+		/*headers: {
+			"Content-Type": contentType
+		},*/
+		body: (contentType === CONTENT_TYPES.JSON ? JSON.stringify(data) : data)
+		/*
+		(() => {
+			if(contentType === CONTENT_TYPES.JSON) {
+				return JSON.stringify(data);
+			} else {
+				return data;
+			}
+		}*/
 	}
 }
 
@@ -47,9 +61,9 @@ const injectCredentialHeader = (header) => {
  * @param {string} data 
  * @returns 
  */
-const buildFetchType = (fetchType, data = null) => {
+const buildFetchType = (fetchType, {data, contentType} = {}) => {
 	if(fetchType === FETCH_TYPE.POST && data != null) {
-		return buildPost(data);
+		return buildPost(data, contentType);
 	} else {
 		return buildGet();
 	}
@@ -90,7 +104,7 @@ const buildFetchDefaultCallback = (json) => {
  * @param {*} options
  * @returns Promise
  */
-export const buildFetch = async (fetchType, path, {callback, credentials, data, resHandler} = {}) => {
+export const buildFetch = async (fetchType, path, {callback, credentials, data, resHandler, contentType} = {}) => {
 	if(callback === undefined) {
 		callback = buildFetchDefaultCallback;
 	}
@@ -99,7 +113,7 @@ export const buildFetch = async (fetchType, path, {callback, credentials, data, 
 		resHandler = buildFetchDefaultHandler;
 	}
 
-	const fetchHeader = buildFetchType(fetchType, data);
+	const fetchHeader = buildFetchType(fetchType, {data: data, contentType: contentType});
 
 	if(credentials !== undefined) {
 		injectCredentialHeader(fetchHeader);

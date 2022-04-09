@@ -1,17 +1,27 @@
 import React, { Profiler, useState } from "react";
+import { API_ROUTES, postToBackend } from "../../Fetch/ApiFetches";
+import { CONTENT_TYPES } from "../../Fetch/Fetcher";
 import './ProjectForm.css'
 
 
 
 const ProjectForm = (props) => {
 
+	const submitForm = (e) => {
+		e.preventDefault();
+
+		let formData = new FormData(e.currentTarget);
+		postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {contentType: CONTENT_TYPES.FORM_DATA});
+	}
+
+	//action="http://localhost:4000/api/v1/project/create" method="POST" enctype="multipart/form-data" class="project-form-group">
     return (
 
         <div class="basic-div basic-form">
 
             <div class="account-page-title">Project Form</div>
 
-            <form action="http://localhost:4000/api/v1/project/create" method="POST" enctype="multipart/form-data" class="project-form-group">
+            <form onSubmit={submitForm} className="project-form-group" encType="multipart/form-data"> 
 
                 <div class="project-form-container">
 
