@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import './SignUpLogin.css'
 import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
 //import SignUpLoginSlice, { CATEGORIES, reducerFxns} from "../../Redux/Slices/SignUpSlice"
-import { registerUser } from "./UserAction.js";
+//import { registerUser } from "./UserAction.js";
 
 const SignUpLogin = (props) => {
 
