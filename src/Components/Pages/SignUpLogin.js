@@ -1,186 +1,140 @@
-// import React, { useContext, useState } from "react";
-// import './SignUpLogin.css'
+import React, { useContext, useState } from "react";
+import './SignUpLogin.css'
+import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
+import SignUpLoginSlice, { CATEGORIES, reducerFxns} from "../../Redux/Slices/SignUpSlice"
+import { registerUser } from "./UserAction.js";
 
-// const SignUpLogin = (props) => {
+const SignUpLogin = (props) => {
 
-//     const [loginTabClicked, toggleLoginTabClicked] = useState(false);
-//     const [signUpTabClicked, toggleSignUpTabClicked] = useState(false);
+    const [loginTabClicked, toggleLoginTabClicked] = useState(false);
+    const [signUpTabClicked, toggleSignUpTabClicked] = useState(false);
 
+    const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [UserName, setName] = useState("");
+  const [ConfirmPasword, setConfirmPasword] = useState("");
 
-//     const handleLoginTabClicked = async (e) => {
+  const onEmailHandler = (e) => {
+    setEmail(e.currentTarget.value);
+  };
 
-//         toggleSignUpTabClicked(false);
-//         toggleLoginTabClicked(true);
-//     }
+  const onUserNamerHandler = (e) => {
+    setName(e.currentTarget.value);
+  };
 
-//     const handleSignUpTabClicked = async (e) => {
+  const onPasswordHanlder = (e) => {
+    setPassword(e.currentTarget.value);
+  };
 
-//         toggleLoginTabClicked(false);
-//         toggleSignUpTabClicked(true);
-//     }
+  const onConfirmPasswordHandler = (e) => {
+    setConfirmPasword(e.currentTarget.value);
+  };
 
+  const onSubmitHandler1 = (e) => {
+    e.preventDefault();
+    console.log(e);
+    
+  fetch('http://localhost:3000/',{
+    method: 'POST',
+    headers:{'Content-Type': "application/json"},
+    body: e
+  })
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+  }
+    const handleLoginTabClicked = async (e) => {
 
+        toggleSignUpTabClicked(false);
+        toggleLoginTabClicked(true);
+    }
 
-//     const validEmail = (value) => {
-//         if (!isEmail(value)) {
-//           return (
-//             <div className="alert alert-danger" role="alert">
-//               This is not a valid email.
-//             </div>
-//           );
-//         }
-//       };
-//       const vusername = (value) => {
-//         if (value.length < 3 || value.length > 20) {
-//           return (
-//             <div className="alert alert-danger" role="alert">
-//               The username must be between 3 and 20 characters.
-//             </div>
-//           );
-//         }
-//       };
-//       const vpassword = (value) => {
-//         if (value.length < 6 || value.length > 40) {
-//           return (
-//             <div className="alert alert-danger" role="alert">
-//               The password must be between 6 and 40 characters.
-//             </div>
-//           );
-//         }
-//       };
-//       const Register = () => {
-//         const form = useRef();
-//         const checkBtn = useRef();
-//         const [username, setUsername] = useState("");
-//         const [email, setEmail] = useState("");
-//         const [password, setPassword] = useState("");
-//         const [successful, setSuccessful] = useState(false);
-//         const { message } = useSelector(state => state.message);
-//         const dispatch = useDispatch();
-//         const onChangeUsername = (e) => {
-//           const username = e.target.value;
-//           setUsername(username);
-//         };
-//         const onChangeEmail = (e) => {
-//           const email = e.target.value;
-//           setEmail(email);
-//         };
-//         const onChangePassword = (e) => {
-//           const password = e.target.value;
-//           setPassword(password);
-//         };
-//         const handleRegister = (e) => {
-//           e.preventDefault();
-//           setSuccessful(false);
-//           form.current.validateAll();
-//           if (checkBtn.current.context._errors.length === 0) {
-//             dispatch(register(username, email, password))
-//               .then(() => {
-//                 setSuccessful(true);
-//               })
-//               .catch(() => {
-//                 setSuccessful(false);
-//               });
-//           }
-//         };
+    const handleSignUpTabClicked = async (e) => {
 
-//     if (signUpTabClicked || (!signUpTabClicked && !loginTabClicked)) {
+        toggleLoginTabClicked(false);
+        toggleSignUpTabClicked(true);
+    }
 
-//         return (
-//             <div class="basic-div basic-form">
+    if (signUpTabClicked || (!signUpTabClicked && !loginTabClicked)) {
 
-//                 <div id="signup">
-//                     <div class="tab-container">
-//                         <h id="login-tab" class="basic-tab not-active" onClick={handleLoginTabClicked} >LOGIN</h>
-//                         <h id="signup-tab" class="basic-tab active" onClick={handleSignUpTabClicked}> SIGN UP</h>
-//                     </div>
+        return (
+            <div class="basic-div basic-form">
 
-//                     <div class="signup-login-group basic-group">
+                <div id="signup">
+                    <div class="tab-container">
+                        <h id="login-tab" class="basic-tab not-active" onClick={handleLoginTabClicked} >LOGIN</h>
+                        <h id="signup-tab" class="basic-tab active" onClick={handleSignUpTabClicked}> SIGN UP</h>
+                    </div>
 
-//                     <div className="form-group">
-//                 <label htmlFor="username">Username</label>
-//                 <Input
-//                   type="text"
-//                   className="form-control"
-//                   name="username"
-//                   value={username}
-//                   onChange={onChangeUsername}
-//                   validations={[required, vusername]}
-//                 />
-//               </div>
-//               <div className="form-group">
-//                 <label htmlFor="email">Email</label>
-//                 <Input
-//                   type="text"
-//                   className="form-control"
-//                   name="email"
-//                   value={email}
-//                   onChange={onChangeEmail}
-//                   validations={[required, validEmail]}
-//                 />
-//               </div>
-//               <div className="form-group">
-//                 <label htmlFor="email">Email</label>
-//                 <Input
-//                   type="text"
-//                   className="form-control"
-//                   name="email"
-//                   value={email}
-//                   onChange={onChangeEmail}
-//                   validations={[required, validEmail]}
-//                 />
-//               </div>
+                    <div class="signup-login-group basic-group">
 
-//                         <div class="question-container">
-//                             <div class="warning">Are you an organization?</div>
-//                             <input id="signup-checkbox" type="checkbox"></input>
-//                         </div>
+                    <form
+        onSubmit={onSubmitHandler1}
+        style={{ display: "flex", flexDirection: "column" }}>
+        <label>Email</label>
+        <input type="email" value={Email} onChange={onEmailHandler} />
 
-//                         <div class="button-group">
-//                             <div class="submit-button">SIGN UP</div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>);
-//     }
-//     else if (loginTabClicked) {
+        <label>UserName</label>
+        <input type="test" value={UserName} onChange={onUserNamerHandler} />
+
+        <label>Password</label>
+        <input type="password" value={Password} onChange={onPasswordHanlder} />
+
+        <label>ConfirmPasword</label>
+        <input
+          type="password"
+          value={ConfirmPasword}
+          onChange={onConfirmPasswordHandler}
+        />
+        <br />
+        <button type="submit">Sign Up</button>
+      </form>
+                    </div>
+                </div>
+            </div>);
+    }
+    else if (loginTabClicked) {
 
 
-//         return (
-//             <div class="basic-div basic-form">
+        return (
+            <div class="basic-div basic-form">
 
-//                 <div id="login" >
+                <div id="login" >
 
-//                     <div class="tab-container">
-//                         <h class="basic-tab active" onClick={handleLoginTabClicked} >LOGIN</h>
-//                         <h class="basic-tab not-active" onClick={handleSignUpTabClicked} >SIGN UP</h>
-//                     </div>
+                    <div class="tab-container">
+                        <h class="basic-tab active" onClick={handleLoginTabClicked} >LOGIN</h>
+                        <h class="basic-tab not-active" onClick={handleSignUpTabClicked} >SIGN UP</h>
+                    </div>
 
-//                     <div class="signup-login-group basic-group">
+                    <div class="signup-login-group basic-group">
 
-//                         <div class="email input-label">EMAIL</div>
-//                         <input class="basic-input"></input>
-//                         <div class="password input-label">PASSWORD</div>
-//                         <input class="basic-input"></input>
+                    <form
+        onSubmit={onSubmitHandler}
+        style={{ display: "flex", flexDirection: "column" }}>
+        <label>Email</label>
+        <input type="email" value={Email} onChange={onEmailHandler} />
 
-//                         <div class="warning">Forgot password?</div>
+      
 
-//                         <div class="button-group">
-//                             <div class="submit-button">LOGIN</div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         );
+        <label>Password</label>
+        <input type="password" value={Password} onChange={onPasswordHanlder} />
 
-//     }
+        
+        <br />
+        <button type="submit">Sign Up</button>
+      </form>
+                    </div>
+                </div>
+            </div>
+        );
+
+    }
     
 
 
 
-// }
-
-// }
+}
 
 
-// export default SignUpLogin;
+
+}
+export default SignUpLogin;
