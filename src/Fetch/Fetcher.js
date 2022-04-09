@@ -29,21 +29,20 @@ const buildGet = () => {
  * @returns json
  */
 const buildPost = (data, contentType) => {
+	if(!contentType) {
+		contentType = CONTENT_TYPES.JSON;
+	}
+
+	if(contentType == CONTENT_TYPES.JSON) {
+		data = JSON.stringify(data);
+	}
+
+	//console.log(contentType == CONTENT_TYPES.JSON ? "STRINGIFIED: " + JSON.stringify(data) : data);
 	return {
 		method: "POST",
 		mode: "cors",
-		/*headers: {
-			"Content-Type": contentType
-		},*/
-		body: (contentType === CONTENT_TYPES.JSON ? JSON.stringify(data) : data)
-		/*
-		(() => {
-			if(contentType === CONTENT_TYPES.JSON) {
-				return JSON.stringify(data);
-			} else {
-				return data;
-			}
-		}*/
+		headers: contentType == CONTENT_TYPES.JSON ? {"Content-Type": contentType} : undefined,
+		body: data
 	}
 }
 
@@ -114,6 +113,8 @@ export const buildFetch = async (fetchType, path, {callback, credentials, data, 
 	}
 
 	const fetchHeader = buildFetchType(fetchType, {data: data, contentType: contentType});
+
+	console.log("FH: ", fetchHeader)
 
 	if(credentials !== undefined) {
 		injectCredentialHeader(fetchHeader);
