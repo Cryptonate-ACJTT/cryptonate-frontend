@@ -34,7 +34,7 @@ const SignUpLogin = (props) => {
     e.preventDefault();
     console.log(e);
     
-		fetch('http://localhost:4000/api/v1/user HTTP/1.1',{
+		fetch('http://localhost:4000/api/v1/user',{
 			method: 'POST',
 			headers:{'Content-Type': "application/json"},
 			body: e
