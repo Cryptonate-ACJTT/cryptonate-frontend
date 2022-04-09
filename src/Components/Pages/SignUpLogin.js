@@ -34,11 +34,12 @@ const SignUpLogin = (props) => {
     e.preventDefault();
     console.log(e);
     
-  fetch('http://localhost:3000/',{
-    method: 'POST',
-    headers:{'Content-Type': "application/json"},
-    body: e
-  })
+		fetch('http://localhost:3000/',{
+			method: 'POST',
+			headers:{'Content-Type': "application/json"},
+			body: e
+		})
+	}
   const onSubmitHandler = (e) => {
     e.preventDefault();
   }
@@ -127,14 +128,13 @@ const SignUpLogin = (props) => {
             </div>
         );
 
-    }
+    } else {
+		return null;
+	}
     
 
 
 
 }
 
-
-
-}
 export default SignUpLogin;
