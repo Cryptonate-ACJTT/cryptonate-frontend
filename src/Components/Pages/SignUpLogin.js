@@ -34,7 +34,7 @@ const SignUpLogin = (props) => {
     e.preventDefault();
     console.log(e);
     
-		fetch('http://localhost:3000/',{
+		fetch('http://localhost:4000/api/v1',{
 			method: 'POST',
 			headers:{'Content-Type': "application/json"},
 			body: e
@@ -121,7 +121,7 @@ const SignUpLogin = (props) => {
 
         
         <br />
-        <button type="submit">Sign Up</button>
+        <button type="submit">Login</button>
       </form>
                     </div>
                 </div>
