@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import './SignUpLogin.css'
 import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
+import { CONTENT_TYPES } from "../../Fetch/Fetcher";
 //import SignUpLoginSlice, { CATEGORIES, reducerFxns} from "../../Redux/Slices/SignUpSlice"
 //import { registerUser } from "./UserAction.js";
 
