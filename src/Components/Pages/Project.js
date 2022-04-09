@@ -2,24 +2,38 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Project.css"
 import ExploreSlice from "../../Redux/Slices/ExploreSlice";
+import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
 
 
 const Project = (props) => {
 	const { id } = useParams();
 	const slice = ExploreSlice.useSlice();
-	console.log(slice.projects);
+	let projectData;// = slice.projects.filter(proj => proj._id === id);
+
+	// console.log(slice.projects.filter(p => p._id == id));
+
 
 	useEffect(() => {
-		return(() => {
+		if(!projectData) {
+			projectData = postToBackend(API_ROUTES.BACKEND.GET_PROJECT, {id: id});
+			console.log(projectData);
+			// add an api route for getting by ID
+		}
 
-			
+		return(() => {
 			ExploreSlice.unsubscribe();
-		});
+		}, []);
 	});
 
-	return (
-		<p>{id}</p>
-	)
+	if(!projectData) {	// project doesn't exist probably
+		return (
+			<p>{id}</p>
+		)
+	} else {
+		return (
+			<p>{projectData}</p>
+		)
+	}
 }
 /*
 import Visualizer from './Visualizer';
