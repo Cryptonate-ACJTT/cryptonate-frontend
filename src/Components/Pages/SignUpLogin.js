@@ -1,20 +1,28 @@
 import React, { useContext, useState } from "react";
 import './SignUpLogin.css'
+import { Navigate, useLocation } from "react-router-dom";
 import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
-import { CONTENT_TYPES } from "../../Fetch/Fetcher";
+
+import axios from "axios";
+import { ThirtyFpsTwoTone } from "@mui/icons-material";
+
 //import SignUpLoginSlice, { CATEGORIES, reducerFxns} from "../../Redux/Slices/SignUpSlice"
 //import { registerUser } from "./UserAction.js";
+
+
+
+
 
 const SignUpLogin = (props) => {
 
   const [loginTabClicked, toggleLoginTabClicked] = useState(false);
   const [signUpTabClicked, toggleSignUpTabClicked] = useState(false);
-
+  
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [UserName, setName] = useState("");
   const [ConfirmPasword, setConfirmPasword] = useState("");
-
+const [Role, setRole] = useState("");
   const onEmailHandler = (e) => {
     setEmail(e.currentTarget.value);
   };
@@ -27,39 +35,77 @@ const SignUpLogin = (props) => {
     setPassword(e.currentTarget.value);
   };
 
+  let state = {
+    isDonor: "donor",
+    isOrg: "organization"
+    
+  };
+
+
   const onConfirmPasswordHandler = (e) => {
     setConfirmPasword(e.currentTarget.value);
   };
 
-  const onSubmitHandler1 = (e) => {
-    e.preventDefault();
 
-
-    let formData1 = new FormData(e.currentTarget);
-    postToBackend(API_ROUTES.BACKEND.REGISTER_USER, formData1, { contentType: CONTENT_TYPES.FORM_DATA });
-  }
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-
-
-    let formData2 = new FormData(e.currentTarget);
-    postToBackend(API_ROUTES.BACKEND.LOGIN_USER, formData2, { contentType: CONTENT_TYPES.FORM_DATA });
-  }
   const handleLoginTabClicked = async (e) => {
 
     toggleSignUpTabClicked(false);
     toggleLoginTabClicked(true);
   }
-
+  const location = useLocation;
+  const from = location.state?.from?.pathname || "/";
   const handleSignUpTabClicked = async (e) => {
 
     toggleLoginTabClicked(false);
     toggleSignUpTabClicked(true);
   }
+  const SignUpHandler = (e) => {
+    e.preventDefault();
+    
+    console.log(Email);
+    console.log(Password);
+    console.log(UserName);
+
+    let body = {
+      email: Email,
+      password: Password,
+      username: UserName,
+      role : "donor"
+    };
+
+    axios
+      .post("http://localhost:4000/api/v1/user", body)
+      .then((res) => console.log(res));
+  };
+
+  const LoginHandler = (e) => {
+    e.preventDefault();
+    
+    console.log( Email);
+    console.log(Password);
+    
+
+    let body = {
+      email: Email,
+      password: Password,
+      username: UserName,
+      role :Role
+    };
+
+    axios
+      .post("http://localhost:4000/api/v1/user/login", body)
+      .then((res) => console.log(res));
+
+      
+  };
 
   if (signUpTabClicked || (!signUpTabClicked && !loginTabClicked)) {
 
     return (
+
+
+
+
       <div class="basic-div basic-form">
 
         <div id="signup">
@@ -67,11 +113,18 @@ const SignUpLogin = (props) => {
             <h id="login-tab" class="basic-tab not-active" onClick={handleLoginTabClicked} >LOGIN</h>
             <h id="signup-tab" class="basic-tab active" onClick={handleSignUpTabClicked}> SIGN UP</h>
           </div>
+          <div class="question-container">
+                <div class="are-you-an-organization">Are you an organization?</div>
+                <input type="checkbox"></input>
 
+
+
+                
+              </div>
           <div class="signup-login-group basic-group">
 
             <form
-              onSubmit={onSubmitHandler1}
+              onSubmit={SignUpHandler}
               style={{ display: "flex", flexDirection: "column" }}>
               <label>Email</label>
               <input type="email" value={Email} onChange={onEmailHandler} />
@@ -90,7 +143,14 @@ const SignUpLogin = (props) => {
               />
               <div class="question-container">
                 <div class="are-you-an-organization">Are you an organization?</div>
-                <input type="checkbox"></input>
+                <input type="checkbox"
+                
+                
+                ></input>
+
+
+
+                
               </div>
               <br />
               <button type="submit">Sign Up</button>
@@ -115,7 +175,7 @@ const SignUpLogin = (props) => {
           <div class="signup-login-group basic-group">
 
             <form
-              onSubmit={onSubmitHandler}
+              onSubmit={LoginHandler}
               style={{ display: "flex", flexDirection: "column" }}>
               <label>Email</label>
               <input type="email" value={Email} onChange={onEmailHandler} />
@@ -144,4 +204,3 @@ const SignUpLogin = (props) => {
 }
 
 export default SignUpLogin;
-
