@@ -26,23 +26,29 @@ const buildGet = () => {
 /**
  * Basic function to create a POST request header, accepts json 'data'
  * @param {string} data 
+ * @param {CONTENT_TYPES} contentType
  * @returns json
  */
 const buildPost = (data, contentType) => {
-	if(!contentType) {
+	if(!contentType) {	// default content-type to
 		contentType = CONTENT_TYPES.JSON;
 	}
 
 	if(contentType == CONTENT_TYPES.JSON) {
-		data = JSON.stringify(data);
+		return {
+			method: "POST",
+			mode: "cors",
+			headers: {
+				"Content-Type": contentType
+			},
+			body: JSON.stringify(data)
+		}
 	}
 
-	//console.log(contentType == CONTENT_TYPES.JSON ? "STRINGIFIED: " + JSON.stringify(data) : data);
 	return {
 		method: "POST",
 		mode: "cors",
-		headers: contentType == CONTENT_TYPES.JSON ? {"Content-Type": contentType} : undefined,
-		body: data
+		data: data
 	}
 }
 

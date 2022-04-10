@@ -50,7 +50,7 @@ export const API_ROUTES = {
  * @returns Promise
  */
 export const getFromBackend = (path, {callback, credentials, resHandler} = {}) => {
-	return buildFetch(FETCH_TYPE.GET, ADDRESSES.BACKEND + path, {callback, credentials, resHandler})
+	return buildFetch(FETCH_TYPE.GET, ADDRESSES.BACKEND + path, {callback: callback, credentials: credentials, resHandler: resHandler})
 }
 
 
@@ -65,7 +65,7 @@ export const getFromBackend = (path, {callback, credentials, resHandler} = {}) =
  * @returns Promise
  */
 export const postToBackend = (path, data, {callback, credentials, resHandler, contentType} = {}) => {
-	return buildFetch(FETCH_TYPE.POST, ADDRESSES.BACKEND + path, {callback, credentials, data: data, resHandler, contentType: contentType});
+	return buildFetch(FETCH_TYPE.POST, ADDRESSES.BACKEND + path, {callback: callback, credentials, data: data, resHandler: resHandler, contentType: contentType});
 }
 
 
