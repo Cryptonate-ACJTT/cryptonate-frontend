@@ -1,15 +1,34 @@
 import React from "react";
 import "./OrgAuthForm.css";
-import { Link } from 'react-router-dom'
+import { API_ROUTES, postToBackend } from "../../Fetch/ApiFetches";
+import { CONTENT_TYPES } from "../../Fetch/Fetcher";
 
 const OrgAuthForm = (props) => {
 
+    const submitForm = (e) => {
+        e.preventDefault();
+
+        let formData = new FormData(e.currentTarget);
+        console.log("!!!!!!!! ORG FORM !!!!!!!!")
+        console.log(formData)
+        postToBackend(API_ROUTES.BACKEND.SUBMIT_ORG_FORM, formData, { contentType: CONTENT_TYPES.FORM_DATA });
+    }
+
     return (
         <div class="basic-div basic-form">
-                <h class="account-page-title">Information Form for Authentication</h>
-            <div class="form-group basic-group">
+            <h class="account-page-title">Information Form for Authentication</h>
+            <form onSubmit={submitForm} class="form-group basic-group" encType="multipart/form-data">
 
-                <div class="input-container">
+                <input name="orgId" class="input-box" />
+                <input name="name" class="input-box" />
+                <input name="EIN" class="input-box" />
+                <input name="category" class="input-box" />
+                <input name="email" class="input-box"></input>
+                <input name="phone" class="input-box"></input>
+                <input name="location" class="input-box"></input>
+                <input name="website" class="input-box"></input>
+
+                {/* <div class="input-container">
                     <div class="input-tag-group">
                         <div>
                             <label id="org-username">Organization's user name</label>
@@ -27,28 +46,28 @@ const OrgAuthForm = (props) => {
                         <div class="edit-info-button-group">
                             <button class="edit-info-button"> Edit Info</button>
                         </div>
-                        <input class="input-box"></input>
-                        <input class="input-box"></input>
+                        <input name="name" class="input-box"></input>
+                        <input name="EIN" class="input-box"></input>
                         <div>
-                            <select id="category-select">
+                            <select name="category" id="category-select">
                                 <option>Animal</option>
                                 <option>Children</option>
                             </select>
                         </div>
-                        <input class="input-box"></input>
-                        <input class="input-box"></input>
-                        <input class="input-box"></input>
-                        <input class="input-box"></input>
+                        <input name="email" class="input-box"></input>
+                        <input name="phone" class="input-box"></input>
+                        <input name="location"class="input-box"></input>
+                        <input name="website"class="input-box"></input>
 
                     </div>
 
                 </div>
-                <div id="warning"> * fields are mandatory</div>
+                <div id="warning"> * fields are mandatory</div> */}
 
                 <div class="button-group">
-                    <div class="submit-button">SUBMIT</div>
+                    <button type="submit" class="submit-button">SUBMIT</button>
                 </div>
-            </div>
+            </form>
         </div>
 
     );

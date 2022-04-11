@@ -11,6 +11,8 @@ const ProjectForm = (props) => {
 		e.preventDefault();
 
 		let formData = new FormData(e.currentTarget);
+        console.log("@@@@@@@ PROJECT FORM @@@@@@@")
+        console.log(formData)
 		postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {contentType: CONTENT_TYPES.FORM_DATA});
 	}
 

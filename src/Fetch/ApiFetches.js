@@ -22,6 +22,7 @@ export const API_ROUTES = {
 		EXPLORE_SEARCH: "/project/explore/search",
 
 		REGISTER_USER: "/user",
+		SUBMIT_ORG_FORM:"/user/submitOrgForm",
 		LOGIN_USER: "/user/login",
 		GET_LOGGED_IN: "/user/loggedIn",
 		LOGOUT_USER: "/user/logout",
