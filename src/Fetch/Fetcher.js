@@ -34,6 +34,8 @@ const buildPost = (data, contentType) => {
 		contentType = CONTENT_TYPES.JSON;
 	}
 
+	console.log("DATA:", data);
+
 	if(contentType == CONTENT_TYPES.JSON) {
 		return {
 			method: "POST",
@@ -48,7 +50,7 @@ const buildPost = (data, contentType) => {
 	return {
 		method: "POST",
 		mode: "cors",
-		data: data
+		body: data
 	}
 }
 
@@ -120,10 +122,10 @@ export const buildFetch = async (fetchType, path, {callback, credentials, data, 
 
 	const fetchHeader = buildFetchType(fetchType, {data: data, contentType: contentType});
 
-	console.log("FH: ", fetchHeader)
-
 	if(credentials !== undefined) {
-		injectCredentialHeader(fetchHeader);
+		if(credentials == true) {
+			injectCredentialHeader(fetchHeader);
+		}
 	}
 
 	return await fetch(path, fetchHeader)
