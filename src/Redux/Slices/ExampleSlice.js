@@ -1,4 +1,4 @@
-import { getFromIndexer } from "../../Fetch/ApiFetches";
+import { getFromBackend, getFromIndexer, postToBackend } from "../../Fetch/ApiFetches";
 import Store from "../Store";
 import StoreSlice from "../StoreSlice";
 
@@ -34,8 +34,15 @@ ExampleSlice.reducerFxns.addExampleFxn("thing");
 console.log(ExampleSlice.getState());
 
 (async () => {	// testing getting data via fetch request
-	const data = await getFromIndexer("/health")
-
+	//const data = await getFromBackend("/v1/images/bb35b8f7d8212fb9596524f4245e0bee");
+	//const data = await getFromIndexer("/health");
+	const data = await postToBackend("/user", {
+		"username": "donor2",
+		"password": "password",
+		"email": "donor2@gmail.com",
+		"role": "donor"
+	  });
+	
 	ExampleSlice.reducerFxns.addExampleFxn(data);
 	console.log(ExampleSlice.getState());
 })();

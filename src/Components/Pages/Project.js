@@ -3,35 +3,51 @@ import { useParams } from "react-router-dom";
 import "./Project.css"
 import ExploreSlice from "../../Redux/Slices/ExploreSlice";
 import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
+import FourOhFour from "./FourOhFour";
 
 
 const Project = (props) => {
 	const { id } = useParams();
 	const slice = ExploreSlice.useSlice();
-	let projectData;// = slice.projects.filter(proj => proj._id === id);
+	let [projectData, setProjectData] = useState();
 
-	// console.log(slice.projects.filter(p => p._id == id));
-
-
+	/**
+	 * Get page data before component render.
+	 */
 	useEffect(() => {
-		if(!projectData) {
-			projectData = postToBackend(API_ROUTES.BACKEND.GET_PROJECT, {id: id});
-			console.log(projectData);
-			// add an api route for getting by ID
-		}
+		getPageData();
 
 		return(() => {
 			ExploreSlice.unsubscribe();
-		}, []);
-	});
+		});
+	}, []);
+
+	/**
+	 * Gets page data! Put here so useEffect doesn't complain about missing dependencies.
+	 */
+	const getPageData = () => {
+		if(!slice.projects.length) {
+			postToBackend(API_ROUTES.BACKEND.GET_PROJECT, {id: id}, {callback: (data) => {
+				setProjectData(data.project);
+			}});
+		} else {
+			setProjectData(slice.projects.filter(proj => proj._id === id)[0]);
+		}
+	}
 
 	if(!projectData) {	// project doesn't exist probably
 		return (
-			<p>{id}</p>
+			<FourOhFour/>
 		)
 	} else {
-		return (
-			<p>{projectData}</p>
+		return ( 
+			<div className="project-container">
+				<div className="project-details">
+					<p>{JSON.stringify(projectData)}</p>
+					<h1 className="page-title">{projectData.projectName}</h1>
+					<img className="project-image" src={projectData.image}/>
+				</div>
+			</div>	
 		)
 	}
 }

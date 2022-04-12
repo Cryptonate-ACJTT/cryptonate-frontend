@@ -17,13 +17,15 @@
 .explore-content {
 	width: 80vw;
 	margin-left: 20vw;
+	padding-right: 5vw;
 	position: absolute;
+	overflow-y: scroll;
 }
 
 .explore-tiling {
     display: grid;
     gap: 2em;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .explore-tile {
@@ -42,6 +44,7 @@
 .explore-tile:active {
     background-color: lightblue;
     box-shadow: 8px 8px rgba(0, 0, 0, 0.3);
+	
 }
 
 .explore-tile-title {
@@ -49,16 +52,14 @@
 }
 
 .explore-tile-img-contain {
-    width: 100%;
     text-align: center;
 }
 
 .explore-tile-img {
 	object-fit: cover;
-    margin: 10px;
     width: 100%;
-	max-width: 600px;
-    max-height: 400px;
+	max-width: 100%;
+    max-height: 100%;
 }
 
 .explore-tile-desc {
