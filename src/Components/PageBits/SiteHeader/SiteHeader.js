@@ -5,20 +5,17 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import SiteHeaderButton from "./SiteHeaderButton/SiteHeaderButton";
 import image from '../../Pages/Images/cryptonate-logo.png'
 
-
-import { Link } from 'react-router-dom'
-
-
+import { Link, Navigate } from 'react-router-dom'
+import UserSlice, { reducerFxns as userReducers } from "../../../Redux/Slices/UserSlice";
 
 const SiteHeader = (props) => {
 
-    const [loggedIn, toggleloggedIn] = useState(true);
+	const slice = UserSlice.useSlice();
 
-    const handleLogout = async (e) => {
-        toggleloggedIn(false);
-        console.log(loggedIn);
+    const handleLogout = (e) => {
+        userReducers.userLogoutFxn();
+		<Navigate to="/"/>
     }
-
 
     return (
         <nav className="site-hdr">
@@ -42,17 +39,17 @@ const SiteHeader = (props) => {
                 <Link to="/why-crypto">
                     <SiteHeaderButton btnText="Why Crypto"/>
                 </Link>
-                {loggedIn ?
+                {slice.loggedIn ?
                     <div className="dropdown">
                         {/* <div class="dropbtn">My Account</div> */}
                         <AccountCircleOutlinedIcon sx={{ml:1, mr:1}}></AccountCircleOutlinedIcon>
-
 
                         <div className="dropdown-content">
                             <Link to ="/profile"> Profile</Link>
                             <Link to ="/wallet"> Wallet</Link>
                             <Link to ="/organization-auth-form"> Form</Link>
-                            <a href="#" onClick={handleLogout}>Log Out</a>
+							<Link to ="/logout" onClick={handleLogout}>Log Out</Link>
+                            
                         </div>
                     </div>
                     :

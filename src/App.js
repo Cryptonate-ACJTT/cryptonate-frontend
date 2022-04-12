@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -20,7 +20,14 @@ import Profile from './Components/Pages/Profile';
 import OrgAuthForm from './Components/Pages/OrgAuthForm';
 import ProjectForm from './Components/Pages/ProjectForm';
 
+const SITE_PATHS = {
+	HOME: "/home",
+	EXPLORE: "/explore",
+	ABOUT: "/about"
+}
 
+
+// TODO: protected routes for profile, wallet, project form, etc
 const App = () => {
   return (
     <BrowserRouter>
@@ -28,57 +35,25 @@ const App = () => {
        		<SiteHeader/>
       
       		<Routes>
-				<Route path="/" element={<Home/>}/>
+				<Route path="/" element={<Navigate replace to="/home"/>}/>
 				<Route path="/home" element={<Home/>} />
 				<Route path="/explore" element={<Explore/>} />
 				<Route path="/about" element={<About/>} />
 				<Route path="/why-crypto" element={<Crypto/>} />
 				<Route path="/login-signup" element={<SignUpLogin/>} />
 				<Route path="/explore/project/:id" element={<Project/>}/>
+
 				<Route path="/profile" element={<Profile/>} />
 				<Route path="/organization-auth-form" element={<OrgAuthForm/>} />
 				<Route path="/project-form" element={<ProjectForm/>} />
 				<Route path="/wallet" element={<Wallet/>} />
+
+				<Route path="/logout" element={<Navigate replace to="/home"/>}/>
+				<Route path="/login" element={<Navigate replace to="/profile"/>}/>
     		</Routes>
     	</div>
     </BrowserRouter>
     ) 
   }
-
-
-
-
-// class App extends React.Component {
-//   // constructor(props) {
-//   //   super(props);
-//   //   this.state = {
-//   //     content: <Explore/>
-//   //   }
-//   // }
-
-//   // changePage = (page) => {
-//   //   this.setState({content: page});
-//   // }
-
-//   render() {
-//     return ( //background canvas later
-
-//       <Router>
-//         <div className="App">
-//           <SiteHeader/>
-//           {/* <SiteContent content={this.state.content} passDownOnClick={this.changePage}/> */}
-//           </div>
-//         <Routes>
-//           <Route exact path="/" component={Home}/>
-//         </Routes>
-//       </Router>
-      
-//       // <div className="App">
-//       //   <SiteHeader onClick={this.changePage}/>
-//       //   <SiteContent content={this.state.content} passDownOnClick={this.changePage}/>
-//       // </div>
-//     );
-//   }
-// }
 
 export default App;

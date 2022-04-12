@@ -6,12 +6,17 @@ import StoreSlice from "../StoreSlice";
 	Redux stuff for the Explore page.
 */
 
-// Sort types
+/**
+ * Types of sortings the user can select on the explore page.
+ */
 export const SORTINGS = [
 	{name: "Close to Goal", fxn: ((a, b) => { return (Math.floor(a.totalSaved / a.goalAmount) - Math.floor(b.totalSaved / b.totalAmount)) })},
 	{name: "Recently Added", fxn: ((a, b) => { return (new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()) })}
 ];
 
+/**
+ * Categories the user can select on the explore page.
+ */
 export const CATEGORIES = [{name: "Animal", checked: false}];
 
 const initState = {
@@ -70,8 +75,19 @@ const exploreCategoriesFxn = (categories) => {
 
 
 export const storeKey = "EXPLORE_PROJECTS";
-const reducers = {exploreSortReducer, exploreSearchReducer, exploreProjectsReducer, exploreCategoriesReducer};
-export const reducerFxns = {exploreSortFxn, exploreSearchFxn, exploreProjectsFxn, exploreCategoriesFxn};
+const reducers = {
+	exploreSortReducer,
+	exploreSearchReducer, 
+	exploreProjectsReducer, 
+	exploreCategoriesReducer
+};
+
+export const reducerFxns = {
+	exploreSortFxn, 
+	exploreSearchFxn, 
+	exploreProjectsFxn, 
+	exploreCategoriesFxn
+};
 
 const ExploreSlice = new StoreSlice(storeKey, initState, reducers, reducerFxns);
 export default ExploreSlice;

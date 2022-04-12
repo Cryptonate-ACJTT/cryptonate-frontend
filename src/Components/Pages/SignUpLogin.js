@@ -1,111 +1,106 @@
 import React, { useContext, useState } from "react";
 import './SignUpLogin.css'
-import { Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
 
-import axios from "axios";
-import { ThirtyFpsTwoTone } from "@mui/icons-material";
+import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
 
 //import SignUpLoginSlice, { CATEGORIES, reducerFxns} from "../../Redux/Slices/SignUpSlice"
 //import { registerUser } from "./UserAction.js";
 
-
-
-
-
 const SignUpLogin = (props) => {
-
-  const [loginTabClicked, toggleLoginTabClicked] = useState(false);
-  const [signUpTabClicked, toggleSignUpTabClicked] = useState(false);
-  
-  const [Email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
-  const [UserName, setName] = useState("");
-  const [ConfirmPasword, setConfirmPasword] = useState("");
-const [Role, setRole] = useState("");
-  const onEmailHandler = (e) => {
-    setEmail(e.currentTarget.value);
-  };
-
-  const onUserNamerHandler = (e) => {
-    setName(e.currentTarget.value);
-  };
-
-  const onPasswordHanlder = (e) => {
-    setPassword(e.currentTarget.value);
-  };
-
-  let state = {
-    isDonor: "donor",
-    isOrg: "organization"
-    
-  };
+	const slice = UserSlice.useSlice();
 
 
-  const onConfirmPasswordHandler = (e) => {
-    setConfirmPasword(e.currentTarget.value);
-  };
+	const [loginTabClicked, toggleLoginTabClicked] = useState(false);
+	const [signUpTabClicked, toggleSignUpTabClicked] = useState(false);
+	
+	const [Email, setEmail] = useState("");
+	const [Password, setPassword] = useState("");
+	const [UserName, setName] = useState("");
+	const [ConfirmPasword, setConfirmPasword] = useState("");
+	const [Role, setRole] = useState("");
+
+	const onEmailHandler = (e) => {
+		setEmail(e.currentTarget.value);
+	};
+
+	const onUserNamerHandler = (e) => {
+		setName(e.currentTarget.value);
+	};
+
+	const onPasswordHanlder = (e) => {
+		setPassword(e.currentTarget.value);
+	};
+
+	let state = {
+		isDonor: "donor",
+		isOrg: "organization"
+		
+	};
+
+	const onConfirmPasswordHandler = (e) => {
+		setConfirmPasword(e.currentTarget.value);
+	};
+
+	const handleLoginTabClicked = async (e) => {
+
+		toggleSignUpTabClicked(false);
+		toggleLoginTabClicked(true);
+	}
+	const location = useLocation;
+	
+	const from = location.state?.from?.pathname || "/";
+
+	const handleSignUpTabClicked = async (e) => {
+
+		toggleLoginTabClicked(false);
+		toggleSignUpTabClicked(true);
+	}
+	const SignUpHandler = (e) => {
+		e.preventDefault();
+		
+		console.log(Email);
+		console.log(Password);
+		console.log(UserName);
+
+		let body = {
+			email: Email,
+			password: Password,
+			username: UserName,
+			role : "donor"
+		};
+
+		postToBackend(API_ROUTES.BACKEND.REGISTER_USER, body,  {callback: (data) => {
+			console.log(data);
+		}});
+	};
+
+	const LoginHandler = (e) => {
+		e.preventDefault();
+		
+		console.log( Email);
+		console.log(Password);
+		
+
+		let body = {
+			email: Email,
+			password: Password,
+			username: UserName,
+			role: "donor"	//temp
+		};
 
 
-  const handleLoginTabClicked = async (e) => {
 
-    toggleSignUpTabClicked(false);
-    toggleLoginTabClicked(true);
-  }
-  const location = useLocation;
-  const from = location.state?.from?.pathname || "/";
-  const handleSignUpTabClicked = async (e) => {
-
-    toggleLoginTabClicked(false);
-    toggleSignUpTabClicked(true);
-  }
-  const SignUpHandler = (e) => {
-    e.preventDefault();
-    
-    console.log(Email);
-    console.log(Password);
-    console.log(UserName);
-
-    let body = {
-      email: Email,
-      password: Password,
-      username: UserName,
-      role : "donor"
-    };
-
-    axios
-      .post("http://localhost:4000/api/v1/user", body)
-      .then((res) => console.log(res));
-  };
-
-  const LoginHandler = (e) => {
-    e.preventDefault();
-    
-    console.log( Email);
-    console.log(Password);
-    
-
-    let body = {
-      email: Email,
-      password: Password,
-      username: UserName,
-      role :Role
-    };
-
-    axios
-      .post("http://localhost:4000/api/v1/user/login", body)
-      .then((res) => console.log(res));
-
-      
-  };
+		// TODO: redirect from here to profile page
+		postToBackend(API_ROUTES.BACKEND.LOGIN_USER, body, {callback: (data) => {
+			userReducers.userLoginFxn(data.user);
+		}});
+	};
 
   if (signUpTabClicked || (!signUpTabClicked && !loginTabClicked)) {
 
     return (
-
-
-
-
       <div class="basic-div basic-form">
 
         <div id="signup">
@@ -143,14 +138,8 @@ const [Role, setRole] = useState("");
               />
               <div class="question-container">
                 <div class="are-you-an-organization">Are you an organization?</div>
-                <input type="checkbox"
-                
-                
-                ></input>
+                <input type="checkbox"/>
 
-
-
-                
               </div>
               <br />
               <button type="submit">Sign Up</button>
@@ -160,8 +149,6 @@ const [Role, setRole] = useState("");
       </div>);
   }
   else if (loginTabClicked) {
-
-
     return (
       <div class="basic-div basic-form">
 
@@ -187,7 +174,7 @@ const [Role, setRole] = useState("");
 
 
               <br />
-              <button type="submit">Login</button>
+				<button type="submit">Login</button>
             </form>
           </div>
         </div>
@@ -197,10 +184,6 @@ const [Role, setRole] = useState("");
   } else {
     return null;
   }
-
-
-
-
 }
 
 export default SignUpLogin;
