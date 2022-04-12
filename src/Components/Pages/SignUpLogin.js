@@ -33,6 +33,15 @@ const SignUpLogin = (props) => {
 		setPassword(e.currentTarget.value);
 	};
 
+	const onRoleHandler = (e) => {
+		if (e.currentTarget.value == true){
+			setRole(state.isOrg)
+		}
+		else{
+			setRole(state.isOrg)
+		}
+	}
+
 	let state = {
 		isDonor: "donor",
 		isOrg: "organization"
@@ -68,7 +77,7 @@ const SignUpLogin = (props) => {
 			email: Email,
 			password: Password,
 			username: UserName,
-			role : "donor"
+			role : Role
 		};
 
 		postToBackend(API_ROUTES.BACKEND.REGISTER_USER, body,  {callback: (data) => {
@@ -87,7 +96,7 @@ const SignUpLogin = (props) => {
 			email: Email,
 			password: Password,
 			username: UserName,
-			role: "donor"	//temp
+			role: Role
 		};
 
 
@@ -138,7 +147,7 @@ const SignUpLogin = (props) => {
               />
               <div class="question-container">
                 <div class="are-you-an-organization">Are you an organization?</div>
-                <input type="checkbox"/>
+                <input  onChange={onRoleHandler} type="checkbox"/>
 
               </div>
               <br />
