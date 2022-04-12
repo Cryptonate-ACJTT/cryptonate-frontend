@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import './Wallet.css'
+import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
 
-// class Wallet extends React.Component {
 
 const Wallet = (props) => {
+    const slice = UserSlice.useSlice();
+
 
     return (
         <div class="basic-div profile-screen">
@@ -11,9 +13,9 @@ const Wallet = (props) => {
             <h class="account-page-title">My Wallet</h>
             <div class="wallet-container basic-group">
                 <div class="w-user-name-area ">
-                    <div class="profile-label" id="p-user-name" >[ USER NAME ]'s Wallet</div>
+                    <div class="profile-label" id="p-user-name" >[ {slice.username} ] 's Wallet</div>
                 </div>
-                <div class="w-user-status">  <h class="approve-tag">Donor</h></div>
+                <div class="w-user-status">  <h class="approve-tag">{slice.role}</h></div>
                 <div class="change-wallet"><button >Change Wallet</button></div>
 
                 <div class="balance-tag-area"> <div class="tag-box">Balance</div></div>
