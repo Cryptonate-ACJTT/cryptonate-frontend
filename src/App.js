@@ -19,14 +19,7 @@ import Wallet from './Components/Pages/Wallet';
 import Profile from './Components/Pages/Profile';
 import OrgAuthForm from './Components/Pages/OrgAuthForm';
 import ProjectForm from './Components/Pages/ProjectForm';
-import { API_ROUTES } from './Fetch/ApiFetches';
 import AuthorizedRoute from './Components/PageBits/AuthRoute/AuthRoute';
-
-const SITE_PATHS = {
-	HOME: "/home",
-	EXPLORE: "/explore",
-	ABOUT: "/about"
-}
 
 
 // TODO: protected routes for profile, wallet, project form, etc
