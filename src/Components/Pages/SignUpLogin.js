@@ -20,7 +20,7 @@ const SignUpLogin = (props) => {
 	const [UserName, setName] = useState("");
 	const [ConfirmPasword, setConfirmPasword] = useState("");
 	const [Role, setRole] = useState("");
-
+	
 	const onEmailHandler = (e) => {
 		setEmail(e.currentTarget.value);
 	};
@@ -32,16 +32,24 @@ const SignUpLogin = (props) => {
 	const onPasswordHanlder = (e) => {
 		setPassword(e.currentTarget.value);
 	};
-
+/*
 	const onRoleHandler = (e) => {
 		if (e.currentTarget.value == true){
 			setRole(state.isOrg)
 		}
 		else{
-			setRole(state.isOrg)
+			setRole(state.isDonor)
 		}
 	}
-
+*/
+const onRoleHandler = (e) => {
+    const checked = e.target.checked;
+    if (checked) {
+		setRole(state.isOrg)
+    } else {
+		setRole(state.isDonor)
+    }
+  };
 	let state = {
 		isDonor: "donor",
 		isOrg: "organization"
@@ -105,6 +113,8 @@ const SignUpLogin = (props) => {
 		postToBackend(API_ROUTES.BACKEND.LOGIN_USER, body, {callback: (data) => {
 			userReducers.userLoginFxn(data.user);
 		}});
+		Navigate('/profile');
+		slice.loggedin = true;
 	};
 
   if (signUpTabClicked || (!signUpTabClicked && !loginTabClicked)) {
@@ -117,14 +127,7 @@ const SignUpLogin = (props) => {
             <h id="login-tab" class="basic-tab not-active" onClick={handleLoginTabClicked} >LOGIN</h>
             <h id="signup-tab" class="basic-tab active" onClick={handleSignUpTabClicked}> SIGN UP</h>
           </div>
-          <div class="question-container">
-                <div class="are-you-an-organization">Are you an organization?</div>
-                <input type="checkbox"></input>
-
-
-
-                
-              </div>
+          
           <div class="signup-login-group basic-group">
 
             <form
@@ -147,7 +150,9 @@ const SignUpLogin = (props) => {
               />
               <div class="question-container">
                 <div class="are-you-an-organization">Are you an organization?</div>
-                <input  onChange={onRoleHandler} type="checkbox"/>
+                <input  onClick={(e) => {
+                                onRoleHandler(e);
+                            }} type="checkbox"/>
 
               </div>
               <br />
