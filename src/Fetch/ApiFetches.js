@@ -9,7 +9,10 @@ import { buildFetch, FETCH_TYPE } from "./Fetcher";
  */
 export const ADDRESSES = {
 	BACKEND: "http://localhost:4000/api/v1",
-	INDEXER: "https://algoindexer.algoexplorerapi.io"
+	ALGORAND: "http://localhost:4001",
+	INDEXER: "http://localhost:8980",
+	KEYDAEMON: "http://localhost:4002"
+	//INDEXER: "https://algoindexer.algoexplorerapi.io"
 }
 
 
@@ -17,6 +20,22 @@ export const ADDRESSES = {
  * Routes that the various API could take
  */
 export const API_ROUTES = {
+	/* FRONTEND: {
+		HOME: "/home",
+		EXPLORE: "/explore",
+		ABOUT: "/about",
+		WHY_CRYPTO: "/why-crypto",
+		LOGIN_SIGNUP: "/login-signup",
+		PROJECT_PAGE: "explore/project/:id",
+		PROFILE: "/profile",
+		ORG_AUTH: "/organization-auth-form",
+		PROJECT_FORM: "/project-form",
+		WALLET: "/wallet",
+		LOGOUT: "/logout",
+		LOGIN: "/login",
+		DEFAULT: "*"
+	}, */
+
 	BACKEND: {
 		FRONTPAGE_STATS: "/project/frontpage",
 		EXPLORE_SEARCH: "/project/explore/search",
@@ -29,11 +48,18 @@ export const API_ROUTES = {
 
 		GET_PROJECT: "/project",
 		ALL_PROJECT: "/project/explore",
-		CREATE_PROJECT: "/project/create"
+		CREATE_PROJECT: "/project/create",
+
+		CREATE_WALLET: "/crypto/newWallet",
+		CHECK_BALANCE: "/crypto/balance"
+	},
+
+	ALGORAND: {
+
 	},
 
 	INDEXER: {
-		HEALTH: "/health"
+		HEALTH: "/health?pretty"
 	}	
 }
 
