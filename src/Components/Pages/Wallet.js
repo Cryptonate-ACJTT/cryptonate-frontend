@@ -22,7 +22,7 @@ const Wallet = (props) => {
 				await postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, {address: addrs[i]}, {callback: (data) => {
 					acc.push({
 						address: addrs[i], 
-						balance: data.balance.amount}
+						balance: data.balance}
 					);
 				}});
 			}
@@ -55,7 +55,7 @@ const Wallet = (props) => {
 
 		for(let i = 0; i < accounts.length; i++) {
 			accountsReturned.push(
-				<div className="page-informatic basic-description flex-vertical">
+				<div key={i} className="page-informatic basic-description flex-vertical">
 					<div className="account-id vflex-75">{accounts[i].address}</div>
 					<div className="account-balance vflex-25">
 						Balance: {accounts[i].balance}<img src={logo} style={{"height":"2.5em", "display":"inline"}}/>
