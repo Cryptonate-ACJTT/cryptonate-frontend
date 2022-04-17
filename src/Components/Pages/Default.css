@@ -1,19 +1,85 @@
 /*
+	BASIC STUFF
+*/
+
+.page-container {
+	width: 95vw;
+	height: 100%;
+	margin: 2.5vw;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.flex-vertical {
+	display: flex;
+	flex-flow: row wrap;
+	width: 100%;
+}
+
+.flex-horizontal {
+	display: flex;
+	flex-flow: column wrap;
+	height: 100%;
+}
+
+.page-content-group {
+	margin: 0.5vw;
+	margin-left: auto;
+	margin-right: auto;
+
+	border-radius: 10px;
+}
+
+.page-informatic {
+	width: 100%;
+	border-radius: inherit;
+	background-color: white;
+}
+
+.page-title {
+	margin: 0.5vw;
+  	font-size: 40px; 
+  	font-weight: Bold;
+  	color:#1C3E64
+}
+
+hr {
+	border-top: 3px dotted #1C3E64;
+	margin-bottom: 0%;
+}
+
+
+/*
 	TEXT STYLINGS
 */
 
 
 /*
-	BUTTON
+	BUTTON(S)
 */
 
-.cryptonate-dflt-btn {
-	
-}
+
 
 /*
-	PAGE DIV SEPARATION LEFT-RIGHT
+	PAGE COLUMN/ROW SIZE;
 */
-.left-70 {
 
+.vflex-40 {
+	width: 40%;
+	height: inherit;
+}
+
+.vflex-60 {
+	width: 60%;
+	height: inherit;
+}
+
+.vflex-75 {
+	width: 75%;
+	height: inherit;
+}
+
+.vflex-25 {
+	width: 25%;
+	height: inherit;
 }

@@ -9,7 +9,7 @@ import StoreSlice from "../StoreSlice";
 // reducers
 
 const userLoginReducer = (state, loginInfo) => {
-	return Object.assign({}, loginInfo, {
+	return Object.assign({}, state, {
 		loggedIn: true,
 		userInfo: loginInfo
 	});
@@ -19,6 +19,11 @@ const userLoginFxn = (loginInfo) => {
 	Store.dispatch({type: "userLoginReducer", payload: loginInfo});
 }
 
+/**
+ * Logs the user out (of the store slice);
+ * @param {*} state 
+ * @returns 
+ */
 const userLogoutReducer = (state) => {
 	return Object.assign({}, state, {
 		loggedIn: false,
@@ -26,8 +31,26 @@ const userLogoutReducer = (state) => {
 	});
 }
 
+/**
+ * Dispatches userLogoutReducer to store.
+ */
 const userLogoutFxn = () => {
 	Store.dispatch({type: "userLogoutReducer", payload: null});
+}
+
+
+const userWalletReducer = (state, wallet) => {
+	console.log("in fxn ", state);
+	return Object.assign({}, state, {
+		userInfo: {
+			...state.userInfo,
+			wallet: wallet
+		}
+	});	
+}
+
+const userWalletFxn = (wallet) => {
+	Store.dispatch({type: "userWalletReducer", payload: wallet});	
 }
 
 
@@ -41,12 +64,14 @@ const initState = {
 
 const reducers = {
 	userLoginReducer, 
-	userLogoutReducer
+	userLogoutReducer,
+	userWalletReducer
 };
 
 export const reducerFxns = {
 	userLoginFxn,
-	userLogoutFxn
+	userLogoutFxn,
+	userWalletFxn
 };
 
 const UserSlice = new StoreSlice(storeKey, initState, reducers, reducerFxns);
