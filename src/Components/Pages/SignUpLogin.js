@@ -25,13 +25,8 @@ const SignUpLogin = (props) => {
 	const [Password, setPassword] = useState("");
 	const [UserName, setName] = useState("");
 	const [ConfirmPasword, setConfirmPasword] = useState("");
-<<<<<<< HEAD
-	const [Role, setRole] = useState("");
-	
-=======
 	const [Role, setRole] = useState(false);
 
->>>>>>> r-dev
 	const onEmailHandler = (e) => {
 		setEmail(e.currentTarget.value);
 	};
@@ -43,32 +38,11 @@ const SignUpLogin = (props) => {
 	const onPasswordHanlder = (e) => {
 		setPassword(e.currentTarget.value);
 	};
-<<<<<<< HEAD
-/*
-	const onRoleHandler = (e) => {
-		if (e.currentTarget.value == true){
-			setRole(state.isOrg)
-		}
-		else{
-			setRole(state.isDonor)
-		}
-	}
-*/
-const onRoleHandler = (e) => {
-    const checked = e.target.checked;
-    if (checked) {
-		setRole(state.isOrg)
-    } else {
-		setRole(state.isDonor)
-    }
-  };
-=======
 
 	const onRoleSwitch = (e) => {
 		setRole(e.currentTarget.checked);
 	}
 /*
->>>>>>> r-dev
 	let state = {
 		isDonor: "donor",
 		isOrg: "organization"
@@ -105,25 +79,9 @@ const onRoleHandler = (e) => {
 
 		console.log(Role ? "organization" : "donor");
 		
-<<<<<<< HEAD
-		console.log(Email);
-		console.log(Password);
-		console.log(UserName);
-
-		let body = {
-			email: Email,
-			password: Password,
-			username: UserName,
-			role : Role
-		};
-
-		postToBackend(API_ROUTES.BACKEND.REGISTER_USER, body,  {callback: (data) => {
-			console.log(data);
-=======
 		signUpUser(Email, UserName, Password, Role ? "organization" : "donor", {callback: (data) => {
 			userReducers.userLoginFxn(data.user);
 			navigate("/profile", {replace: true});
->>>>>>> r-dev
 		}});
 	};
 
@@ -133,20 +91,6 @@ const onRoleHandler = (e) => {
 	 */
 	const LoginHandler = (e) => {
 		e.preventDefault();
-<<<<<<< HEAD
-		
-		console.log( Email);
-		console.log(Password);
-		
-
-		let body = {
-			email: Email,
-			password: Password,
-			username: UserName,
-			role: Role
-		};
-=======
->>>>>>> r-dev
 
 		loginUser(Email, UserName, Password, "donor", {callback: (data) => {
 			userReducers.userLoginFxn(data.user);
@@ -189,13 +133,7 @@ const onRoleHandler = (e) => {
               />
               <div class="question-container">
                 <div class="are-you-an-organization">Are you an organization?</div>
-<<<<<<< HEAD
-                <input  onClick={(e) => {
-                                onRoleHandler(e);
-                            }} type="checkbox"/>
-=======
                 <input type="checkbox" onChange={onRoleSwitch}/>
->>>>>>> r-dev
 
               </div>
               <br />
