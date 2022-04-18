@@ -7,7 +7,6 @@ import logo from "./Images/algorand_logo_mark_black.svg";
 // class Wallet extends React.Component {
 
 const Wallet = (props) => {
-    const slice = UserSlice.useSlice();
 
 
 	const slice = props.userSlice;
