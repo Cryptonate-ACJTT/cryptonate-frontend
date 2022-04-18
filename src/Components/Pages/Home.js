@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { API_ROUTES, getFromBackend } from "../../Fetch/ApiFetches";
+import { getFPStats } from "../../Fetch/ApiFetches";
 import './Home.css'
 import image from './Images/image1.png'
 
@@ -8,7 +8,7 @@ const Home = (props) => {
 	let [stats, setStats] = useState({});
 
 	useEffect(() => {
-		getFromBackend(API_ROUTES.BACKEND.FRONTPAGE_STATS, {callback: (data) => {
+		getFPStats({callback: (data) => {
 			setStats(data);
 		}});
 	}, []);

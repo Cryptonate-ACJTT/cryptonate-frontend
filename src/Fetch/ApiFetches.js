@@ -51,7 +51,9 @@ export const API_ROUTES = {
 		CREATE_PROJECT: "/project/create",
 
 		CREATE_WALLET: "/crypto/newWallet",
-		CHECK_BALANCE: "/crypto/balance"
+		CHECK_BALANCE: "/crypto/balance",
+
+		TXN_BASIC: "/crypto/txn/basic"
 	},
 
 	ALGORAND: {
@@ -64,8 +66,9 @@ export const API_ROUTES = {
 }
 
 
-
-/* ====== BACKEND BASICS ====== */
+/*******************************
+	BACKEND BASICS
+*******************************/
 
 /**
  * Send a GET request to the backend at /'path'.
@@ -96,18 +99,36 @@ export const postToBackend = (path, data, {callback, credentials, resHandler, co
 }
 
 
-
-/* ====== ALGOEXPLORER ====== */
+/*******************************
+	HOME PAGE
+*******************************/
 
 /**
- * Send a GET request to AlgoExplorer at /'path'
- * -- OPTIONS:	-resHandler handles the response object,
- * 				-credentials injects a credentials header for auth functionality,
- * 				-callback replaces default callback function (which returns res.json()).
- * @param {string} path 
- * @param {*} options
- * @returns Promise
+ * Get stats for the front page.
+ * @param {*} param0 
+ * @returns 
  */
-export const getFromIndexer = (path, {callback, credentials, resHandler} = {}) => {
-	return buildFetch(FETCH_TYPE.GET, ADDRESSES.INDEXER + path, {callback, credentials, resHandler});
+export const getFPStats = ({callback} = {}) => {
+	return getFromBackend(API_ROUTES.BACKEND.FRONTPAGE_STATS, {callback: callback});
+}
+
+
+
+/*******************************
+	CRYPTO TRANSACTIONS
+*******************************/
+
+/**
+ * 
+ * @returns 
+ */
+export const txnBasic = (userInfo, sender, receiver, amount, {callback} = {}) => {
+	return postToBackend(API_ROUTES.BACKEND.TXN_BASIC, {
+		email: userInfo.email,
+		role: userInfo.role,
+		wallet: userInfo.wallet.id,
+		sender: sender,
+		receiver: receiver,
+		amount: amount
+	}, {callback: callback, credentials: true});
 }

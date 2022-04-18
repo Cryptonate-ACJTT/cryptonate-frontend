@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ADDRESSES, API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
+import { ADDRESSES, API_ROUTES, getFromBackend } from "../../Fetch/ApiFetches";
 import ExploreSlice, { CATEGORIES, reducerFxns, SORTINGS } from "../../Redux/Slices/ExploreSlice"
 import "./Explore.css";
+import "./Default.css";
 
 const PROJECTS_PER_PAGE = 9; // multiple of three please
 
@@ -58,6 +59,7 @@ const Explore = () => {
 	return (
 		<div className="explore-container">
         	<h1 className="page-title">Explore & Discover</h1>
+			<hr/>
 			<ExploreSearch slice={slice}/>
 			<div>
 				<ExploreFilter slice={slice} sorts={SORTINGS} categories={CATEGORIES}/>

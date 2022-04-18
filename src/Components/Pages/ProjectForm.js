@@ -1,19 +1,15 @@
 import React, { Profiler, useState } from "react";
 import { API_ROUTES, postToBackend } from "../../Fetch/ApiFetches";
 import { CONTENT_TYPES } from "../../Fetch/Fetcher";
+import AuthorizedRoute from "../PageBits/AuthRoute/AuthRoute";
 import './ProjectForm.css'
-
-
 
 const ProjectForm = (props) => {
 
 	const submitForm = (e) => {
 		e.preventDefault();
-
 		let formData = new FormData(e.currentTarget);
-        console.log("@@@@@@@ PROJECT FORM @@@@@@@")
-        console.log(formData)
-		postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {contentType: CONTENT_TYPES.FORM_DATA});
+		postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
 	}
 
 	//action="http://localhost:4000/api/v1/project/create" method="POST" enctype="multipart/form-data" class="project-form-group">
@@ -23,7 +19,7 @@ const ProjectForm = (props) => {
 
             <div class="account-page-title">Project Form</div>
 
-            <form onSubmit={submitForm} className="project-form-group" encType="multipart/form-data"> 
+            <form onSubmit={submitForm} className="project-form-group"> 
 
                 <div class="project-form-container">
 

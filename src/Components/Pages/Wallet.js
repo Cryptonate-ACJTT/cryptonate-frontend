@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './Default.css'	// was messing around with this pay no mind.
-import { API_ROUTES, postToBackend } from "../../Fetch/ApiFetches";
+import { API_ROUTES, postToBackend, txnBasic } from "../../Fetch/ApiFetches";
 import './Wallet.css'
 import { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
 import logo from "./Images/algorand_logo_mark_black.svg";
@@ -12,6 +12,7 @@ const Wallet = (props) => {
 
 	const [accounts, setAccounts] = useState([]);
 
+	console.log(slice);
 
 	useEffect(() => {
 		let acc = [];
@@ -22,8 +23,8 @@ const Wallet = (props) => {
 				await postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, {address: addrs[i]}, {callback: (data) => {
 					acc.push({
 						address: addrs[i], 
-						balance: data.balance}
-					);
+						balance: data.balance
+					});
 				}});
 			}
 			console.log(acc);
@@ -33,6 +34,9 @@ const Wallet = (props) => {
 	}, [slice.userInfo.wallet.accounts]);
 
 
+	const getBalances = () => {
+		
+	}
 	const addWallet = (e) => {
 		// nauw
 	}
@@ -67,6 +71,14 @@ const Wallet = (props) => {
 		return accountsReturned;
 	}
 
+	const testTxn = (e) => {
+		console.log(e.target.value);
+		console.log(slice.userInfo);
+		txnBasic(slice.userInfo, slice.userInfo.wallet.accounts[0], "MGTGN4OD5PFCOSDAQK5OP6S2PKOU2K6L3CVDYZNPCSIP2BBSQ46TX2HUEE", 10000, {callback: (data) => {
+			console.log(data);
+		}})
+	}
+
 	if(!slice.userInfo.wallet) {
 		return (
 			<div className="page-container">
@@ -74,7 +86,7 @@ const Wallet = (props) => {
 				<hr/>
 				<p className="basic-description">You don't have a wallet yet!</p>
 				<p className="basic-description">
-					<button onClick={addWallet}>CONNECT</button> or <button onClick={generateWallet}>GENERATE</button> one now!
+					<button onClick={addWallet} disabled>CONNECT</button> or <button onClick={generateWallet}>GENERATE</button> one now!
 				</p>
 			</div>
 		)
@@ -86,6 +98,7 @@ const Wallet = (props) => {
 				<div className="page-content-group">
 					{addWalletAccounts(accounts)}
 				</div>
+				<button onClick={testTxn}>Test send</button>
 			</div>
 		)
 	}
