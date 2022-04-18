@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './SignUpLogin.css'
-import { Link, Navigate, useLocation } from "react-router-dom";
-import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
+import { useNavigate, useLocation } from "react-router-dom";
+import { loginUser, signUpUser } from "../../Fetch/ApiFetches";
 
 import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
 
@@ -11,15 +11,21 @@ import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserS
 const SignUpLogin = (props) => {
 	const slice = UserSlice.useSlice();
 
+	useEffect(() => {
+
+		return UserSlice.unsubscribe();
+	})
+
+	const navigate = useNavigate();
+
 
 	const [loginTabClicked, toggleLoginTabClicked] = useState(false);
-	const [signUpTabClicked, toggleSignUpTabClicked] = useState(false);
 	
 	const [Email, setEmail] = useState("");
 	const [Password, setPassword] = useState("");
 	const [UserName, setName] = useState("");
 	const [ConfirmPasword, setConfirmPasword] = useState("");
-	const [Role, setRole] = useState("");
+	const [Role, setRole] = useState(false);
 
 	const onEmailHandler = (e) => {
 		setEmail(e.currentTarget.value);
@@ -33,89 +39,76 @@ const SignUpLogin = (props) => {
 		setPassword(e.currentTarget.value);
 	};
 
+	const onRoleSwitch = (e) => {
+		setRole(e.currentTarget.checked);
+	}
+/*
 	let state = {
 		isDonor: "donor",
 		isOrg: "organization"
-		
 	};
-
+*/
 	const onConfirmPasswordHandler = (e) => {
 		setConfirmPasword(e.currentTarget.value);
 	};
 
-	const handleLoginTabClicked = async (e) => {
 
-		toggleSignUpTabClicked(false);
-		toggleLoginTabClicked(true);
-	}
 	const location = useLocation;
 	
 	const from = location.state?.from?.pathname || "/";
 
-	const handleSignUpTabClicked = async (e) => {
-
-		toggleLoginTabClicked(false);
-		toggleSignUpTabClicked(true);
+	/**
+	 * Handles clicking between tabs
+	 * @param {*} e 
+	 */
+	const handleTabSwitch = () => {
+		if(loginTabClicked) {
+			toggleLoginTabClicked(false);
+		} else {
+			toggleLoginTabClicked(true);
+		}
 	}
+
+
+	/**
+	 * Intercepts new user and passes to backend
+	 * @param {*} e 
+	 */
 	const SignUpHandler = (e) => {
 		e.preventDefault();
+
+		console.log(Role ? "organization" : "donor");
 		
-		console.log(Email);
-		console.log(Password);
-		console.log(UserName);
-
-		let body = {
-			email: Email,
-			password: Password,
-			username: UserName,
-			role : "donor"
-		};
-
-		postToBackend(API_ROUTES.BACKEND.REGISTER_USER, body,  {callback: (data) => {
-			console.log(data);
+		signUpUser(Email, UserName, Password, Role ? "organization" : "donor", {callback: (data) => {
+			userReducers.userLoginFxn(data.user);
+			navigate("/profile", {replace: true});
 		}});
 	};
 
+	/**
+	 * Intercepts login click and passes to backend
+	 * @param {*} e 
+	 */
 	const LoginHandler = (e) => {
 		e.preventDefault();
-		
-		console.log( Email);
-		console.log(Password);
-		
 
-		let body = {
-			email: Email,
-			password: Password,
-			username: UserName,
-			role: "donor"	//temp
-		};
-
-
-
-		// TODO: redirect from here to profile page
-		postToBackend(API_ROUTES.BACKEND.LOGIN_USER, body, {callback: (data) => {
+		loginUser(Email, UserName, Password, "donor", {callback: (data) => {
 			userReducers.userLoginFxn(data.user);
+			navigate("/profile", {replace: true});
 		}});
 	};
 
-  if (signUpTabClicked || (!signUpTabClicked && !loginTabClicked)) {
+  if (!loginTabClicked) {
 
     return (
       <div class="basic-div basic-form">
 
         <div id="signup">
           <div class="tab-container">
-            <h id="login-tab" class="basic-tab not-active" onClick={handleLoginTabClicked} >LOGIN</h>
-            <h id="signup-tab" class="basic-tab active" onClick={handleSignUpTabClicked}> SIGN UP</h>
+            <h id="login-tab" class="basic-tab not-active" onClick={handleTabSwitch} >LOGIN</h>
+            <h id="signup-tab" class="basic-tab active" onClick={handleTabSwitch}> SIGN UP</h>
           </div>
-          <div class="question-container">
-                <div class="are-you-an-organization">Are you an organization?</div>
-                <input type="checkbox"></input>
-
-
-
-                
-              </div>
+          
           <div class="signup-login-group basic-group">
 
             <form
@@ -138,7 +131,7 @@ const SignUpLogin = (props) => {
               />
               <div class="question-container">
                 <div class="are-you-an-organization">Are you an organization?</div>
-                <input type="checkbox"/>
+                <input type="checkbox" onChange={onRoleSwitch}/>
 
               </div>
               <br />
@@ -148,15 +141,15 @@ const SignUpLogin = (props) => {
         </div>
       </div>);
   }
-  else if (loginTabClicked) {
+  else {
     return (
       <div class="basic-div basic-form">
 
         <div id="login" >
 
           <div class="tab-container">
-            <h class="basic-tab active" onClick={handleLoginTabClicked} >LOGIN</h>
-            <h class="basic-tab not-active" onClick={handleSignUpTabClicked} >SIGN UP</h>
+            <h class="basic-tab active" onClick={handleTabSwitch} >LOGIN</h>
+            <h class="basic-tab not-active" onClick={handleTabSwitch} >SIGN UP</h>
           </div>
 
           <div class="signup-login-group basic-group">
@@ -180,9 +173,6 @@ const SignUpLogin = (props) => {
         </div>
       </div>
     );
-
-  } else {
-    return null;
   }
 }
 

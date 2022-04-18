@@ -4,6 +4,11 @@ import { buildFetch, FETCH_TYPE } from "./Fetcher";
 	API interactions go in here!
 */
 
+
+/*******************************
+	REFERENCE VALUES
+*******************************/
+
 /**
  * The APIs we're using
  */
@@ -20,7 +25,7 @@ export const ADDRESSES = {
  * Routes that the various API could take
  */
 export const API_ROUTES = {
-	/* FRONTEND: {
+	FRONTEND: {
 		HOME: "/home",
 		EXPLORE: "/explore",
 		ABOUT: "/about",
@@ -34,22 +39,26 @@ export const API_ROUTES = {
 		LOGOUT: "/logout",
 		LOGIN: "/login",
 		DEFAULT: "*"
-	}, */
+	},
 
 	BACKEND: {
+		/* MISC */
 		FRONTPAGE_STATS: "/project/frontpage",
-		EXPLORE_SEARCH: "/project/explore/search",
-
+		
+		/* USER */
 		REGISTER_USER: "/user",
 		SUBMIT_ORG_FORM:"/user/submitOrgForm",
 		LOGIN_USER: "/user/login",
 		GET_LOGGED_IN: "/user/loggedIn",
 		LOGOUT_USER: "/user/logout",
 
+		/* PROJECTS */
 		GET_PROJECT: "/project",
 		ALL_PROJECT: "/project/explore",
 		CREATE_PROJECT: "/project/create",
+		EXPLORE_SEARCH: "/project/explore/search",
 
+		/* CRYPTO */
 		CREATE_WALLET: "/crypto/newWallet",
 		CHECK_BALANCE: "/crypto/balance",
 
@@ -113,14 +122,63 @@ export const getFPStats = ({callback} = {}) => {
 }
 
 
+/*******************************
+	SIGN UP/LOGIN
+*******************************/
+
+/**
+ * Sign up the user
+ * @param {*} email 
+ * @param {*} username 
+ * @param {*} password 
+ * @param {*} role 
+ * @param {*} param4 
+ * @returns 
+ */
+export const signUpUser = (email, username, password, role, {callback} = {}) => {
+	return postToBackend(API_ROUTES.BACKEND.REGISTER_USER, {
+		email: email,
+		password: password,
+		username: username,
+		role: role
+	}, {callback: callback, credentials: true});
+}
+
+/**
+ * Log in the user
+ * @param {*} email 
+ * @param {*} username 
+ * @param {*} password 
+ * @param {*} role 
+ * @param {*} param4 
+ * @returns 
+ */
+export const loginUser = (email, username, password, role, {callback} = {}) => {
+	return postToBackend(API_ROUTES.BACKEND.LOGIN_USER, {
+		email: email,
+		password: password,
+		username: username,
+		role: role
+	}, {callback: callback, credentials: true});
+}
+
+/**
+ * Log out the user
+ * @param {*} param0 
+ * @returns 
+ */
+export const logoutUser = ({callback} = {}) => {
+	return postToBackend(API_ROUTES.BACKEND.LOGOUT_USER, {}, {callback: callback, credentials: true});
+}
+
 
 /*******************************
 	CRYPTO TRANSACTIONS
 *******************************/
 
 /**
- * 
- * @returns 
+ * Sends a transaction request to the backend, which sends it on to algosdk
+ * @returns Promise
  */
 export const txnBasic = (userInfo, sender, receiver, amount, {callback} = {}) => {
 	return postToBackend(API_ROUTES.BACKEND.TXN_BASIC, {
