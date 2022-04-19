@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ADDRESSES, API_ROUTES, getFromBackend } from "../../Fetch/ApiFetches";
 import ExploreSlice, { CATEGORIES, reducerFxns, SORTINGS } from "../../Redux/Slices/ExploreSlice"
+import { Card, CardContent, CardMedia, Grid, Tooltip, Typography, Box, CircularProgress } from "@mui/material"
 import "./Explore.css";
 import "./Default.css";
 
@@ -230,6 +231,8 @@ const ExploreTiling = (props) => {
 					image = {project.image}
 					desc = {project.summary}
 					progress = {Math.floor(project.totalSaved/project.goalAmount) * 100}
+					date = {project.updatedAt}
+					verified = {false}	// UPDATE THIS LATER
 				/>
 			);
 		}
@@ -271,13 +274,18 @@ const ExploreTiling = (props) => {
 				<span className="explore-paginate-desc">{"Page " + page + " of " + maxPages.current}</span>
 				<button className="explore-paginate-next" onClick={nextPage}>{">"}</button>
 			</div>
-			<div className="explore-tiling">
+			<Grid container spacing={3}>
 				{tiles}
-			</div>
+			</Grid>
+			
 		</div>
 	);
 }
-
+/*
+<div className="explore-tiling">
+				{tiles}
+			</div>
+*/
 
 /**
  * Tile used to display a project.
@@ -286,19 +294,52 @@ const ExploreTiling = (props) => {
  */
 const ExploreTile = (props) => {
 	return (
-		<Link to={"/explore/project/" + props.id}>
-			<div className="explore-tile">
-				<h4 className="explore-tile-title">{props.title}</h4>
-				<div className="explore-tile-img-contain">
-					<img src={ADDRESSES.BACKEND + props.image} alt={""} className="explore-tile-img"/>
-				</div>
-				<p className="explore-tile-desc">{props.desc}</p>
-				<p className="explore-tile-prog-desc">{props.progress}%</p>
-				<progress value={props.progress} max="100" className="explore-tile-prog"/>
-			</div>
-		</Link>
-	)
+		<Grid item xs={4}>
+			<Link to={"/explore/project/" + props.id}>
+				<Card className="explore-tile" variant="outlined" sx={{"border-radius": "20px"}}>
+					<CardContent>
+						<Typography variant="h4">{props.title}</Typography>
+					</CardContent>
+					
+					<CardMedia component="img" alt="" height="150" image={ADDRESSES.BACKEND + props.image} sx={{"border-radius":"10px", border:"2px solid lightgray"}}/>
+					<CardContent style={{"padding-bottom": 0}}>
+						<Grid container spacing={2}>
+							<Grid item xs={8}>
+								<Typography maxHeight="100px" minHeight="100px" variant="body2" xs={{"overflowWrap":"breakWord", "overflow": "hidden"}}>{props.desc}</Typography>
+							</Grid>
 
+							<Grid item xs={4}>
+								<Box sx={{ position: 'relative', display: 'inline-flex' }}>
+									<CircularProgress variant="determinate" value={100} size={"75px"} thickness={7} sx={{"position": "absolute", color:"gray"}}/>
+									<CircularProgress variant="determinate" value={props.progress} size={"75px"} thickness={7}/>
+									<Box sx={{inset: "0 0 0 0", position: "absolute", display: "flex", alignItems: "center", justifyContent: "center"}}>
+										<Typography variant="caption">{props.progress}%</Typography>
+									</Box>
+								</Box>
+							</Grid>
+							<Grid item xs={8}>
+								<Typography variant="caption">{new Date(props.date).toDateString()}</Typography>
+							</Grid>
+							<Grid item xs={4} sx={{"text-align": "right"}}>
+								<Tooltip title={
+									<React.Fragment>
+										<Typography>{props.verified ? "This project has been verified!" : "Unverified as of " + new Date(props.date).toDateString()}</Typography>
+									</React.Fragment>}
+								>
+									<Typography variant="h6">{props.verified ? "🟢":"🔴"}</Typography>	
+								</Tooltip>
+								
+							</Grid>
+						</Grid>
+					</CardContent>
+					
+				</Card>
+			</Link>
+		
+		</Grid>
+		
+	)
 }
+
 
 export default Explore;

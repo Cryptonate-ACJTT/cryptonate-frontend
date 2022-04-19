@@ -30,10 +30,10 @@
 
 .explore-tile {
     border-radius: 15px;
-    text-align: left;
     background-color: white;
     transition: 0.2s;
     padding: 10px;
+	text-align: left;
 }
 
 .explore-tile:hover {

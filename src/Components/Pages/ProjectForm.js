@@ -15,7 +15,7 @@ const ProjectForm = (props) => {
 		
 		submitProjectForm(JSON.stringify(props.userSlice.userInfo), formData, {callback: (data) => {
 			userReducers.userWalletFxn(data.wallet);
-			navigate("/explore/project" + data.project._id)
+			navigate("/explore/project/" + data.project._id);
 		}});
 	}
 
