@@ -48,7 +48,7 @@ const buildPost = (data, contentType) => {
 	return {
 		method: "POST",
 		mode: "cors",
-		data: data
+		body: data
 	}
 }
 
