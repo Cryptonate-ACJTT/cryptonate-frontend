@@ -1,15 +1,22 @@
-import React, { Profiler, useState } from "react";
-import { API_ROUTES, postToBackend } from "../../Fetch/ApiFetches";
-import { CONTENT_TYPES } from "../../Fetch/Fetcher";
-import AuthorizedRoute from "../PageBits/AuthRoute/AuthRoute";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { API_ROUTES, submitProjectForm } from "../../Fetch/ApiFetches";
+import { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
+
 import './ProjectForm.css'
 
 const ProjectForm = (props) => {
 
+	const navigate = useNavigate();
+
 	const submitForm = (e) => {
 		e.preventDefault();
 		let formData = new FormData(e.currentTarget);
-		postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
+		
+		submitProjectForm(JSON.stringify(props.userSlice.userInfo), formData, {callback: (data) => {
+			userReducers.userWalletFxn(data.wallet);
+			navigate("/explore/project" + data.project._id)
+		}});
 	}
 
 	//action="http://localhost:4000/api/v1/project/create" method="POST" enctype="multipart/form-data" class="project-form-group">
