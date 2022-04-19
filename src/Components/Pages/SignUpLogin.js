@@ -96,8 +96,6 @@ const SignUpLogin = (props) => {
 			userReducers.userLoginFxn(data.user);
 			navigate("/profile", {replace: true});
 		}});
-		Navigate('/profile');
-		slice.loggedin = true;
 	};
 
   if (!loginTabClicked) {
