@@ -1,4 +1,4 @@
-import { buildFetch, FETCH_TYPE } from "./Fetcher";
+import { buildFetch, CONTENT_TYPES, FETCH_TYPE } from "./Fetcher";
 
 /*
 	API interactions go in here!
@@ -26,18 +26,28 @@ export const ADDRESSES = {
  */
 export const API_ROUTES = {
 	FRONTEND: {
+		/* HOME/ABOUT/WHY */
 		HOME: "/home",
-		EXPLORE: "/explore",
 		ABOUT: "/about",
 		WHY_CRYPTO: "/why-crypto",
-		LOGIN_SIGNUP: "/login-signup",
+		
+		/* PROJECTS */
+		EXPLORE: "/explore",
 		PROJECT_PAGE: "explore/project/:id",
-		PROFILE: "/profile",
+		
+		/* FORMS */
 		ORG_AUTH: "/organization-auth-form",
 		PROJECT_FORM: "/project-form",
-		WALLET: "/wallet",
-		LOGOUT: "/logout",
+		
+		/* USER STUFF */
+		LOGIN_SIGNUP: "/login-signup",
 		LOGIN: "/login",
+		LOGOUT: "/logout",
+		
+		PROFILE: "/profile",
+		WALLET: "/wallet",
+
+		/* DEFAULT */
 		DEFAULT: "*"
 	},
 
@@ -171,6 +181,14 @@ export const logoutUser = ({callback} = {}) => {
 	return postToBackend(API_ROUTES.BACKEND.LOGOUT_USER, {}, {callback: callback, credentials: true});
 }
 
+/*******************************
+	PROJECT FORM
+*******************************/
+
+export const submitProjectForm = (userInfo, formData, {callback} = {}) => {
+	formData.append("userInfo", userInfo); // userInfo not in form
+	return postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
+}
 
 /*******************************
 	CRYPTO TRANSACTIONS

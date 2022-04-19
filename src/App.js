@@ -20,7 +20,9 @@ import Profile from './Components/Pages/Profile';
 import OrgAuthForm from './Components/Pages/OrgAuthForm';
 import ProjectForm from './Components/Pages/ProjectForm';
 import AuthorizedRoute from './Components/PageBits/AuthRoute/AuthRoute';
+import { API_ROUTES } from './Fetch/ApiFetches';
 
+const PAGES = API_ROUTES.FRONTEND;
 
 // TODO: protected routes for profile, wallet, project form, etc
 const App = () => {
