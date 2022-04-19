@@ -92,7 +92,7 @@ const SignUpLogin = (props) => {
 	const LoginHandler = (e) => {
 		e.preventDefault();
 
-		loginUser(Email, UserName, Password, "donor", {callback: (data) => {
+		loginUser(Email, UserName, Password, Role ? "organization" : "donor", {callback: (data) => {
 			userReducers.userLoginFxn(data.user);
 			navigate("/profile", {replace: true});
 		}});
