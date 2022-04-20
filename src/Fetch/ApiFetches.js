@@ -1,3 +1,4 @@
+import { trackPromise } from "react-promise-tracker";
 import { buildFetch, CONTENT_TYPES, FETCH_TYPE } from "./Fetcher";
 
 /*
@@ -199,12 +200,14 @@ export const submitProjectForm = (userInfo, formData, {callback} = {}) => {
  * @returns Promise
  */
 export const txnBasic = (userInfo, sender, receiver, amount, {callback} = {}) => {
-	return postToBackend(API_ROUTES.BACKEND.TXN_BASIC, {
-		email: userInfo.email,
-		role: userInfo.role,
-		wallet: userInfo.wallet.id,
-		sender: sender,
-		receiver: receiver,
-		amount: amount
-	}, {callback: callback, credentials: true});
+	return trackPromise(
+		postToBackend(API_ROUTES.BACKEND.TXN_BASIC, {
+			email: userInfo.email,
+			role: userInfo.role,
+			wallet: userInfo.wallet.id,
+			sender: sender,
+			receiver: receiver,
+			amount: amount
+		}, {callback: callback, credentials: true})
+	);
 }

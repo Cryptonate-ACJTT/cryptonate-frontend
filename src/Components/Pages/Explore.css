@@ -15,11 +15,11 @@
 }
 
 .explore-content {
-	width: 80vw;
+	width:fit-content;
 	margin-left: 20vw;
 	padding-right: 5vw;
+	padding-bottom: 5vw;
 	position: absolute;
-	overflow-y: scroll;
 }
 
 .explore-tiling {
