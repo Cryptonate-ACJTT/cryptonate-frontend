@@ -1,24 +1,22 @@
-import React, {useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Profile.css'
-import { Link } from "react-router-dom";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
+import { Link } from "react-router-dom";
 
 
 const Profile = (props) => {
 
     const userSlice = UserSlice.useSlice();
 
-    let userRole = userSlice.role;
-    let userEmail = userSlice.email;
-    let userName = userSlice.username;
-    let projects = userSlice.projects;
+    let userRole = userSlice.userInfo.role;
+    let userEmail = userSlice.userInfo.email;
+    let userName = userSlice.userInfo.username;
+
+    let projects = userSlice.userInfo.projects;
+
     console.log(projects)
-    console.log("PRRRRRRRRRRRRRROJECTS");
-
-    console.log(userSlice.id);
-
 
 
     const [passwordEditing, togglePasswordEditing] = useState(false);
@@ -59,7 +57,7 @@ const Profile = (props) => {
 
                 <div class="project-inprogress-box">
                     <div class="active-project-container my-project-container">
-                        <ProjectTiling slice={userSlice}/>
+                        <ProjectTiling slice={userSlice} />
                     </div>
                 </div>
                 <div class="project-completed-box">
@@ -92,14 +90,14 @@ const Profile = (props) => {
 
 }
 
-
 const ProjectTiling = (props) => {
 
     let [tiles, setTiles] = useState([]);
 
-    useEffect(() => {		
-		setTiles(makeTiles(props.slice.projects.slice()));
-	}, [props.slice.projects]);
+    useEffect(() => {
+        setTiles(makeTiles(props.slice.userInfo.projects.slice()));
+    }, [props.slice.userInfo.projects]);
+
 
     const makeTiles = (projects) => {
         let tiling = [];
@@ -126,19 +124,17 @@ const ProjectTiling = (props) => {
 }
 
 const ProjectTile = (props) => {
-
     return (
         <div>
-            <Link  to={"/explore/project/" + props.id}>
+            <Link to={"/explore/project" + props.id}>
                 <div className="project-list-item">
                     <h4 className="project-list-title">{props.title}</h4>
-                    <h4 className="project-list-item-prog">{props.progress}%</h4>
+                    <h4 className="project-list-title">{props.progress}</h4>
+
                 </div>
             </Link>
-
         </div>
     );
-
 }
 
 
