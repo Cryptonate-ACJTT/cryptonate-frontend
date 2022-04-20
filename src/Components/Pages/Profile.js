@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import './Profile.css'
-
+import { Link } from "react-router-dom";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
 
 import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
 
 
 const Profile = (props) => {
 
-    const slice = UserSlice.useSlice();
-    let userRole = slice.role;
-    let userEmail = slice.email;
-    let userName = slice.username;
-    let userPassword = slice.password;
+    const userSlice = UserSlice.useSlice();
 
-    console.log(userPassword)
+    let userRole = userSlice.role;
+    let userEmail = userSlice.email;
+    let userName = userSlice.username;
+    let projects = userSlice.projects;
+    console.log(projects)
+    console.log("PRRRRRRRRRRRRRROJECTS");
+
+    console.log(userSlice.id);
+
 
 
     const [passwordEditing, togglePasswordEditing] = useState(false);
@@ -23,23 +26,16 @@ const Profile = (props) => {
     const [emailEditing, toggleEmailEditing] = useState(false);
 
 
-    const handlePasswordEditing = async (e) => {
-        togglePasswordEditing(!passwordEditing);
-        console.log(passwordEditing);
-    }
+    const handlePasswordEditing = async (e) => { togglePasswordEditing(!passwordEditing); }
 
-    const handleNameEditing = async (e) => {
-        toggleNameEditing(!nameEditing);
-        console.log(nameEditing);
-    }
+    const handleNameEditing = async (e) => { toggleNameEditing(!nameEditing); }
 
-    const handleEmailEditing = async (e) => {
-        toggleEmailEditing(!emailEditing);
-        console.log(emailEditing);
-    }
+    const handleEmailEditing = async (e) => { toggleEmailEditing(!emailEditing); }
 
-    // let userData= postToBackend(API_ROUTES.BACKEND.GET_LOGGED_IN, )
-    // console.log(userData)
+    let projectLabel = {
+        donorInProgress: "Donated Project In Progress",
+        donorCompleted: "Donated Project Completed"
+    }
 
     return (
 
@@ -48,19 +44,23 @@ const Profile = (props) => {
             <h class="account-page-title">My Profile</h>
             <div class="profile-container basic-group">
                 <div class="p-user-name-area ">
-                    {nameEditing ? 
-                    <input id="p-user-name-input" onBlur={handleNameEditing}></input>
-                    :
-                    <h class="profile-label" id="p-user-name">[ {userName} ]</h>
+                    {nameEditing ?
+                        <input id="p-user-name-input" onBlur={handleNameEditing}></input>
+                        :
+                        <h class="profile-label" id="p-user-name">[ {userName} ]</h>
                     }
                     <text onClick={handleNameEditing} class="edit-info">edit</text>
                 </div>
 
                 <div class="user-status"> <h class="approve-tag">{userRole}</h></div>
-                <div class="project-inprogress profile-label">Donated Project In Progress</div>
-                <div class="project-completed profile-label">Donated Project Completed</div>
+                <div class="project-inprogress profile-label">My Projects In Progress</div>
+                <div class="project-completed profile-label">My Projects Completed</div>
+
+
                 <div class="project-inprogress-box">
-                    <div class="active-project-container my-project-container"></div>
+                    <div class="active-project-container my-project-container">
+                        <ProjectTiling slice={userSlice}/>
+                    </div>
                 </div>
                 <div class="project-completed-box">
                     <div class="non-active-project-container my-project-container"></div>
@@ -76,13 +76,13 @@ const Profile = (props) => {
                 </div>
                 {/* <div class="password-label profile-label">Password</div> */}
                 {/* <div class="p-password"> */}
-                    {/* {passwordEditing ? */}
-                        {/* <input id="p-password-input" type="password" onBlur={handlePasswordEditing} defaultValue={slice.password}></input> */}
-                        {/* : */}
-                        {/* <h id="p-password">{slice.password}</h> */}
-                    {/* } */}
-                    {/* <text onClick={handlePasswordEditing} class="edit-info">edit</text> */}
-                    {/* <EditOutlinedIcon id="edit-icon"  onClick={handlePasswordEditing}></EditOutlinedIcon> */}
+                {/* {passwordEditing ? */}
+                {/* <input id="p-password-input" type="password" onBlur={handlePasswordEditing} defaultValue={slice.password}></input> */}
+                {/* : */}
+                {/* <h id="p-password">{slice.password}</h> */}
+                {/* } */}
+                {/* <text onClick={handlePasswordEditing} class="edit-info">edit</text> */}
+                {/* <EditOutlinedIcon id="edit-icon"  onClick={handlePasswordEditing}></EditOutlinedIcon> */}
                 {/* </div> */}
 
             </div>
@@ -91,6 +91,56 @@ const Profile = (props) => {
     );
 
 }
+
+
+const ProjectTiling = (props) => {
+
+    let [tiles, setTiles] = useState([]);
+
+    useEffect(() => {		
+		setTiles(makeTiles(props.slice.projects.slice()));
+	}, [props.slice.projects]);
+
+    const makeTiles = (projects) => {
+        let tiling = [];
+        for (const project of projects) {
+            tiling.push(
+                <ProjectTile
+                    id={project._id}
+                    title={project.projectName}
+                    progress={Math.floor(project.totalSaved / project.goalAmount) * 100}
+                />
+            );
+        }
+
+        return tiling;
+    }
+
+    return (
+        <div>
+            <div className="project-tiling">
+                {tiles}
+            </div>
+        </div>
+    );
+}
+
+const ProjectTile = (props) => {
+
+    return (
+        <div>
+            <Link  to={"/explore/project/" + props.id}>
+                <div className="project-list-item">
+                    <h4 className="project-list-title">{props.title}</h4>
+                    <h4 className="project-list-item-prog">{props.progress}%</h4>
+                </div>
+            </Link>
+
+        </div>
+    );
+
+}
+
 
 
 export default Profile;
