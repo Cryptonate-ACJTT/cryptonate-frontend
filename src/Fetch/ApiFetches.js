@@ -1,3 +1,5 @@
+import { trackPromise } from "react-promise-tracker";
+import { reducerFxns } from "../Redux/Slices/SiteSlice";
 import { buildFetch, CONTENT_TYPES, FETCH_TYPE } from "./Fetcher";
 
 /*
@@ -181,6 +183,18 @@ export const logoutUser = ({callback} = {}) => {
 	return postToBackend(API_ROUTES.BACKEND.LOGOUT_USER, {}, {callback: callback, credentials: true});
 }
 
+
+/**
+ * 
+ * @param {*} username 
+ * @param {*} role 
+ * @param {*} param2 
+ * @returns 
+ */
+export const getLoggedIn = (username, role, {callback} = {}) => {
+	return postToBackend(API_ROUTES.BACKEND.GET_LOGGED_IN, {username: username, role:role}, {callback: callback, credentials: true});
+}
+
 /*******************************
 	PROJECT FORM
 *******************************/
@@ -199,12 +213,14 @@ export const submitProjectForm = (userInfo, formData, {callback} = {}) => {
  * @returns Promise
  */
 export const txnBasic = (userInfo, sender, receiver, amount, {callback} = {}) => {
-	return postToBackend(API_ROUTES.BACKEND.TXN_BASIC, {
-		email: userInfo.email,
-		role: userInfo.role,
-		wallet: userInfo.wallet.id,
-		sender: sender,
-		receiver: receiver,
-		amount: amount
-	}, {callback: callback, credentials: true});
+	return trackPromise(
+		postToBackend(API_ROUTES.BACKEND.TXN_BASIC, {
+			email: userInfo.email,
+			role: userInfo.role,
+			wallet: userInfo.wallet.id,
+			sender: sender,
+			receiver: receiver,
+			amount: amount
+		}, {callback: callback, credentials: true})
+	);
 }

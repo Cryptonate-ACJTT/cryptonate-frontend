@@ -296,13 +296,13 @@ const ExploreTile = (props) => {
 	return (
 		<Grid item xs={4}>
 			<Link to={"/explore/project/" + props.id}>
-				<Card className="explore-tile" variant="outlined" sx={{"border-radius": "20px"}}>
+				<Card className="explore-tile" variant="outlined" sx={{"borderRadius": "20px"}}>
 					<CardContent>
 						<Typography variant="h4">{props.title}</Typography>
 					</CardContent>
 					
-					<CardMedia component="img" alt="" height="150" image={ADDRESSES.BACKEND + props.image} sx={{"border-radius":"10px", border:"2px solid lightgray"}}/>
-					<CardContent style={{"padding-bottom": 0}}>
+					<CardMedia component="img" alt="" height="150" image={ADDRESSES.BACKEND + props.image} sx={{"borderRadius":"10px", border:"2px solid lightgray"}}/>
+					<CardContent style={{"paddingBottom": 0}}>
 						<Grid container spacing={2}>
 							<Grid item xs={8}>
 								<Typography maxHeight="100px" minHeight="100px" variant="body2" xs={{"overflowWrap":"breakWord", "overflow": "hidden"}}>{props.desc}</Typography>
@@ -320,7 +320,7 @@ const ExploreTile = (props) => {
 							<Grid item xs={8}>
 								<Typography variant="caption">{new Date(props.date).toDateString()}</Typography>
 							</Grid>
-							<Grid item xs={4} sx={{"text-align": "right"}}>
+							<Grid item xs={4} sx={{"textAlign": "right"}}>
 								<Tooltip title={
 									<React.Fragment>
 										<Typography>{props.verified ? "This project has been verified!" : "Unverified as of " + new Date(props.date).toDateString()}</Typography>

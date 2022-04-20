@@ -16,6 +16,10 @@ const userLoginReducer = (state, loginInfo) => {
 }
 
 const userLoginFxn = (loginInfo) => {
+	if(!localStorage.getItem("userInfo")) {
+		localStorage.setItem("userInfo", JSON.stringify(loginInfo));
+	}
+
 	Store.dispatch({type: "userLoginReducer", payload: loginInfo});
 }
 
@@ -35,6 +39,7 @@ const userLogoutReducer = (state) => {
  * Dispatches userLogoutReducer to store.
  */
 const userLogoutFxn = () => {
+	localStorage.clear();
 	Store.dispatch({type: "userLogoutReducer", payload: null});
 }
 

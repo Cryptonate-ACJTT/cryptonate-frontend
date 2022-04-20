@@ -3,7 +3,7 @@ import './Default.css'	// was messing around with this pay no mind.
 import { API_ROUTES, postToBackend, txnBasic } from "../../Fetch/ApiFetches";
 import './Wallet.css'
 import { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
-import logo from "./Images/algorand_logo_mark_black.svg";
+//import logo from "./Images/algorand_logo_mark_black.svg";
 // class Wallet extends React.Component {
 
 const Wallet = (props) => {
@@ -63,7 +63,7 @@ const Wallet = (props) => {
 				<div key={i} className="page-informatic basic-description flex-vertical">
 					<div className="account-id vflex-75">{accounts[i].address}</div>
 					<div className="account-balance vflex-25">
-						Balance: {accounts[i].balance}<img src={logo} style={{"height":"2.5em", "display":"inline"}}/>
+						Balance: {accounts[i].balance}<img src={null} style={{"height":"2.5em", "display":"inline"}}/>
 					</div>
 				</div>
 			);

@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Project.css"
-import ExploreSlice from "../../Redux/Slices/ExploreSlice";
-import { API_ROUTES, getFromBackend, postToBackend } from "../../Fetch/ApiFetches";
+import { ADDRESSES, API_ROUTES, getFromBackend, postToBackend, txnBasic } from "../../Fetch/ApiFetches";
 import FourOhFour from "./FourOhFour";
+import { Alert, Box, Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { DarkAlgoIcon } from "../PageBits/Icons/Icons";
+import UserSlice from "../../Redux/Slices/UserSlice";
 
 
 const Project = (props) => {
 	const { id } = useParams();
-	const slice = ExploreSlice.useSlice();
+	const slice = UserSlice.useSlice();
 	let [projectData, setProjectData] = useState();
+	let [donateOpen, setDonateOpen] = useState(false);
+	let [loggedInAlert, setLoggedInAlert] = useState(false);
 
 	/**
 	 * Get page data before component render.
 	 */
+	
 	useEffect(() => {
 		getPageData();
 
 		return(() => {
-			ExploreSlice.unsubscribe();
+			UserSlice.unsubscribe();
 		});
 	}, []);
 
@@ -26,13 +31,64 @@ const Project = (props) => {
 	 * Gets page data! Put here so useEffect doesn't complain about missing dependencies.
 	 */
 	const getPageData = () => {
+		postToBackend(API_ROUTES.BACKEND.GET_PROJECT, {id: id}, {callback: (data) => {
+			setProjectData(data.project);
+			console.log(data.project);
+		}});
+		/*
 		if(!slice.projects.length) {
-			postToBackend(API_ROUTES.BACKEND.GET_PROJECT, {id: id}, {callback: (data) => {
-				setProjectData(data.project);
-			}});
+			
 		} else {
 			setProjectData(slice.projects.filter(proj => proj._id === id)[0]);
+		}*/
+	}
+
+	const dialogHandler = () => {
+		if(slice.loggedIn) {
+			if(donateOpen) {
+				setDonateOpen(false);
+			} else {
+				setDonateOpen(true);
+			}
+		} else {
+			alertHandler();
 		}
+	}
+
+	const alertHandler = () => {
+		if (loggedInAlert) {
+			setLoggedInAlert(false);
+		} else {
+			setLoggedInAlert(true);
+		}
+	}
+
+	const donateHandler = (e) => {
+		e.preventDefault();
+		let formData = new FormData(e.currentTarget);
+		
+
+		if(slice.userInfo) {
+			if(formData.get("amount") > 0) {
+				if(formData.get("account")) {
+					dialogHandler();
+					return txnBasic(slice.userInfo, formData.get("account"), projectData.address, parseInt(formData.get("amount")));
+				}
+			}
+		}		
+	}
+
+	const makeAccountSelect = (accounts) => {
+		let displayItems = [];
+		console.log("ACC", accounts)
+		for(let i = 0; i < accounts.length; i++) {
+			displayItems.push(
+				<MenuItem key={i} value={accounts[i]}>
+					{accounts[i]}
+				</MenuItem>);
+		}
+
+		return displayItems;	
 	}
 
 	if(!projectData) {	// project doesn't exist probably
@@ -41,17 +97,93 @@ const Project = (props) => {
 		)
 	} else {
 		return ( 
-			<div className="project-container">
+			<Box>
+				<Dialog open={loggedInAlert} onClose={alertHandler}>
+					<Alert severity="warning">You must be logged in to donate.</Alert>
+				</Dialog>
+				
+				<Dialog open={donateOpen} onClose={dialogHandler} fullWidth maxWidth="md">
+					<form onSubmit={donateHandler}>
+						<DialogContent>
+							<DialogContentText variant="caption">
+								Project Address: {projectData.address}
+							</DialogContentText>
+							<DialogContentText variant="h5">
+								How much would you like to donate to {projectData.projectName}?
+							</DialogContentText>
+							<Select name="account" fullwidth value={slice.userInfo ? slice.userInfo.wallet.accounts[0] : null}>
+								{slice.userInfo? makeAccountSelect(slice.userInfo.wallet.accounts) : null}
+							</Select>
+							<Grid container spacing={2}>
+								<Grid item xs={1}>
+									<DarkAlgoIcon/>
+								</Grid>
+								<Grid item xs={11}>
+									<TextField name="amount" type="number" fullWidth variant="outlined" defaultValue={0}></TextField>
+								</Grid>
+							</Grid>
+						</DialogContent>
+						
+						<DialogActions>
+							<Button type="submit">DONATE</Button>
+							<Button onClick={dialogHandler}>Cancel</Button>
+						</DialogActions>
+					</form>
+				</Dialog>
+				<Grid container spacing={2} height="100vw">
+					<Grid item xs={7}>
+						<Card>
+							<CardContent sx={{borderBottom: "3px solid gray"}}>
+								<Typography variant="h3" sx={{borderBottom: "3px dotted lightgray"}}>{projectData.projectName}</Typography>
+								<Typography variant="h5">{projectData.projectSubTitle}</Typography>
+							</CardContent>
+							<CardMedia sx={{border: "3px solid lightgrey"}} component="img" alt="" image={ADDRESSES.BACKEND + projectData.image} height="400px"/>
+							<CardContent sx={{textAlign:"left"}}>
+								<Typography variant="body2">{projectData.solution}</Typography>
+							</CardContent>
+						</Card>
+					</Grid>
+					<Grid item xs={5}>
+						<Card>
+							<CardContent sx={{textAlign:"left", border:"3px dashed rgba(0,0,0,0.2)", margin: "5px"}}>
+								<Grid container spacing={2}>
+									<Grid item xs={6}>
+										<Typography variant="h5">{projectData.orgName}'s Goal:</Typography>
+									</Grid>
+									<Grid item xs={6}>
+										<Typography variant="h5"><DarkAlgoIcon/>{projectData.goalAmount}</Typography>
+									</Grid>
+								</Grid>
+								<Grid container spacing={2}>
+									<Grid item xs={6}>
+										<Typography variant="h5">Total raised: </Typography>
+									</Grid>
+									<Grid item xs={6}>
+										<Typography variant="h5"><DarkAlgoIcon/>{projectData.totalSaved}</Typography>
+									</Grid>
+								</Grid>
+							</CardContent>
+							<CardContent>
+								<Button sx={{width: "100%"}} onClick={() => {dialogHandler(true)}}>
+									DONATE
+								</Button>
+							</CardContent>
+						</Card>
+					</Grid>
+				</Grid>
+			</Box>
+		)
+	}
+}
+/*
+
+<div className="project-container">
 				<div className="project-details">
 					<p>{JSON.stringify(projectData)}</p>
 					<h1 className="page-title">{projectData.projectName}</h1>
 					<img className="project-image" src={projectData.image}/>
 				</div>
 			</div>	
-		)
-	}
-}
-/*
 import Visualizer from './Visualizer';
 import logo from "./Images/algorand_logo_mark_black.svg";
 import image from "./Images/temp.jpg"

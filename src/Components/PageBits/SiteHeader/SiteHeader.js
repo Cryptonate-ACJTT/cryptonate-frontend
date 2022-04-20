@@ -7,14 +7,17 @@ import image from '../../Pages/Images/cryptonate-logo.png'
 
 import { Link, Navigate } from 'react-router-dom'
 import UserSlice, { reducerFxns as userReducers } from "../../../Redux/Slices/UserSlice";
+import { logoutUser } from "../../../Fetch/ApiFetches";
 
 const SiteHeader = (props) => {
 
 	const slice = UserSlice.useSlice();
 
     const handleLogout = (e) => {
-        userReducers.userLogoutFxn();
-		<Navigate to="/"/>
+		logoutUser({callback: () => {
+			userReducers.userLogoutFxn();
+			<Navigate to="/"/>
+		}})
     }
 
     return (
