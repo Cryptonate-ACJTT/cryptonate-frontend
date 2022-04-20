@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import "./Project.css"
 import { ADDRESSES, API_ROUTES, getFromBackend, postToBackend, txnBasic } from "../../Fetch/ApiFetches";
 import FourOhFour from "./FourOhFour";
-import { Alert, Box, Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { DarkAlgoIcon } from "../PageBits/Icons/Icons";
 import UserSlice from "../../Redux/Slices/UserSlice";
 
@@ -14,6 +14,7 @@ const Project = (props) => {
 	let [projectData, setProjectData] = useState();
 	let [donateOpen, setDonateOpen] = useState(false);
 	let [loggedInAlert, setLoggedInAlert] = useState(false);
+
 	/**
 	 * Get page data before component render.
 	 */
@@ -63,7 +64,18 @@ const Project = (props) => {
 	}
 
 	const donateHandler = (e) => {
-		return txnBasic()
+		e.preventDefault();
+		let formData = new FormData(e.currentTarget);
+		
+
+		if(slice.userInfo) {
+			if(formData.get("amount") > 0) {
+				if(formData.get("account")) {
+					dialogHandler();
+					return txnBasic(slice.userInfo, formData.get("account"), projectData.address, parseInt(formData.get("amount")));
+				}
+			}
+		}		
 	}
 
 	const makeAccountSelect = (accounts) => {
@@ -91,30 +103,32 @@ const Project = (props) => {
 				</Dialog>
 				
 				<Dialog open={donateOpen} onClose={dialogHandler} fullWidth maxWidth="md">
-					<DialogContent>
-						<DialogContentText variant="caption">
-							Project Address: {projectData.address}
-						</DialogContentText>
-						<DialogContentText variant="h5">
-							How much would you like to donate to {projectData.projectName}?
-						</DialogContentText>
-						<Select fullwidth value={slice.userInfo ? slice.userInfo.wallet.accounts[0] : null}>
-							{slice.userInfo? makeAccountSelect(slice.userInfo.wallet.accounts) : null}
-						</Select>
-						<Grid container spacing={2}>
-							<Grid item xs={1}>
-								<DarkAlgoIcon/>
+					<form onSubmit={donateHandler}>
+						<DialogContent>
+							<DialogContentText variant="caption">
+								Project Address: {projectData.address}
+							</DialogContentText>
+							<DialogContentText variant="h5">
+								How much would you like to donate to {projectData.projectName}?
+							</DialogContentText>
+							<Select name="account" fullwidth value={slice.userInfo ? slice.userInfo.wallet.accounts[0] : null}>
+								{slice.userInfo? makeAccountSelect(slice.userInfo.wallet.accounts) : null}
+							</Select>
+							<Grid container spacing={2}>
+								<Grid item xs={1}>
+									<DarkAlgoIcon/>
+								</Grid>
+								<Grid item xs={11}>
+									<TextField name="amount" type="number" fullWidth variant="outlined" defaultValue={0}></TextField>
+								</Grid>
 							</Grid>
-							<Grid item xs={11}>
-								<TextField type="number" fullWidth variant="outlined" defaultValue={0}></TextField>
-							</Grid>
-						</Grid>
-					</DialogContent>
-					
-					<DialogActions>
-						<Button onClick={donateHandler}>DONATE</Button>
-						<Button onClick={dialogHandler}>Cancel</Button>
-					</DialogActions>
+						</DialogContent>
+						
+						<DialogActions>
+							<Button type="submit">DONATE</Button>
+							<Button onClick={dialogHandler}>Cancel</Button>
+						</DialogActions>
+					</form>
 				</Dialog>
 				<Grid container spacing={2} height="100vw">
 					<Grid item xs={7}>

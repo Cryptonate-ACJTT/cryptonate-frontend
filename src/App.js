@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 
@@ -20,13 +20,31 @@ import Profile from './Components/Pages/Profile';
 import OrgAuthForm from './Components/Pages/OrgAuthForm';
 import ProjectForm from './Components/Pages/ProjectForm';
 import AuthorizedRoute from './Components/PageBits/AuthRoute/AuthRoute';
-import { API_ROUTES } from './Fetch/ApiFetches';
+import { API_ROUTES, getLoggedIn } from './Fetch/ApiFetches';
 import Loading from './Components/PageBits/Loading/Loading';
+import UserSlice, {reducerFxns as userReducers} from './Redux/Slices/UserSlice';
 
 const PAGES = API_ROUTES.FRONTEND;
 
 // TODO: protected routes for profile, wallet, project form, etc
 const App = () => {
+  const userSlice = UserSlice.useSlice();
+
+  useEffect(() => {
+	if(!userSlice.loggedIn) {
+		let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+		if(userInfo) {
+			getLoggedIn(userInfo.username, userInfo.role, {callback: (data) => {
+				if(data.loggedIn) {
+					userReducers.userLoginFxn(data.user);
+				}
+			}});
+		}
+	}
+		
+  });
+
   return (
 	<div>
 		<BrowserRouter>

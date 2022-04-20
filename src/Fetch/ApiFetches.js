@@ -183,6 +183,18 @@ export const logoutUser = ({callback} = {}) => {
 	return postToBackend(API_ROUTES.BACKEND.LOGOUT_USER, {}, {callback: callback, credentials: true});
 }
 
+
+/**
+ * 
+ * @param {*} username 
+ * @param {*} role 
+ * @param {*} param2 
+ * @returns 
+ */
+export const getLoggedIn = (username, role, {callback} = {}) => {
+	return postToBackend(API_ROUTES.BACKEND.GET_LOGGED_IN, {username: username, role:role}, {callback: callback, credentials: true});
+}
+
 /*******************************
 	PROJECT FORM
 *******************************/
