@@ -74,7 +74,11 @@ export const API_ROUTES = {
 		CREATE_WALLET: "/crypto/newWallet",
 		CHECK_BALANCE: "/crypto/balance",
 
-		TXN_BASIC: "/crypto/txn/basic"
+		TXN_BASIC: "/crypto/txn/basic",
+
+
+		/* INDEX */
+		GET_ACCOUNT_TXN: "/crypto/index/account"
 	},
 
 	ALGORAND: {
@@ -222,5 +226,16 @@ export const txnBasic = (userInfo, sender, receiver, amount, {callback} = {}) =>
 			receiver: receiver,
 			amount: amount
 		}, {callback: callback, credentials: true})
+	);
+}
+
+
+/*******************************
+	INDEXER
+*******************************/
+
+export const getAccountTxns = (address, {callback} = {}) => {
+	return trackPromise(
+		postToBackend(API_ROUTES.BACKEND.GET_ACCOUNT_TXN, {address: address}, {callback: callback})
 	);
 }

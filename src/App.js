@@ -42,7 +42,8 @@ const App = () => {
 			}});
 		}
 	}
-		
+
+	return UserSlice.unsubscribe();	
   });
 
   return (
