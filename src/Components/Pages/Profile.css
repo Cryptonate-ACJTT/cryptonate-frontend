@@ -51,14 +51,10 @@
 .project-list-item{
   display: flex;
   justify-content: space-between;
-}
-
-.project-list-title {
+  font-size: larger;
+ font-weight: bolder;
  color: black;
-}
 
-.project-list-item-prog{
-  color: black;
 }
 
 .no-project{
