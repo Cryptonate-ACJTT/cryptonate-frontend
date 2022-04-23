@@ -22,63 +22,63 @@ const ProjectForm = (props) => {
 	//action="http://localhost:4000/api/v1/project/create" method="POST" enctype="multipart/form-data" class="project-form-group">
     return (
 
-        <div class="basic-div basic-form">
+        <div className="basic-div basic-form">
 
-            <div class="account-page-title">Project Form</div>
+            <div className="account-page-title">Project Form</div>
 
             <form onSubmit={submitForm} className="project-form-group"> 
 
-                <div class="project-form-container">
+                <div className="project-form-container">
 
-                    <div class="form-left">
+                    <div className="form-left">
                         <div id="the-form" name="project-form">
 
-                            <div class="form-input-group">
-                                <label for="title-input" class="form-label">Title</label>
+                            <div className="form-input-group">
+                                <label htmlFor="title-input" className="form-label">Title</label>
                                 <textarea id="title-input" rows="1" cols="50" name="projectName" required />
                             </div>
-                            <div class="form-input-group">
-                                <label for="org-input" class="form-label">Org name</label>
+                            <div className="form-input-group">
+                                <label htmlFor="org-input" className="form-label">Org name</label>
                                 <textarea id="org-input" rows="1" cols="50" name="orgName" required />
                             </div>
 
-                            <div class="form-input-group">
-                                <label for="subtitle-input" class="form-label">Subtitle</label>
+                            <div className="form-input-group">
+                                <label htmlFor="subtitle-input" className="form-label">Subtitle</label>
                                 <textarea id="subtitle-input" rows="1" cols="50" name="projectSubTitle" required />
                             </div>
 
-                            <div class="form-input-group">
-                                <label for="summary-input" class="form-label">Summary</label>
+                            <div className="form-input-group">
+                                <label htmlFor="summary-input" className="form-label">Summary</label>
                                 <textarea id="summary-input" name="summary" required cols="50" placeholder="Briefly summarize the project" />
                             </div>
 
-                            <div class="form-input-group">
-                                <label for="goal-input" class="form-label">Goal Amount</label>
+                            <div className="form-input-group">
+                                <label htmlFor="goal-input" className="form-label">Goal Amount</label>
                                 <input type={"number"} min="0" step="any" id="goal-input" name="goalAmount" required placeholder="Enter the goal in Algo" />
                             </div>
 
                             <div>
-                                <h class ="header-label" >Image</h>
+                                <label className ="header-label" >Image</label>
                                 <input type={"file"} name="image" id="selectedFile" ></input>
                             </div>
                             
                         </div>
                     </div>
-                    <div class="form-right">
+                    <div className="form-right">
 
                         <div id="the-form" action="#" method="POST" name="project-form">
 
-                            <div class="form-input-group">
-                                <label for="detail-input" class="form-label">Detail</label>
+                            <div className="form-input-group">
+                                <label htmlFor="detail-input" className="form-label">Detail</label>
                                 <textarea id="detail-input" name="project-detail" required rows="6" cols="50" placeholder="Explain the project detail" />
                             </div>
 
-                            <div class="form-input-group">
-                                <label for="solution-input" class="form-label">Solution</label>
+                            <div className="form-input-group">
+                                <label htmlFor="solution-input" className="form-label">Solution</label>
                                 <textarea id="solution-input" name="solution" required rows="6" cols="50" placeholder="Explain the project solution" />
                             </div>
                             <div className="form-input-group">
-                                <h className="header-label" >Category</h>
+                                <label className="header-label" >Category</label>
                                 <select id="category-input" name="category">
                                     <option>Animal</option>
                                     <option>Children</option>
@@ -90,7 +90,7 @@ const ProjectForm = (props) => {
 
                 </div>
 
-                <button id="submit-button" type="submit" class="submit-button button-group" >SUBMIT</button>
+                <button id="submit-button" type="submit" className="submit-button button-group" >SUBMIT</button>
 
             </form>
 

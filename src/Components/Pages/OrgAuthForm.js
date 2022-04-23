@@ -15,9 +15,9 @@ const OrgAuthForm = (props) => {
     }
 
     return (
-        <div class="basic-div basic-form">
-            <h class="account-page-title">Information Form for Authentication</h>
-            <form onSubmit={submitForm} class="form-group basic-group" encType="multipart/form-data">
+        <div className="basic-div basic-form">
+            <p className="account-page-title">Information Form for Authentication</p>
+            <form onSubmit={submitForm} className="form-group basic-group" encType="multipart/form-data">
 
                 {/* <input name="orgId" class="input-box" />
                 <input name="name" class="input-box" />
@@ -28,44 +28,44 @@ const OrgAuthForm = (props) => {
                 <input name="location" class="input-box"></input>
                 <input name="website" class="input-box"></input> */}
 
-                <div class="input-container">
-                    <div class="input-tag-group">
+                <div className="input-container">
+                    <div className="input-tag-group">
                         <div>
                             <label id="org-username">Organization's user name</label>
-                            <h class="approve-tag">Approved</h>
+                            <p className="approve-tag">Approved</p>
                         </div>
-                        <h class="input-tag">1. Organization Name*</h>
-                        <h class="input-tag">2. Employment Identification Number*</h>
-                        <h class="input-tag">3. Category*</h>
-                        <h class="input-tag">4. Organization Email*</h>
-                        <h class="input-tag">5. Organization Phone Number</h>
-                        <h class="input-tag">6. Location</h>
-                        <h class="input-tag">7. Website Address*</h>
+                        <p className="input-tag">1. Organization Name*</p>
+                        <p className="input-tag">2. Employment Identification Number*</p>
+                        <p className="input-tag">3. Category*</p>
+                        <p className="input-tag">4. Organization Email*</p>
+                        <p className="input-tag">5. Organization Phone Number</p>
+                        <p className="input-tag">6. Location</p>
+                        <p className="input-tag">7. Website Address*</p>
                     </div>
-                    <div class="input-group">
-                        <div class="edit-info-button-group">
-                            <button class="edit-info-button"> Edit Info</button>
+                    <div className="input-group">
+                        <div className="edit-info-button-group">
+                            <button className="edit-info-button"> Edit Info</button>
                         </div>
-                        <input name="name" class="input-box"></input>
-                        <input name="EIN" class="input-box"></input>
+                        <input name="name" className="input-box"></input>
+                        <input name="EIN" className="input-box"></input>
                         <div>
                             <select name="category" id="category-select">
                                 <option>Animal</option>
                                 <option>Children</option>
                             </select>
                         </div>
-                        <input name="email" class="input-box"></input>
-                        <input name="phone" class="input-box"></input>
-                        <input name="location"class="input-box"></input>
-                        <input name="website"class="input-box"></input>
+                        <input name="email" className="input-box"></input>
+                        <input name="phone" className="input-box"></input>
+                        <input name="location"className="input-box"></input>
+                        <input name="website"className="input-box"></input>
 
                     </div>
 
                 </div>
                 <div id="warning"> * fields are mandatory</div>
 
-                <div class="button-group">
-                    <button type="submit" class="submit-button">SUBMIT</button>
+                <div className="button-group">
+                    <button type="submit" className="submit-button">SUBMIT</button>
                 </div>
             </form>
         </div>

@@ -15,7 +15,7 @@
     "password-label password"; 
 }
 
-.p-user-name-area { grid-area: p-user-name-area;}
+.p-user-name-area { grid-area: p-user-name-area; display: ruby;}
 .user-status {  grid-area: user-status;}
 .edit-button {  text-align: center;   grid-area: edit-button; }
 .project-inprogress { grid-area: project-inprogress; }
@@ -23,7 +23,7 @@
 .project-inprogress-box { grid-area: project-inprogress-box; }
 .project-completed-box { grid-area: project-completed-box; }
 .email-label { grid-area: email-label; }
-.p-email { grid-area: p-email; }
+.p-email { grid-area: p-email; display: ruby;}
 .password-label { grid-area: password-label; }
 .password { grid-area: password; }
 
@@ -52,9 +52,8 @@
   display: flex;
   justify-content: space-between;
   font-size: larger;
- font-weight: bolder;
- color: black;
-
+  font-weight: bolder;
+  color: black;
 }
 
 .no-project{

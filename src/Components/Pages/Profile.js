@@ -62,18 +62,18 @@ const Profile = (props) => {
 
         <div className="basic-div basic-form profile-screen">
 
-            <h className="account-page-title">My Profile</h>
+            <p className="account-page-title">My Profile</p>
             <div className="profile-container basic-group">
                 <div className="p-user-name-area ">
                     {nameEditing ?
                         <input id="p-user-name-input" onBlur={handleNameEditing}></input>
                         :
-                        <h className="profile-label" id="p-user-name">[ {userName} ]</h>
+                        <p className="profile-label" id="p-user-name">[ {userName} ]</p>
                     }
-                    <text onClick={handleNameEditing} className="edit-info">edit</text>
+                    <p onClick={handleNameEditing} className="edit-info">edit</p>
                 </div>
 
-                <div className="user-status"> <h className="approve-tag">{userRole}</h></div>
+                <div className="user-status"> <p className="approve-tag">{userRole}</p></div>
 
                 <div className="project-inprogress profile-label">{projectInProgressLabel}</div>
                 <div className="project-completed profile-label">{projectCompletedLabel}</div>
@@ -106,9 +106,9 @@ const Profile = (props) => {
                     {emailEditing ?
                         <input id="p-email-input" onBlur={handleEmailEditing}></input>
                         :
-                        <h id="p-email">{userEmail}</h>
+                        <p id="p-email">{userEmail}</p>
                     }
-                    <text onClick={handleEmailEditing} className="edit-info">edit</text>
+                    <p onClick={handleEmailEditing} className="edit-info">edit</p>
                 </div>
                 {/* <div class="password-label profile-label">Password</div> */}
                 {/* <div class="p-password"> */}
@@ -167,7 +167,7 @@ const ProjectTile = (props) => {
     return (
         <Link to={"/explore/project/" + props.id}>
             <div className="project-list-item">
-                <div className="project-list-title" >[ {props.title} ]</div>
+                <div className="project-list-title">[ {props.title} ]</div>
                 <div className="project-list-item-prog">{props.progress}%</div>
             </div>
         </Link>
