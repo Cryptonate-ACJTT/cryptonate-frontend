@@ -12,8 +12,6 @@ const Profile = (props) => {
     const [nameEditing, toggleNameEditing] = useState(false);
     const [emailEditing, toggleEmailEditing] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [projInProgEmpty, setProjInProgEmpty] = useState(true);
-    const [projCompletedEmpty, setProjCompletedEmpty] = useState(true);
 
 
     const userSlice = UserSlice.useSlice();
@@ -34,14 +32,6 @@ const Profile = (props) => {
         else if(project.projectOpen == false){
             projectsCompleted.push(project)
         }
-    }
-    console.log(projectsCompleted.length)
-
-    if(projectsInProg.length != 0){
-        setProjInProgEmpty(false)
-    }
-    else if(projectsCompleted.length != 0){
-        setProjCompletedEmpty(false)
     }
 
 
@@ -92,7 +82,7 @@ const Profile = (props) => {
                 <div className="project-inprogress-box">
                     <div className="active-project-container my-project-container">
                         {
-                            (projInProgEmpty)?
+                            (projectsInProg.length == 0)?
                             <div className="no-project">No Projects In Progress</div>
                             :
                             <ProjectTiling projects={projectsInProg} />
@@ -103,7 +93,7 @@ const Profile = (props) => {
                 <div className="project-completed-box">
                     <div className="non-active-project-container my-project-container">
                         {
-                            projCompletedEmpty?
+                            (projectsCompleted.length == 0)?
                             <div className="no-project">No Projects Completed</div>
                             :
                             <ProjectTiling projects={projectsCompleted} />
