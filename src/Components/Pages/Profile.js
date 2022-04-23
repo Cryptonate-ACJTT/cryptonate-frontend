@@ -8,6 +8,14 @@ import { Link } from "react-router-dom";
 
 const Profile = (props) => {
 
+    const [passwordEditing, togglePasswordEditing] = useState(false);
+    const [nameEditing, toggleNameEditing] = useState(false);
+    const [emailEditing, toggleEmailEditing] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [projInProgEmpty, setProjInProgEmpty] = useState(true);
+    const [projCompletedEmpty, setProjCompletedEmpty] = useState(true);
+
+
     const userSlice = UserSlice.useSlice();
 
     let userRole = userSlice.userInfo.role;
@@ -16,61 +24,101 @@ const Profile = (props) => {
 
     let projects = userSlice.userInfo.projects;
 
-    console.log(projects)
+    let projectsInProg = []
+    let projectsCompleted = []
+
+    for (const project of projects){
+        if(project.projectOpen == true){
+            projectsInProg.push(project)
+        }
+        else if(project.projectOpen == false){
+            projectsCompleted.push(project)
+        }
+    }
+    console.log(projectsCompleted.length)
+
+    if(projectsInProg.length != 0){
+        setProjInProgEmpty(false)
+    }
+    else if(projectsCompleted.length != 0){
+        setProjCompletedEmpty(false)
+    }
 
 
-    const [passwordEditing, togglePasswordEditing] = useState(false);
-    const [nameEditing, toggleNameEditing] = useState(false);
-    const [emailEditing, toggleEmailEditing] = useState(false);
+    if (userRole == "admin") {
+        setIsAdmin(true)
+    }
 
 
     const handlePasswordEditing = async (e) => { togglePasswordEditing(!passwordEditing); }
-
     const handleNameEditing = async (e) => { toggleNameEditing(!nameEditing); }
-
     const handleEmailEditing = async (e) => { toggleEmailEditing(!emailEditing); }
 
-    let projectLabel = {
-        donorInProgress: "Donated Project In Progress",
-        donorCompleted: "Donated Project Completed"
+    let projectInProgressLabel = ""
+    let projectCompletedLabel = ""
+
+
+    if (userRole == "admin") {
+        projectInProgressLabel = "Organizations To Be Authorized"
+        projectCompletedLabel = "Authorizaed Organizations"
     }
+    else {
+        projectInProgressLabel = "My Projects In Progress"
+        projectCompletedLabel = "My Projects Completed"
+    }
+
 
     return (
 
-        <div class="basic-div basic-form profile-screen">
+        <div className="basic-div basic-form profile-screen">
 
-            <h class="account-page-title">My Profile</h>
-            <div class="profile-container basic-group">
-                <div class="p-user-name-area ">
+            <h className="account-page-title">My Profile</h>
+            <div className="profile-container basic-group">
+                <div className="p-user-name-area ">
                     {nameEditing ?
                         <input id="p-user-name-input" onBlur={handleNameEditing}></input>
                         :
-                        <h class="profile-label" id="p-user-name">[ {userName} ]</h>
+                        <h className="profile-label" id="p-user-name">[ {userName} ]</h>
                     }
-                    <text onClick={handleNameEditing} class="edit-info">edit</text>
+                    <text onClick={handleNameEditing} className="edit-info">edit</text>
                 </div>
 
-                <div class="user-status"> <h class="approve-tag">{userRole}</h></div>
-                <div class="project-inprogress profile-label">My Projects In Progress</div>
-                <div class="project-completed profile-label">My Projects Completed</div>
+                <div className="user-status"> <h className="approve-tag">{userRole}</h></div>
+
+                <div className="project-inprogress profile-label">{projectInProgressLabel}</div>
+                <div className="project-completed profile-label">{projectCompletedLabel}</div>
 
 
-                <div class="project-inprogress-box">
-                    <div class="active-project-container my-project-container">
-                        <ProjectTiling slice={userSlice} />
+                <div className="project-inprogress-box">
+                    <div className="active-project-container my-project-container">
+                        {
+                            (projInProgEmpty)?
+                            <div className="no-project">No Projects In Progress</div>
+                            :
+                            <ProjectTiling projects={projectsInProg} />
+                        }
+                        
                     </div>
                 </div>
-                <div class="project-completed-box">
-                    <div class="non-active-project-container my-project-container"></div>
+                <div className="project-completed-box">
+                    <div className="non-active-project-container my-project-container">
+                        {
+                            projCompletedEmpty?
+                            <div className="no-project">No Projects Completed</div>
+                            :
+                            <ProjectTiling projects={projectsCompleted} />
+                        }
+                        
+                    </div>
                 </div>
-                <div class="email-label profile-label">Email</div>
-                <div class="p-email">
+                <div className="email-label profile-label">Email</div>
+                <div className="p-email">
                     {emailEditing ?
                         <input id="p-email-input" onBlur={handleEmailEditing}></input>
                         :
                         <h id="p-email">{userEmail}</h>
                     }
-                    <text onClick={handleEmailEditing} class="edit-info">edit</text>
+                    <text onClick={handleEmailEditing} className="edit-info">edit</text>
                 </div>
                 {/* <div class="password-label profile-label">Password</div> */}
                 {/* <div class="p-password"> */}
@@ -95,8 +143,8 @@ const ProjectTiling = (props) => {
     let [tiles, setTiles] = useState([]);
 
     useEffect(() => {
-        setTiles(makeTiles(props.slice.userInfo.projects.slice()));
-    }, [props.slice.userInfo.projects]);
+        setTiles(makeTiles(props.projects.slice()));
+    }, [props.projects]);
 
 
     const makeTiles = (projects) => {
@@ -104,6 +152,7 @@ const ProjectTiling = (props) => {
         for (const project of projects) {
             tiling.push(
                 <ProjectTile
+                    key = {project._id}
                     id={project._id}
                     title={project.projectName}
                     progress={Math.floor(project.totalSaved / project.goalAmount) * 100}
@@ -124,16 +173,14 @@ const ProjectTiling = (props) => {
 }
 
 const ProjectTile = (props) => {
-    return (
-        <div>
-            <Link to={"/explore/project" + props.id}>
-                <div className="project-list-item">
-                    <h4 className="project-list-title">{props.title}</h4>
-                    <h4 className="project-list-title">{props.progress}</h4>
 
-                </div>
-            </Link>
-        </div>
+    return (
+        <Link to={"/explore/project/" + props.id}>
+            <div className="project-list-item">
+                <h4 className="project-list-title">[ {props.title} ]</h4>
+                <h4 className="project-list-item-prog">{props.progress}%</h4>
+            </div>
+        </Link>
     );
 }
 

@@ -19,16 +19,16 @@ const OrgAuthForm = (props) => {
             <h class="account-page-title">Information Form for Authentication</h>
             <form onSubmit={submitForm} class="form-group basic-group" encType="multipart/form-data">
 
-                <input name="orgId" class="input-box" />
+                {/* <input name="orgId" class="input-box" />
                 <input name="name" class="input-box" />
                 <input name="EIN" class="input-box" />
                 <input name="category" class="input-box" />
                 <input name="email" class="input-box"></input>
                 <input name="phone" class="input-box"></input>
                 <input name="location" class="input-box"></input>
-                <input name="website" class="input-box"></input>
+                <input name="website" class="input-box"></input> */}
 
-                {/* <div class="input-container">
+                <div class="input-container">
                     <div class="input-tag-group">
                         <div>
                             <label id="org-username">Organization's user name</label>
@@ -62,7 +62,7 @@ const OrgAuthForm = (props) => {
                     </div>
 
                 </div>
-                <div id="warning"> * fields are mandatory</div> */}
+                <div id="warning"> * fields are mandatory</div>
 
                 <div class="button-group">
                     <button type="submit" class="submit-button">SUBMIT</button>

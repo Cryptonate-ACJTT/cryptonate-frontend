@@ -29,12 +29,12 @@
 
 .my-project-container{
   border-radius: 10px;
-  min-height: 136px;
+  min-height: fit-content;
   width:700px;
 }
-.active-project-container {   background-color: #9FC4FB;  }
+.active-project-container {   background-color: #9FC4FB;  padding: 15px;}
 
-.non-active-project-container {    background-color: #a8a4a44a;   }
+.non-active-project-container {    background-color: #a8a4a44a;  padding: 15px; }
   
 .profile-label{  font-weight: bold;   }
 
@@ -46,4 +46,21 @@
 #edit-icon{
   vertical-align: middle;
   margin-left: 10px;
+}
+
+.project-list-item{
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-list-title {
+ color: black;
+}
+
+.project-list-item-prog{
+  color: black;
+}
+
+.no-project{
+  text-align: center;
 }
