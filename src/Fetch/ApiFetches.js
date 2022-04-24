@@ -204,6 +204,15 @@ export const submitProjectForm = (userInfo, formData, {callback} = {}) => {
 	return postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
 }
 
+/************************************
+	ORGANIZATION AUTHORIZATION FORM
+*************************************/
+
+export const submitOrgAuthForm = (userInfo, formData, {callback} = {}) => {
+	formData.append("userInfo", userInfo); // userInfo not in form
+	return postToBackend(API_ROUTES.BACKEND.SUBMIT_ORG_FORM, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
+}
+
 /*******************************
 	CRYPTO TRANSACTIONS
 *******************************/

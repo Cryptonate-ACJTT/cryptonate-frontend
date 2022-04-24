@@ -73,7 +73,14 @@ const Profile = (props) => {
                     <p onClick={handleNameEditing} className="edit-info">edit</p>
                 </div>
 
-                <div className="user-status"> <p className="approve-tag">{userRole}</p></div>
+                <div className="user-status"> 
+                {/* {userSlice.userInfo.approved == true ? 
+                    <p className="approved-tag">{userRole}</p>
+                : 
+                    <p className="not-approved-tag">{userRole}</p>
+                } */}
+                    <p className="approved-tag">{userRole}</p>
+                </div>
 
                 <div className="project-inprogress profile-label">{projectInProgressLabel}</div>
                 <div className="project-completed profile-label">{projectCompletedLabel}</div>
