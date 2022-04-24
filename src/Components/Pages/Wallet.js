@@ -1,61 +1,36 @@
 import React, { useEffect, useState } from "react";
-import './Default.css'	// was messing around with this pay no mind.
 import { API_ROUTES, getAccountTxns, postToBackend, txnBasic } from "../../Fetch/ApiFetches";
-import './Wallet.css'
-import { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
-import { Accordion, AccordionSummary, AccordionDetails, Grid, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material"
-import { DataGrid, getGridColDef } from "@mui/x-data-grid"
+import { Accordion, AccordionSummary, AccordionDetails, Grid, Typography, Paper, Box } from "@mui/material"
+import { DataGrid } from "@mui/x-data-grid"
 import { ExpandMoreRounded } from "@mui/icons-material";
+import Visualizer from "../PageBits/Visualize/Visualize";
 //import logo from "./Images/algorand_logo_mark_black.svg";
 // class Wallet extends React.Component {
 
 const Wallet = (props) => {
-
-
 	const slice = props.userSlice;
 
 	const [accounts, setAccounts] = useState([]);
 
-	console.log(slice);
-
+	/**
+	 * Get account balances;
+	 */
 	useEffect(() => {
 		let acc = [];
 
 		(async () => {
 			let addrs = slice.userInfo.wallet.accounts;
-			for(let i = 0; i < addrs.length; i++) {
-				await postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, {address: addrs[i]}, {callback: (data) => {
-					acc.push({
-						address: addrs[i], 
-						balance: data.balance
-					});
-				}});
-			}
-			console.log(acc);
+			await postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, {addresses: addrs}, {callback: (data) => {
+				for(let account of data.balances) {
+					acc.push(account);
+				}
+			}});
+			
 			setAccounts(acc);
 		})();
 
 	}, [slice.userInfo.wallet.accounts]);
 
-
-	const getBalances = () => {
-		
-	}
-	const addWallet = (e) => {
-		// nauw
-	}
-
-	const generateWallet = (e) => {
-		postToBackend(API_ROUTES.BACKEND.CREATE_WALLET, {
-			email: slice.userInfo.email,
-			role: slice.userInfo.role
-		}, {
-			credentials: true, 
-			callback: (data) => {
-				userReducers.userWalletFxn(data.wallet);
-			}
-		});
-	}
 
 
 	const addWalletAccounts = (accounts) => {
@@ -64,14 +39,6 @@ const Wallet = (props) => {
 		for(let i = 0; i < accounts.length; i++) {
 			accountsReturned.push(
 				<WalletAccordion key={i} address={accounts[i].address} balance={accounts[i].balance}/>
-
-				/*
-				<div key={i} className="page-informatic basic-description flex-vertical">
-					<div className="account-id vflex-75">{accounts[i].address}</div>
-					<div className="account-balance vflex-25">
-						Balance: {accounts[i].balance}<img src={null} style={{"height":"2.5em", "display":"inline"}}/>
-					</div>
-				</div>*/
 			);
 		}
 
@@ -86,74 +53,27 @@ const Wallet = (props) => {
 		}})
 	}
 
-	if(!slice.userInfo.wallet) {
-		return (
-			<div className="page-container">
-				<h1 class="page-title">My Wallet</h1>
-				<hr/>
-				<p className="basic-description">You don't have a wallet yet!</p>
-				<p className="basic-description">
-					<button onClick={addWallet} disabled>CONNECT</button> or <button onClick={generateWallet}>GENERATE</button> one now!
-				</p>
+	return (
+		<Box className="page-container">
+			<Typography variant="h3" sx={{mb: "20px", borderBottom: "3px solid rgba(0,0,0,0.2)"}}>My Wallet</Typography>
+			
+			<div>
+				<Paper elevation={1} mt="100px">
+				<Grid container spacing={2}>
+					<Grid item xs={8}>
+						<Typography variant="h4">Account</Typography>
+					</Grid>
+					<Grid item xs={4}>
+						<Typography variant="h4">Balance</Typography>
+					</Grid>
+				</Grid>
+				</Paper>
+				{addWalletAccounts(accounts)}
 			</div>
-		)
-	} else {
-		return (
-			<div className="page-container">
-				<h1 class="page-title">My Wallet</h1>
-				<hr/>
-				<div className="page-content-group">
-					{addWalletAccounts(accounts)}
-				</div>
-				<button onClick={testTxn}>Test send</button>
-			</div>
-		)
-	}
-
-	/*
-
+			<button onClick={testTxn}>Test send</button>
+		</Box>
+	)
 	
-	<div className="flex-horizontal">
-					<div className="page-content-group vflex-40" style={{"background-color": "red"}}>
-
-					</div>
-					<div className="page-content-group vflex-60" style={{"background-color":"yellow"}}/>
-				</div>
-				*/
-	/*
-    return (
-        <div class="basic-div profile-screen">
-
-            <h class="account-page-title">My Wallet</h>
-            <div class="wallet-container basic-group">
-                <div class="w-user-name-area ">
-                    <div class="profile-label" id="p-user-name" >[ {slice.username} ] 's Wallet</div>
-                </div>
-                <div class="w-user-status">  <h class="approve-tag">{slice.role}</h></div>
-                <div class="change-wallet"><button >Change Wallet</button></div>
-
-                <div class="balance-tag-area"> <div class="tag-box">Balance</div></div>
-                <div class="balance-area">
-                    <div class="balance-box wallet-box"></div>
-                </div>
-                <div class="transaction-tag-area"><div class="tag-box">Transactions</div></div>
-                <div class="transaction-container">
-                    <div class="transaction-box wallet-box"></div>
-
-                </div>
-                {/* <div class="project-inprogress profile-label">Donated Project In Progress</div>
-                    <div class="project-completed profile-label">Donated Project Completed</div>
-                    <div class="project-inprogress-box">
-                        <div class="active-project-container"></div>
-                    </div>
-                    <div class="project-completed-box">
-                        <div class="non-active-project-container"></div>
-                    </div> }
-            </div>
-        </div>
-
-
-    );*/
 }
 
 const WalletAccordion = (props) => {
@@ -162,10 +82,10 @@ const WalletAccordion = (props) => {
 	const [accData, setAccData] = useState(null);
 	const [tableData, setTableData] = useState(null);
 
-	useEffect(() => {
 
-	});
-
+	/**
+	 * Open/close the accordion, and populate data to it if none yet exists.
+	 */
 	const openAccordion = () => {
 		if(!open) {
 			setOpen(true);
@@ -183,6 +103,10 @@ const WalletAccordion = (props) => {
 		}
 	}
 
+	/**
+	 * Create a DataGrid containing account transaction information.
+	 * @param {*} txns 
+	 */
 	const dataExploration = (txns) => {
 		let dataCols = [
 			{ field: "id", headerName: "ID", minWidth: "80", flex: 2 },
@@ -197,17 +121,6 @@ const WalletAccordion = (props) => {
 
 		
 		for(let i = 0; i < txns.length; i++) {
-
-			/*
-			let tbCell = {
-				id: txns[i].id,
-				toFrom: txns[i].sender === props.address ? "Outgoing ->" : "Incoming <-",
-				amount: txns[i]["payment-transaction"].amount,
-				fee: txns[i].fee
-			}*/
-
-			console.log(Date.now(), txns[i]["round-time"]);
-
 			tbData.push({
 				id: txns[i].id,
 				toFrom: txns[i].sender === props.address ? "Outgoing ->" : "Incoming <-",
@@ -220,13 +133,16 @@ const WalletAccordion = (props) => {
 
 
 		setTableData(
-			<div style={{display:"flex", height:"350px", width:"100%"}}>
+			<div style={{display:"flex", height:"320px", width:"100%"}}>
 				<DataGrid
 					rows={tbData}
 					columns={dataCols}
 					pageSize={5}
 					rowsPerPageOptions={[5]}
 					columnBuffer={8}
+					disableSelectionOnClick
+					disableColumnFilter
+					disableColumnMenu
 				/>
 			</div>
 		);
@@ -240,35 +156,20 @@ const WalletAccordion = (props) => {
 					<Grid item xs={4}>{props.balance}</Grid>
 				</Grid>
 			</AccordionSummary>
-			<AccordionDetails>
+			<AccordionDetails sx={{borderTop: "3px dotted rgba(0,0,0,0.2)"}}>
 				<Grid container spacing={2}>
 					<Grid item xs={8}>
+						<Typography variant="h6">Transaction History</Typography>
 						{open ? tableData : null}
 					</Grid>
 					<Grid item xs={4}>
-
+						<Typography variant="h6">Visualization</Typography>
+						<Visualizer variant="mini" height="320px"/>
 					</Grid>
 				</Grid>
 			</AccordionDetails>
 		</Accordion>
 	);
-
-	/*
-						<Table>
-							<TableHead>
-								<TableRow>
-									<TableCell>ID</TableCell>
-									<TableCell>To/From</TableCell>
-									<TableCell>Amount</TableCell>
-									<TableCell>Fee</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{open ? tableData : null}
-							</TableBody>
-						</Table>
-						*/
-
 }
 
 export default Wallet;

@@ -23,8 +23,12 @@ import AuthorizedRoute from './Components/PageBits/AuthRoute/AuthRoute';
 import { API_ROUTES, getLoggedIn } from './Fetch/ApiFetches';
 import Loading from './Components/PageBits/Loading/Loading';
 import UserSlice, {reducerFxns as userReducers} from './Redux/Slices/UserSlice';
+import { theme } from './SiteTheme';
+import { ThemeProvider } from '@emotion/react';
 
 const PAGES = API_ROUTES.FRONTEND;
+
+
 
 // TODO: protected routes for profile, wallet, project form, etc
 const App = () => {
@@ -47,7 +51,8 @@ const App = () => {
   });
 
   return (
-	<div>
+	
+	<ThemeProvider theme={theme}>
 		<BrowserRouter>
 			<div className="App">
 				<SiteHeader/>
@@ -73,7 +78,7 @@ const App = () => {
 			</div>
 		</BrowserRouter>
 		<Loading/>
-	</div>
+	</ThemeProvider>
     ) 
   }
 
