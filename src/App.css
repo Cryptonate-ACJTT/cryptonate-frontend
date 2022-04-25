@@ -72,12 +72,22 @@ html, body {
   margin-bottom: 10px;
 }
 
-.approve-tag{
+.approved-tag{
   background-color: lightgreen;
   border-radius: 15px;
   width: fit-content;
-    padding-left: 25px;
-    padding-right: 25px;
+  padding-left: 25px;
+  padding-right: 25px;
+  display: inline-block;
+  text-align: center;
+}
+
+.not-approved-tag{
+  background-color: lightcoral;
+  border-radius: 15px;
+  width: fit-content;
+  padding-left: 25px;
+  padding-right: 25px;
   display: inline-block;
   text-align: center;
 }

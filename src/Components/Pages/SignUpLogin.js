@@ -101,15 +101,15 @@ const SignUpLogin = (props) => {
   if (!loginTabClicked) {
 
     return (
-      <div class="basic-div basic-form">
+      <div className="basic-div basic-form">
 
         <div id="signup">
-          <div class="tab-container">
-            <h id="login-tab" class="basic-tab not-active" onClick={handleTabSwitch} >LOGIN</h>
-            <h id="signup-tab" class="basic-tab active" onClick={handleTabSwitch}> SIGN UP</h>
+          <div className="tab-container">
+            <p id="login-tab" className="basic-tab not-active" onClick={handleTabSwitch} >LOGIN</p>
+            <p id="signup-tab" className="basic-tab active" onClick={handleTabSwitch}> SIGN UP</p>
           </div>
           
-          <div class="signup-login-group basic-group">
+          <div className="signup-login-group basic-group">
 
             <form
               onSubmit={SignUpHandler}
@@ -129,8 +129,8 @@ const SignUpLogin = (props) => {
                 value={ConfirmPasword}
                 onChange={onConfirmPasswordHandler}
               />
-              <div class="question-container">
-                <div class="are-you-an-organization">Are you an organization?</div>
+              <div className="question-container">
+                <div className="are-you-an-organization">Are you an organization?</div>
                 <input type="checkbox" onChange={onRoleSwitch}/>
 
               </div>
@@ -143,16 +143,16 @@ const SignUpLogin = (props) => {
   }
   else {
     return (
-      <div class="basic-div basic-form">
+      <div className="basic-div basic-form">
 
         <div id="login" >
 
-          <div class="tab-container">
-            <h class="basic-tab active" onClick={handleTabSwitch} >LOGIN</h>
-            <h class="basic-tab not-active" onClick={handleTabSwitch} >SIGN UP</h>
+          <div className="tab-container">
+            <p className="basic-tab active" onClick={handleTabSwitch} >LOGIN</p>
+            <p className="basic-tab not-active" onClick={handleTabSwitch} >SIGN UP</p>
           </div>
 
-          <div class="signup-login-group basic-group">
+          <div className="signup-login-group basic-group">
 
             <form
               onSubmit={LoginHandler}

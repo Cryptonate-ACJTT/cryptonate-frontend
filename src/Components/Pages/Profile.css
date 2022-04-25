@@ -15,7 +15,7 @@
     "password-label password"; 
 }
 
-.p-user-name-area { grid-area: p-user-name-area;}
+.p-user-name-area { grid-area: p-user-name-area; display: ruby;}
 .user-status {  grid-area: user-status;}
 .edit-button {  text-align: center;   grid-area: edit-button; }
 .project-inprogress { grid-area: project-inprogress; }
@@ -23,18 +23,18 @@
 .project-inprogress-box { grid-area: project-inprogress-box; }
 .project-completed-box { grid-area: project-completed-box; }
 .email-label { grid-area: email-label; }
-.p-email { grid-area: p-email; }
+.p-email { grid-area: p-email; display: ruby;}
 .password-label { grid-area: password-label; }
 .password { grid-area: password; }
 
 .my-project-container{
   border-radius: 10px;
-  min-height: 136px;
+  min-height: fit-content;
   width:700px;
 }
-.active-project-container {   background-color: #9FC4FB;  }
+.active-project-container {   background-color: #9FC4FB;  padding: 15px;}
 
-.non-active-project-container {    background-color: #a8a4a44a;   }
+.non-active-project-container {    background-color: #a8a4a44a;  padding: 15px; }
   
 .profile-label{  font-weight: bold;   }
 
@@ -46,4 +46,16 @@
 #edit-icon{
   vertical-align: middle;
   margin-left: 10px;
+}
+
+.project-list-item{
+  display: flex;
+  justify-content: space-between;
+  font-size: larger;
+  font-weight: bolder;
+  color: black;
+}
+
+.no-project{
+  text-align: center;
 }

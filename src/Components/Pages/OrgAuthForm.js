@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./OrgAuthForm.css";
-import { API_ROUTES, postToBackend } from "../../Fetch/ApiFetches";
-import { CONTENT_TYPES } from "../../Fetch/Fetcher";
+import { useNavigate } from "react-router-dom";
+import { API_ROUTES, submitOrgAuthForm } from "../../Fetch/ApiFetches";
+import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
+
 
 const OrgAuthForm = (props) => {
+
+    const [isEditing, setIsEditing] = useState(false);
+
+    const handleIsEditing = (e) => {    setIsEditing(!isEditing)    }
+
+    const userSlice = UserSlice.useSlice();
+	const navigate = useNavigate();
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -11,62 +20,54 @@ const OrgAuthForm = (props) => {
         let formData = new FormData(e.currentTarget);
         console.log("!!!!!!!! ORG FORM !!!!!!!!")
         console.log(formData)
-        postToBackend(API_ROUTES.BACKEND.SUBMIT_ORG_FORM, formData, { contentType: CONTENT_TYPES.FORM_DATA });
+        submitOrgAuthForm(JSON.stringify(props.userSlice.userInfo), formData, {callback: (data) => {
+			userReducers.userWalletFxn(data.wallet);
+			navigate("/profile", {replace: true});
+		}});
+        // how to append user Id?
     }
 
     return (
-        <div class="basic-div basic-form">
-            <h class="account-page-title">Information Form for Authentication</h>
-            <form onSubmit={submitForm} class="form-group basic-group" encType="multipart/form-data">
-
-                <input name="orgId" class="input-box" />
-                <input name="name" class="input-box" />
-                <input name="EIN" class="input-box" />
-                <input name="category" class="input-box" />
-                <input name="email" class="input-box"></input>
-                <input name="phone" class="input-box"></input>
-                <input name="location" class="input-box"></input>
-                <input name="website" class="input-box"></input>
-
-                {/* <div class="input-container">
-                    <div class="input-tag-group">
+        <div className="basic-div basic-form">
+            <p className="account-page-title">Information Form for Authentication</p>
+            <form onSubmit={submitForm} className="form-group basic-group" encType="multipart/form-data">
+                <div className="input-container">
+                    <div className="input-tag-group">
                         <div>
-                            <label id="org-username">Organization's user name</label>
-                            <h class="approve-tag">Approved</h>
+                            <label id="org-username">[ {userSlice.userInfo.username} ]</label>
+                            <p className="approved-tag">Approved</p>
                         </div>
-                        <h class="input-tag">1. Organization Name*</h>
-                        <h class="input-tag">2. Employment Identification Number*</h>
-                        <h class="input-tag">3. Category*</h>
-                        <h class="input-tag">4. Organization Email*</h>
-                        <h class="input-tag">5. Organization Phone Number</h>
-                        <h class="input-tag">6. Location</h>
-                        <h class="input-tag">7. Website Address*</h>
+                        <p className="input-tag">1. Organization Name*</p>
+                        <p className="input-tag">2. Employment Identification Number*</p>
+                        <p className="input-tag">3. Category*</p>
+                        <p className="input-tag">4. Organization Email*</p>
+                        <p className="input-tag">5. Organization Phone Number</p>
+                        <p className="input-tag">6. Location</p>
+                        <p className="input-tag">7. Website Address*</p>
                     </div>
-                    <div class="input-group">
-                        <div class="edit-info-button-group">
-                            <button class="edit-info-button"> Edit Info</button>
+                    <div className="input-group">
+                        <div className="edit-info-button-group">
+                            <button type="button" onClick={handleIsEditing} className="edit-info-button"> Edit Info</button>
                         </div>
-                        <input name="name" class="input-box"></input>
-                        <input name="EIN" class="input-box"></input>
+                        <input disabled ={!isEditing} name="name" className="input-box"></input>
+                        <input disabled ={!isEditing} name="EIN" className="input-box"></input>
                         <div>
-                            <select name="category" id="category-select">
+                            <select disabled ={!isEditing} name="category" id="category-select">
                                 <option>Animal</option>
                                 <option>Children</option>
                             </select>
                         </div>
-                        <input name="email" class="input-box"></input>
-                        <input name="phone" class="input-box"></input>
-                        <input name="location"class="input-box"></input>
-                        <input name="website"class="input-box"></input>
+                        <input disabled ={!isEditing} name="email" className="input-box"></input>
+                        <input disabled ={!isEditing} name="phone" className="input-box"></input>
+                        <input disabled ={!isEditing} name="location"className="input-box"></input>
+                       <input disabled ={!isEditing} name="website"className="input-box"></input>
 
                     </div>
 
                 </div>
-                <div id="warning"> * fields are mandatory</div> */}
+                <div id="warning"> * fields are mandatory</div>
 
-                <div class="button-group">
-                    <button type="submit" class="submit-button">SUBMIT</button>
-                </div>
+                    <button type="submit" className="button-group submit-button">SUBMIT</button>
             </form>
         </div>
 
