@@ -51,6 +51,13 @@ export const theme = createTheme({
 						fontWeight: "100",
 						fontFamily: "Roboto",
 					}
+				},
+				{
+					props: { variant: "data" },
+					style: {
+						fontFamily: "monospace",
+						color: "darkslategray"	
+					}
 				}
 
 			],

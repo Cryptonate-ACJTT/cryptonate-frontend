@@ -17,18 +17,18 @@ const Home = (props) => {
 
     return (	
 		<Grid container spacing={2} alignItems="center" mt="20vh">
-			<img className="home-screen-image" src={image} alt="img" />
 			<Grid item xs={9}>
-				<Typography variant="title">CHANGE THE WORLD<br/> WITH CRYPTONATE</Typography>
+				<Typography variant="title">CHANGE THE WORLD<br/> WITH <b>CRYPTONATE</b></Typography>
 					<br/><br/>
 				<Typography variant="tagline">blockchain for a better tomorrow</Typography>
+				<img className="home-screen-image" src={image} alt="img" />
 			</Grid>
 			<Grid item xs={3}/>
 			<Grid item xs={9}>
 				<Box ml="15vw" mr="15vw" pt="2vh" sx={{borderTop: "3px dotted rgba(0,0,0,0.2)"}}>
 					<Grid container spacing={3}>
 						<Grid item xs={4}>
-							<Typography variant="stats">Open Fundraisers</Typography>
+							<Typography variant="stats">Fundraisers</Typography>
 						</Grid>
 						<Grid item xs={4}>
 							<Typography variant="stats">Donated</Typography>

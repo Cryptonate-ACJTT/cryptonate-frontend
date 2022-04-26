@@ -63,7 +63,7 @@ const App = () => {
 
 					<Route path="/profile" element={<AuthorizedRoute component={Profile}/>} />
 					<Route path="/organization-auth-form" element={<AuthorizedRoute component={OrgAuthForm}/>} />
-					<Route path="/project-form" element={<AuthorizedRoute component={ProjectForm}/>} />
+					<Route path="/project-form" element={<AuthorizedRoute component={ProjectForm} redirect={"/explore"}/>} />
 					<Route path="/wallet" element={<AuthorizedRoute component={Wallet}/>} />
 
 					<Route path="/logout" element={<Navigate replace to="/home"/>}/>
