@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Store from './Redux/Store';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from "./SiteTheme"
 // import reportWebVitals from './reportWebVitals';
 
 // initialize the store
@@ -19,9 +21,11 @@ console.log(
   );	// yes thank you I love startup logos
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App/>
-  </React.StrictMode>,
+	<React.StrictMode>
+		<ThemeProvider theme={theme}>
+    		<App/>
+		</ThemeProvider>
+	</React.StrictMode>,
   document.getElementById('root')
 );
 

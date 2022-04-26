@@ -55,10 +55,10 @@ const Wallet = (props) => {
 
 	return (
 		<Box className="page-container">
-			<Typography variant="h3" sx={{mb: "20px", borderBottom: "3px solid rgba(0,0,0,0.2)"}}>My Wallet</Typography>
+			<Typography variant="h3" sx={{mb: "3vh", borderBottom: "3px dotted rgba(0,0,0,0.2)"}}>My Wallet</Typography>
 			
 			<div>
-				<Paper elevation={1} mt="100px">
+				<Paper elevation={1} mt="100px" pb="3vh" sx={{backgroundColor: "#1C3E64", color: "white"}}>
 				<Grid container spacing={2}>
 					<Grid item xs={8}>
 						<Typography variant="h4">Account</Typography>
