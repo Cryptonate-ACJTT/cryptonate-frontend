@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ADDRESSES, API_ROUTES, getFromBackend } from "../../Fetch/ApiFetches";
 import ExploreSlice, { CATEGORIES, reducerFxns, SORTINGS } from "../../Redux/Slices/ExploreSlice"
 import { Card, CardContent, CardMedia, Grid, Tooltip, Typography, Box, CircularProgress, Stack, TextField, Button, Select, MenuItem, Checkbox, FormControlLabel, FormGroup } from "@mui/material"
@@ -7,6 +7,7 @@ import "./Explore.css";
 import "./Default.css";
 import PageContainer from "../PageBits/PageContainer/PageContainer";
 import UserSlice from "../../Redux/Slices/UserSlice";
+import { UnverifiedIcon, VerifiedIcon } from "../PageBits/Icons/Icons";
 
 const PROJECTS_PER_PAGE = 9; // multiple of three please
 
@@ -14,6 +15,8 @@ const PROJECTS_PER_PAGE = 9; // multiple of three please
 const Explore = () => {
 	const slice = ExploreSlice.useSlice();
 	const uSlice = UserSlice.useSlice();
+
+	console.log(uSlice);
 
 	/**
 	 * Watches for changes in slice.search, slice.categories and then searches based on that!
@@ -77,8 +80,6 @@ const Explore = () => {
 
 const ExploreSideBar = (props) => {
 
-	useNavigate();
-
 	/**
 	 * Adds options to the sort selection
 	 * @param {*} props 
@@ -118,16 +119,6 @@ const ExploreSideBar = (props) => {
 				<FormControlLabel key={"cat" + i} control={
 					<Checkbox onChange={((e) => {checkBoxHandler(e, i)})}/>
 				} label={<Typography fontSize="15px" variant="data"><b>{categories[i].name}</b></Typography>} />
-
-				/*
-				<MenuItem key={"cat"+i}>{categories[i].name}</MenuItem>
-				<Checkbox>
-
-				</Checkbox>*/
-				/*<div className="explore-category" key={"checkbox" + i} >
-					<input className="explore-category-checkbox" type="checkbox" id={"checkbox-" + categories[i].name} name={categories[i].name} onChange={(e) => {checkBoxHandler(e, i)}}/>
-					<label className="explore-category-label" htmlFor={"checkbox-" + categories[i].name}>{categories[i].name}</label>
-				</div>*/
 			)
 		}
 
@@ -139,7 +130,7 @@ const ExploreSideBar = (props) => {
 	 * @param {*} e 
 	 */
 	const exploreSortIntercept = (e) => {
-		let sorting = SORTINGS.filter(s => s.name == e.target.value)[0];
+		let sorting = SORTINGS.filter(s => s.name === e.target.value)[0];
 		reducerFxns.exploreSortFxn(sorting);
 	}
 
@@ -175,12 +166,15 @@ const ExploreSideBar = (props) => {
 		<Stack  sx={{background:"rgba(255,255,255,0.5)", p:"2vh", borderRadius:"5px 10px 5px 10px"}}>
 			{createProjectButton()}
 			<form onSubmit={exploreSearchIntercept}>
-				<Grid container spacing={2} sx={{pb:"1vh", mb: "1vh", borderBottom: "1px solid rgba(0,0,0,0.2)"}}>
+				<Grid container spacing={2} sx={{pb:"1vh", mb: "1vh"}}>
 					<Grid item xs={8}>
 						<TextField fullWidth name="searchy" type="text" variant="outlined" label="Search by Keyword" style={{borderRadius:"10px 0 0 10px"}}/>
 					</Grid>
-					<Grid item xs={4} style={{"padding-left":"0px"}}>
+					<Grid item xs={4} style={{paddingLeft:"0px"}}>
 						<Button type="submit" value="search" variant="contained" sx={{width:"100%", height:"100%", borderRadius:"0 10px 10px 0"}}>Search</Button>
+					</Grid>
+					<Grid item xs={12}>
+						<Box sx={{borderBottom: "1px solid rgba(0,0,0,0.2)"}}/>
 					</Grid>
 				</Grid>
 			</form>
@@ -190,7 +184,7 @@ const ExploreSideBar = (props) => {
 					<Typography variant="stats">Sort By</Typography>
 				</Grid>	
 				<Grid item xs={8}>
-					<Select fullWidth id="sort-select" onChange={exploreSortIntercept}>
+					<Select fullWidth id="sort-select" onChange={exploreSortIntercept} label="sort">
 						{addSortOptions(props.sorts)}
 					</Select>
 				</Grid>
@@ -303,16 +297,6 @@ const ExploreTiling = (props) => {
 		</Stack>
 	);
 }
-/*
-<div className="explore-tiling">
-				{tiles}
-			</div>
-			<div className="create-project">
-				<Link to="/project-form">
-					<button className="create-project-btn">Create Project</button>
-				</Link>
-			</div>
-*/
 
 /**
  * Tile used to display a project.
@@ -323,37 +307,40 @@ const ExploreTile = (props) => {
 	return (
 		<Grid item xs={4}>
 			<Link to={"/explore/project/" + props.id}>
-				<Card className="explore-tile" variant="outlined" sx={{"borderRadius": "20px"}}>
-					<CardContent>
+				<Card variant="outlined" sx={{background:"white", borderRadius:"15px", ":hover":{cursor: "pointer", boxShadow:"5px 5px rgba(0, 0, 0, 0.2)"}}}>
+					<CardContent sx={{background:"#1C3E64", color:"white", borderBottom:"5px solid rgba(0,0,0,0.2)"}}>
 						<Typography variant="h4">{props.title}</Typography>
 					</CardContent>
 					
-					<CardMedia component="img" alt="" height="150" image={ADDRESSES.BACKEND + props.image} sx={{"borderRadius":"10px", border:"2px dotted rgba(0,0,0,0.2)"}}/>
+					<CardMedia component="img" alt="" height="150" image={ADDRESSES.BACKEND + props.image} sx={{"borderRadius":"0 0 15px 15px", borderBottom:"5px groove rgba(0,0,0,0.5)"}}/>
 					<CardContent style={{"paddingBottom": 0}}>
 						<Grid container spacing={2}>
 							<Grid item xs={8}>
-								<Typography maxHeight="100px" minHeight="100px" variant="body2" xs={{"overflowWrap":"breakWord", "overflow": "hidden"}}>{props.desc}</Typography>
+								<Typography maxHeight="75px" minHeight="75px" variant="body2" sx={{overflowWrap:"break-word", overflow:"hidden", textOverflow:"ellipsis", textAlign:"left"}}>{props.desc}</Typography>
 							</Grid>
 
 							<Grid item xs={4}>
 								<Box sx={{ position: 'relative', display: 'inline-flex' }}>
-									<CircularProgress variant="determinate" value={100} size={"75px"} thickness={7} sx={{"position": "absolute", color:"gray"}}/>
+									<CircularProgress variant="determinate" value={100} size={"75px"} thickness={7} sx={{"position": "absolute", color:"lightgray"}}/>
 									<CircularProgress variant="determinate" value={props.progress} size={"75px"} thickness={7}/>
 									<Box sx={{inset: "0 0 0 0", position: "absolute", display: "flex", alignItems: "center", justifyContent: "center"}}>
 										<Typography variant="caption">{props.progress}%</Typography>
 									</Box>
 								</Box>
 							</Grid>
-							<Grid item xs={8}>
-								<Typography variant="caption">{new Date(props.date).toDateString()}</Typography>
+							<Grid item xs={12}>
+								<Box sx={{borderBottom: "1px solid rgba(0,0,0,0.2)"}}/>
 							</Grid>
-							<Grid item xs={4} sx={{"textAlign": "right"}}>
+							<Grid item xs={8} sx={{display:"flex", justifyContent:"left", alignItems:"center"}} style={{paddingTop:"0"}}>
+								<Typography fontSize="11px" variant="caption">{new Date(props.date).toDateString()}</Typography>
+							</Grid>
+							<Grid item xs={4} sx={{textAlign: "right"}} style={{paddingTop:"0"}}>
 								<Tooltip title={
 									<React.Fragment>
 										<Typography>{props.verified ? "This project has been verified!" : "Unverified as of " + new Date().toDateString()}</Typography>
 									</React.Fragment>}
 								>
-									<Typography variant="h6">{props.verified ? "🟢":"🔴"}</Typography>	
+									<Typography variant="h6">{props.verified ? <VerifiedIcon color="primary"/>:<UnverifiedIcon color="secondary"/>}</Typography>	
 								</Tooltip>
 								
 							</Grid>
