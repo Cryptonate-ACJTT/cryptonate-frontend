@@ -208,8 +208,9 @@ export const submitProjectForm = (userInfo, formData, {callback} = {}) => {
 	ORGANIZATION AUTHORIZATION FORM
 *************************************/
 
-export const submitOrgAuthForm = (userInfo, formData, {callback} = {}) => {
-	formData.append("userInfo", userInfo); // userInfo not in form
+export const submitOrgAuthForm = (orgId, formData, {callback} = {}) => {
+	formData.append("orgId", orgId); // userInfo not in form
+	console.log("orgID is : "+ orgId)
 	return postToBackend(API_ROUTES.BACKEND.SUBMIT_ORG_FORM, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
 }
 

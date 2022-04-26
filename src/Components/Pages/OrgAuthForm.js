@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./OrgAuthForm.css";
 import { useNavigate } from "react-router-dom";
-import { API_ROUTES, submitOrgAuthForm } from "../../Fetch/ApiFetches";
+import { submitOrgAuthForm } from "../../Fetch/ApiFetches";
 import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
 
 
@@ -9,10 +9,10 @@ const OrgAuthForm = (props) => {
 
     const [isEditing, setIsEditing] = useState(false);
 
-    const handleIsEditing = (e) => {    setIsEditing(!isEditing)    }
+    const handleIsEditing = (e) => { setIsEditing(!isEditing) }
 
     const userSlice = UserSlice.useSlice();
-	const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -20,10 +20,11 @@ const OrgAuthForm = (props) => {
         let formData = new FormData(e.currentTarget);
         console.log("!!!!!!!! ORG FORM !!!!!!!!")
         console.log(formData)
-        submitOrgAuthForm(JSON.stringify(props.userSlice.userInfo), formData, {callback: (data) => {
-			userReducers.userWalletFxn(data.wallet);
-			navigate("/profile", {replace: true});
-		}});
+        submitOrgAuthForm(userSlice.userInfo.id, formData, {
+            callback: (data) => {
+                // navigate("/profile", { replace: true });
+            }
+        });
         // how to append user Id?
     }
 
@@ -35,7 +36,11 @@ const OrgAuthForm = (props) => {
                     <div className="input-tag-group">
                         <div>
                             <label id="org-username">[ {userSlice.userInfo.username} ]</label>
-                            <p className="approved-tag">Approved</p>
+                            {userSlice.userInfo.approved == true ?
+                                <p className="approved-tag">Approved</p>
+                                :
+                                <p className="not-approved-tag">Not Approved</p>
+                            }
                         </div>
                         <p className="input-tag">1. Organization Name*</p>
                         <p className="input-tag">2. Employment Identification Number*</p>
@@ -49,25 +54,25 @@ const OrgAuthForm = (props) => {
                         <div className="edit-info-button-group">
                             <button type="button" onClick={handleIsEditing} className="edit-info-button"> Edit Info</button>
                         </div>
-                        <input disabled ={!isEditing} name="name" className="input-box"></input>
-                        <input disabled ={!isEditing} name="EIN" className="input-box"></input>
+                        <input disabled={!isEditing} name="name" className="input-box"></input>
+                        <input disabled={!isEditing} name="EIN" className="input-box"></input>
                         <div>
-                            <select disabled ={!isEditing} name="category" id="category-select">
+                            <select disabled={!isEditing} name="category" id="category-select">
                                 <option>Animal</option>
                                 <option>Children</option>
                             </select>
                         </div>
-                        <input disabled ={!isEditing} name="email" className="input-box"></input>
-                        <input disabled ={!isEditing} name="phone" className="input-box"></input>
-                        <input disabled ={!isEditing} name="location"className="input-box"></input>
-                       <input disabled ={!isEditing} name="website"className="input-box"></input>
+                        <input disabled={!isEditing} name="email" className="input-box"></input>
+                        <input disabled={!isEditing} name="phone" className="input-box"></input>
+                        <input disabled={!isEditing} name="location" className="input-box"></input>
+                        <input disabled={!isEditing} name="website" className="input-box"></input>
 
                     </div>
 
                 </div>
                 <div id="warning"> * fields are mandatory</div>
 
-                    <button type="submit" className="button-group submit-button">SUBMIT</button>
+                <button type="submit" className="button-group submit-button">SUBMIT</button>
             </form>
         </div>
 
