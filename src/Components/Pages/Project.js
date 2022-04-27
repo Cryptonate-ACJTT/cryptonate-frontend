@@ -4,7 +4,7 @@ import "./Project.css"
 import { ADDRESSES, API_ROUTES, getFromBackend, postToBackend, txnBasic } from "../../Fetch/ApiFetches";
 import FourOhFour from "./FourOhFour";
 import { Alert, Box, Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
-import { DarkAlgoIcon } from "../PageBits/Icons/Icons";
+import { AlgoIcon } from "../PageBits/Icons/Icons";
 import UserSlice from "../../Redux/Slices/UserSlice";
 
 
@@ -116,7 +116,7 @@ const Project = (props) => {
 							</Select>
 							<Grid container spacing={2}>
 								<Grid item xs={1}>
-									<DarkAlgoIcon/>
+									<AlgoIcon/>
 								</Grid>
 								<Grid item xs={11}>
 									<TextField name="amount" type="number" fullWidth variant="outlined" defaultValue={0}></TextField>
@@ -151,7 +151,7 @@ const Project = (props) => {
 										<Typography variant="h5">{projectData.orgName}'s Goal:</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography variant="h5"><DarkAlgoIcon/>{projectData.goalAmount}</Typography>
+										<Typography variant="h5"><AlgoIcon/>{projectData.goalAmount}</Typography>
 									</Grid>
 								</Grid>
 								<Grid container spacing={2}>
@@ -159,7 +159,7 @@ const Project = (props) => {
 										<Typography variant="h5">Total raised: </Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography variant="h5"><DarkAlgoIcon/>{projectData.totalSaved}</Typography>
+										<Typography variant="h5"><AlgoIcon/>{projectData.totalSaved}</Typography>
 									</Grid>
 								</Grid>
 							</CardContent>

@@ -4,6 +4,8 @@ import { Accordion, AccordionSummary, AccordionDetails, Grid, Typography, Paper,
 import { DataGrid } from "@mui/x-data-grid"
 import { ExpandMoreRounded } from "@mui/icons-material";
 import Visualizer from "../PageBits/Visualize/Visualize";
+import PageContainer from "../PageBits/PageContainer/PageContainer";
+import { AlgoIcon } from "../PageBits/Icons/Icons";
 //import logo from "./Images/algorand_logo_mark_black.svg";
 // class Wallet extends React.Component {
 
@@ -54,12 +56,10 @@ const Wallet = (props) => {
 	}
 
 	return (
-		<Box className="page-container">
-			<Typography variant="h3" sx={{mb: "20px", borderBottom: "3px solid rgba(0,0,0,0.2)"}}>My Wallet</Typography>
-			
+		<PageContainer title={"My Wallet"} content={
 			<div>
-				<Paper elevation={1} mt="100px">
-				<Grid container spacing={2}>
+				<Paper elevation={1} mt="100px" pb="3vh" sx={{backgroundColor: "#1C3E64", color: "white"}}>
+				<Grid container spacing={2} pb="1vh">
 					<Grid item xs={8}>
 						<Typography variant="h4">Account</Typography>
 					</Grid>
@@ -69,10 +69,16 @@ const Wallet = (props) => {
 				</Grid>
 				</Paper>
 				{addWalletAccounts(accounts)}
+				<button onClick={testTxn}>Test send</button>
 			</div>
-			<button onClick={testTxn}>Test send</button>
-		</Box>
+		}/>
 	)
+	/*
+		<Box className="page-container">
+			<Typography variant="h3" sx={{mb: "3vh", borderBottom: "3px dotted rgba(0,0,0,0.2)"}}>My Wallet</Typography>
+			
+			
+	*/
 	
 }
 
@@ -91,7 +97,6 @@ const WalletAccordion = (props) => {
 			setOpen(true);
 
 			if(accData === null) {
-				console.log("Sending shit");
 				getAccountTxns(props.address, {callback: (data) => {
 					let filtered = data.txns.transactions.filter(txn => txn["tx-type"] == "pay");
 					setAccData(filtered);
@@ -137,8 +142,8 @@ const WalletAccordion = (props) => {
 				<DataGrid
 					rows={tbData}
 					columns={dataCols}
-					pageSize={5}
-					rowsPerPageOptions={[5]}
+					pageSize={4}
+					rowsPerPageOptions={[4]}
 					columnBuffer={8}
 					disableSelectionOnClick
 					disableColumnFilter
@@ -152,8 +157,12 @@ const WalletAccordion = (props) => {
 		<Accordion expanded={open}>
 			<AccordionSummary expandIcon={<ExpandMoreRounded/>} onClick={openAccordion}>
 				<Grid container spacing={2}>
-					<Grid item xs={8}>{props.address}</Grid>
-					<Grid item xs={4}>{props.balance}</Grid>
+					<Grid item xs={8}>
+						<Typography variant="data" fontSize="18px">{props.address}</Typography>
+					</Grid>
+					<Grid item xs={4}>
+						<Typography variant="data" fontSize="18px"><AlgoIcon/>{(props.balance).toFixed(4)}</Typography>
+					</Grid>
 				</Grid>
 			</AccordionSummary>
 			<AccordionDetails sx={{borderTop: "3px dotted rgba(0,0,0,0.2)"}}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 
-import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/css/bootstrap.css';
 
 import SiteHeader from './Components/PageBits/SiteHeader/SiteHeader.js';
 
@@ -23,8 +23,6 @@ import AuthorizedRoute from './Components/PageBits/AuthRoute/AuthRoute';
 import { API_ROUTES, getLoggedIn } from './Fetch/ApiFetches';
 import Loading from './Components/PageBits/Loading/Loading';
 import UserSlice, {reducerFxns as userReducers} from './Redux/Slices/UserSlice';
-import { theme } from './SiteTheme';
-import { ThemeProvider } from '@emotion/react';
 
 const PAGES = API_ROUTES.FRONTEND;
 
@@ -51,8 +49,6 @@ const App = () => {
   });
 
   return (
-	
-	<ThemeProvider theme={theme}>
 		<BrowserRouter>
 			<div className="App">
 				<SiteHeader/>
@@ -67,7 +63,7 @@ const App = () => {
 
 					<Route path="/profile" element={<AuthorizedRoute component={Profile}/>} />
 					<Route path="/organization-auth-form" element={<AuthorizedRoute component={OrgAuthForm}/>} />
-					<Route path="/project-form" element={<AuthorizedRoute component={ProjectForm}/>} />
+					<Route path="/project-form" element={<AuthorizedRoute component={ProjectForm} redirect={"/explore"}/>} />
 					<Route path="/wallet" element={<AuthorizedRoute component={Wallet}/>} />
 
 					<Route path="/logout" element={<Navigate replace to="/home"/>}/>
@@ -76,9 +72,9 @@ const App = () => {
 					<Route path="*" element={<Navigate replace to="/home"/>}/>
 				</Routes>
 			</div>
+			<Loading/>
+			
 		</BrowserRouter>
-		<Loading/>
-	</ThemeProvider>
     ) 
   }
 

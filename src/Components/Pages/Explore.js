@@ -2,15 +2,21 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ADDRESSES, API_ROUTES, getFromBackend } from "../../Fetch/ApiFetches";
 import ExploreSlice, { CATEGORIES, reducerFxns, SORTINGS } from "../../Redux/Slices/ExploreSlice"
-import { Card, CardContent, CardMedia, Grid, Tooltip, Typography, Box, CircularProgress } from "@mui/material"
+import { Card, CardContent, CardMedia, Grid, Tooltip, Typography, Box, CircularProgress, Stack, TextField, Button, Select, MenuItem, Checkbox, FormControlLabel, FormGroup } from "@mui/material"
 import "./Explore.css";
 import "./Default.css";
+import PageContainer from "../PageBits/PageContainer/PageContainer";
+import UserSlice from "../../Redux/Slices/UserSlice";
+import { UnverifiedIcon, VerifiedIcon } from "../PageBits/Icons/Icons";
 
 const PROJECTS_PER_PAGE = 9; // multiple of three please
 
 
 const Explore = () => {
 	const slice = ExploreSlice.useSlice();
+	const uSlice = UserSlice.useSlice();
+
+	console.log(uSlice);
 
 	/**
 	 * Watches for changes in slice.search, slice.categories and then searches based on that!
@@ -27,6 +33,7 @@ const Explore = () => {
 
 		return (() => {	// runs on unmount
 			ExploreSlice.unsubscribe();
+			UserSlice.unsubscribe();
 		});
 	}, [slice.search, slice.categories]);
 	
@@ -50,66 +57,28 @@ const Explore = () => {
 			}
 		}
 
-		console.log(route);
-		
 		getFromBackend(route, { callback: (data) => {
+			console.log(data);
 			reducerFxns.exploreProjectsFxn(data.projects);
 		}});
 	}
 
 	return (
-		<div className="explore-container">
-        	<h1 className="page-title">Explore & Discover</h1>
-			<hr/>
-			<ExploreSearch slice={slice}/>
-			<div>
-				<ExploreFilter slice={slice} sorts={SORTINGS} categories={CATEGORIES}/>
-				<ExploreTiling slice={slice}/>
-			</div>
-		</div>
+		<PageContainer title="Explore & Discover" content={
+			<Grid container spacing={2}>
+				<Grid item xs={3}>
+					<ExploreSideBar slice={uSlice} sorts={SORTINGS} categories={CATEGORIES}/>
+					
+				</Grid>
+				<Grid item xs={9}>
+					<ExploreTiling slice={slice}/>
+				</Grid>
+			</Grid>
+		}/>
 	);
 }
 
-
-
-/**
- * Explore page search bar!
- * @param {*} props 
- */
-const ExploreSearch = (props) => {
-
-	/**
-	 * Intercepts onSubmit; cleans input and
-	 * @param {*} e 
-	 */
-	const exploreSearchIntercept = (e) => {
-		e.preventDefault();
-		let val = "" + e.target.searchy.value;	// string for safety
-		//e.target.searchy.value = "";
-
-		reducerFxns.exploreSearchFxn(val);
-	}
-
-	return (
-		<div className="explore-search">
-			<div className="explore-search-piece">
-				<form onSubmit={exploreSearchIntercept}>
-					<input type="text" name="searchy" placeholder="Search by Keyword" />
-          			<input type="submit" value="Search" />
-				</form>
-			</div>
-		</div>
-	)
-}
-
-
-
-/**
- * Contains the filtering options on the Explore page.
- * @param {*} props 
- * @returns 
- */
-const ExploreFilter = (props) => {
+const ExploreSideBar = (props) => {
 
 	/**
 	 * Adds options to the sort selection
@@ -121,12 +90,12 @@ const ExploreFilter = (props) => {
 		
 		for(let i = 0; i < sortOptions.length; i++) {
 			sortOptionsReturned.push(
-				<option key={"option" + i}>{sortOptions[i].name}</option>
+				<MenuItem key={"option" + i} value={sortOptions[i].name}>{sortOptions[i].name}</MenuItem>
 			)
 		}
 		return sortOptionsReturned;
 	}
-
+	
 	/**
 	 * Adds categories to the categories section.
 	 * @param {*} categories 
@@ -147,39 +116,90 @@ const ExploreFilter = (props) => {
 
 		for(let i = 0; i < categories.length; i++) {
 			categoriesReturned.push(
-				<div className="explore-category" key={"checkbox" + i} >
-					<input className="explore-category-checkbox" type="checkbox" id={"checkbox-" + categories[i].name} name={categories[i].name} onChange={(e) => {checkBoxHandler(e, i)}}/>
-					<label className="explore-category-label" htmlFor={"checkbox-" + categories[i].name}>{categories[i].name}</label>
-				</div>
+				<FormControlLabel key={"cat" + i} control={
+					<Checkbox onChange={((e) => {checkBoxHandler(e, i)})}/>
+				} label={<Typography fontSize="15px" variant="data"><b>{categories[i].name}</b></Typography>} />
 			)
 		}
 
 		return categoriesReturned;
 	}
-
+	
 	/**
 	 * intercepts the onchange
 	 * @param {*} e 
 	 */
 	const exploreSortIntercept = (e) => {
-		let sorting = SORTINGS.filter(s => s.name == e.target.value)[0];
+		let sorting = SORTINGS.filter(s => s.name === e.target.value)[0];
 		reducerFxns.exploreSortFxn(sorting);
 	}
 
+	/**
+	 * Intercepts onSubmit; cleans input and sends it to slice
+	 * @param {*} e 
+	 */
+	 const exploreSearchIntercept = (e) => {
+		e.preventDefault();
+		let val = "" + e.target.searchy.value;	// string for safety
+		//e.target.searchy.value = "";
+
+		reducerFxns.exploreSearchFxn(val);
+	}
+
+	const createProjectButton = () => {
+		if(props.slice.userInfo) {
+			if(props.slice.userInfo.role === "organization") {
+				return (
+					<Link to={API_ROUTES.FRONTEND.PROJECT_FORM}>
+						<Button fullWidth color="secondary" variant="contained" sx={{color:"white", pb:"2vh", pt:"2vh", mb: "1vh", borderRadius:"5px 10px 5px 10px"}}>
+								<b>Create New Project</b>
+						</Button>
+					</Link>
+				);
+			}
+		}
+
+		return null;
+	}
+
 	return (
-		<div className="explore-filter">
-			<h2>Filter</h2>
-			<div className="explore-search-piece">
-				<label htmlFor="sort-select">Sort By:</label>
-				<select id="sort-select" onChange={exploreSortIntercept}>
-					{addSortOptions(props.sorts)}
-				</select>
-			</div>
-			<h3>Categories</h3>
-			<div className="explore-categories">
-				{addCategories(props.categories)}
-			</div>
-		</div>
+		<Stack  sx={{background:"rgba(255,255,255,0.5)", p:"2vh", borderRadius:"5px 10px 5px 10px"}}>
+			{createProjectButton()}
+			<form onSubmit={exploreSearchIntercept}>
+				<Grid container spacing={2} sx={{pb:"1vh", mb: "1vh"}}>
+					<Grid item xs={8}>
+						<TextField fullWidth name="searchy" type="text" variant="outlined" label="Search by Keyword" style={{borderRadius:"10px 0 0 10px"}}/>
+					</Grid>
+					<Grid item xs={4} style={{paddingLeft:"0px"}}>
+						<Button type="submit" value="search" variant="contained" sx={{width:"100%", height:"100%", borderRadius:"0 10px 10px 0"}}>Search</Button>
+					</Grid>
+					<Grid item xs={12}>
+						<Box sx={{borderBottom: "1px solid rgba(0,0,0,0.2)"}}/>
+					</Grid>
+				</Grid>
+			</form>
+
+			<Grid container spacing={2}>
+				<Grid item xs={4} sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+					<Typography variant="stats">Sort By</Typography>
+				</Grid>	
+				<Grid item xs={8}>
+					<Select fullWidth id="sort-select" onChange={exploreSortIntercept} label="sort">
+						{addSortOptions(props.sorts)}
+					</Select>
+				</Grid>
+
+				<Grid item xs={4} sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+					<Typography variant="stats">Categories</Typography>
+				</Grid>
+				<Grid item xs={8}>
+					<FormGroup sx={{alignItems:"center"}}>
+						{addCategories(props.categories)}
+					</FormGroup>
+				</Grid>
+				
+			</Grid>
+		</Stack>
 	);
 }
 
@@ -232,7 +252,7 @@ const ExploreTiling = (props) => {
 					desc = {project.summary}
 					progress = {Math.floor(project.totalSaved/project.goalAmount) * 100}
 					date = {project.updatedAt}
-					verified = {false}	// UPDATE THIS LATER
+					verified = {project.verified}	// UPDATE THIS LATER
 				/>
 			);
 		}
@@ -256,36 +276,27 @@ const ExploreTiling = (props) => {
 		}
 	}
 
+
 	const prevPage = (e) => {
 		if(page > 1) {
 			setPage(page - 1);
 		}
 	}
 
+	
 	return (
-		<div className="explore-content">
-			<div className="create-project">
-				<Link to="/project-form">
-					<button className="create-project-btn">Create Project</button>
-				</Link>
-			</div>
-			<div className="explore-tiling-pages">
-				<button className="explore-paginate-previous" onClick={prevPage}>{"<"}</button>
-				<span className="explore-paginate-desc">{"Page " + page + " of " + maxPages.current}</span>
-				<button className="explore-paginate-next" onClick={nextPage}>{">"}</button>
-			</div>
+		<Stack>
 			<Grid container spacing={3}>
 				{tiles}
 			</Grid>
-			
-		</div>
+			<Box pt="1vh">
+				<Button pr="1vw" variant="contained" onClick={prevPage}><b>{"<"}</b></Button>
+					<span><Typography variant="stats" sx={{paddingLeft: "1vw", paddingRight: "1vw"}}>{page} of {maxPages.current}</Typography></span>
+				<Button variant="contained" onClick={nextPage}><b>{">"}</b></Button>
+			</Box>
+		</Stack>
 	);
 }
-/*
-<div className="explore-tiling">
-				{tiles}
-			</div>
-*/
 
 /**
  * Tile used to display a project.
@@ -296,37 +307,40 @@ const ExploreTile = (props) => {
 	return (
 		<Grid item xs={4}>
 			<Link to={"/explore/project/" + props.id}>
-				<Card className="explore-tile" variant="outlined" sx={{"borderRadius": "20px"}}>
-					<CardContent>
+				<Card variant="outlined" sx={{background:"white", borderRadius:"15px", ":hover":{cursor: "pointer", boxShadow:"5px 5px rgba(0, 0, 0, 0.2)"}}}>
+					<CardContent sx={{background:"#1C3E64", color:"white", borderBottom:"5px solid rgba(0,0,0,0.2)"}}>
 						<Typography variant="h4">{props.title}</Typography>
 					</CardContent>
 					
-					<CardMedia component="img" alt="" height="150" image={ADDRESSES.BACKEND + props.image} sx={{"borderRadius":"10px", border:"2px solid lightgray"}}/>
+					<CardMedia component="img" alt="" height="150" image={ADDRESSES.BACKEND + props.image} sx={{"borderRadius":"0 0 15px 15px", borderBottom:"5px groove rgba(0,0,0,0.5)"}}/>
 					<CardContent style={{"paddingBottom": 0}}>
 						<Grid container spacing={2}>
 							<Grid item xs={8}>
-								<Typography maxHeight="100px" minHeight="100px" variant="body2" xs={{"overflowWrap":"breakWord", "overflow": "hidden"}}>{props.desc}</Typography>
+								<Typography maxHeight="75px" minHeight="75px" variant="body2" sx={{overflowWrap:"break-word", overflow:"hidden", textOverflow:"ellipsis", textAlign:"left"}}>{props.desc}</Typography>
 							</Grid>
 
 							<Grid item xs={4}>
 								<Box sx={{ position: 'relative', display: 'inline-flex' }}>
-									<CircularProgress variant="determinate" value={100} size={"75px"} thickness={7} sx={{"position": "absolute", color:"gray"}}/>
+									<CircularProgress variant="determinate" value={100} size={"75px"} thickness={7} sx={{"position": "absolute", color:"lightgray"}}/>
 									<CircularProgress variant="determinate" value={props.progress} size={"75px"} thickness={7}/>
 									<Box sx={{inset: "0 0 0 0", position: "absolute", display: "flex", alignItems: "center", justifyContent: "center"}}>
 										<Typography variant="caption">{props.progress}%</Typography>
 									</Box>
 								</Box>
 							</Grid>
-							<Grid item xs={8}>
-								<Typography variant="caption">{new Date(props.date).toDateString()}</Typography>
+							<Grid item xs={12}>
+								<Box sx={{borderBottom: "1px solid rgba(0,0,0,0.2)"}}/>
 							</Grid>
-							<Grid item xs={4} sx={{"textAlign": "right"}}>
+							<Grid item xs={8} sx={{display:"flex", justifyContent:"left", alignItems:"center"}} style={{paddingTop:"0"}}>
+								<Typography fontSize="11px" variant="caption">{new Date(props.date).toDateString()}</Typography>
+							</Grid>
+							<Grid item xs={4} sx={{textAlign: "right"}} style={{paddingTop:"0"}}>
 								<Tooltip title={
 									<React.Fragment>
-										<Typography>{props.verified ? "This project has been verified!" : "Unverified as of " + new Date(props.date).toDateString()}</Typography>
+										<Typography>{props.verified ? "This project has been verified!" : "Unverified as of " + new Date().toDateString()}</Typography>
 									</React.Fragment>}
 								>
-									<Typography variant="h6">{props.verified ? "🟢":"🔴"}</Typography>	
+									<Typography variant="h6">{props.verified ? <VerifiedIcon color="primary"/>:<UnverifiedIcon color="secondary"/>}</Typography>	
 								</Tooltip>
 								
 							</Grid>
@@ -337,8 +351,7 @@ const ExploreTile = (props) => {
 			</Link>
 		
 		</Grid>
-		
-	)
+	);
 }
 
 
