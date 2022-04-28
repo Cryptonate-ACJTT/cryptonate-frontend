@@ -218,6 +218,17 @@ export const submitOrgAuthForm = (orgId, formData, {callback} = {}) => {
 	return postToBackend(API_ROUTES.BACKEND.SUBMIT_ORG_FORM, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
 }
 
+
+/************************************
+	PROJECT PAGE
+*************************************/
+
+export const grabProjectData = (id, {callback} = {}) => {
+	return trackPromise(
+		postToBackend(API_ROUTES.BACKEND.GET_PROJECT, {id: id}, {callback: callback})
+	);
+}
+
 /*******************************
 	CRYPTO TRANSACTIONS
 *******************************/
@@ -237,6 +248,16 @@ export const txnBasic = (userInfo, sender, receiver, amount, {callback} = {}) =>
 			amount: amount
 		}, {callback: callback, credentials: true})
 	);
+}
+
+/**
+ * Get the balances of [addrs]
+ * @param {*} addrs 
+ * @param {*} param1 
+ * @returns 
+ */
+export const getAccountBalances = (addrs, {callback} = {}) => {
+	return trackPromise(postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, {addresses: addrs}, {callback: callback}));
 }
 
 
