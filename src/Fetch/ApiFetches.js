@@ -59,10 +59,14 @@ export const API_ROUTES = {
 		
 		/* USER */
 		REGISTER_USER: "/user",
-		SUBMIT_ORG_FORM:"/user/submitOrgForm",
 		LOGIN_USER: "/user/login",
 		GET_LOGGED_IN: "/user/loggedIn",
 		LOGOUT_USER: "/user/logout",
+
+		/* USER - ORG FROM */
+		SUBMIT_ORG_FORM:"/user/submitOrgForm",
+		GET_ORG_FORM:"/user/orgForm",
+		UPDATE_ORG_FORM:"/user/updateOrgForm",
 
 		/* PROJECTS */
 		GET_PROJECT: "/project",
@@ -213,9 +217,17 @@ export const submitProjectForm = (userInfo, formData, {callback} = {}) => {
 *************************************/
 
 export const submitOrgAuthForm = (orgId, formData, {callback} = {}) => {
-	formData.append("orgId", orgId); // userInfo not in form
-	console.log("orgID is : "+ orgId)
+	formData.append("orgId", orgId); 
 	return postToBackend(API_ROUTES.BACKEND.SUBMIT_ORG_FORM, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
+}
+
+export const getOrgAuthForm = (orgId, {callback} = {}) => {
+	return postToBackend(API_ROUTES.BACKEND.GET_ORG_FORM, {orgId: orgId}, {callback: callback, credentials: true});
+}
+
+export const updateOrgAuthForm = (orgId, formData, {callback} = {}) => {
+	formData.append("orgId", orgId); 
+	return postToBackend(API_ROUTES.BACKEND.UPDATE_ORG_FORM, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
 }
 
 /*******************************

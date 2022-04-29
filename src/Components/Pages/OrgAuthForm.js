@@ -1,31 +1,66 @@
 import React, { useState, useEffect } from "react";
 import "./OrgAuthForm.css";
+import { ADDRESSES, getOrgAuthForm, updateOrgAuthForm, submitOrgAuthForm } from "../../Fetch/ApiFetches";
 import { useNavigate } from "react-router-dom";
-import { submitOrgAuthForm } from "../../Fetch/ApiFetches";
 import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
 
 
 const OrgAuthForm = (props) => {
 
-    const [isEditing, setIsEditing] = useState(false);
+    const userSlice = UserSlice.useSlice();
+    const theId = userSlice.userInfo.id
+    let approved = userSlice.userInfo.approved
+    const [isEditing, setIsEditing] = useState(!approved);
+    const [isApproved, setIsApproved] = useState(approved)
+    const [orgName, setOrgName] = useState("")
+    const [orgEmail, setOrgEmail] = useState("")
+    const [orgCategory, setOrgCategory] = useState("")
+    const [orgWebsite, setOrgWebsite] = useState("")
+    const [orgEIN, setOrgEIN] = useState("")
+    const [orgPhone, setOrgPhone] = useState("")
+    const [orgLocation, setOrgLocation] = useState("")
+
+
+    useEffect(() => {
+        getOrgAuthForm(theId, {
+            callback: (data) => {
+                console.log(data.form);
+                setOrgName(data.form.name)
+                setOrgEmail(data.form.email)
+                setOrgWebsite(data.form.website)
+                setOrgEIN(data.form.EIN)
+                setOrgCategory(data.form.orgCategory)
+                setOrgPhone(data.form.phone)
+                setOrgLocation(data.form.location)
+            }
+        });
+
+
+    }, [isApproved])
 
     const handleIsEditing = (e) => { setIsEditing(!isEditing) }
 
-    const userSlice = UserSlice.useSlice();
-    // const navigate = useNavigate();
+
+    const navigate = useNavigate();
 
     const submitForm = (e) => {
         e.preventDefault();
 
         let formData = new FormData(e.currentTarget);
-        console.log("!!!!!!!! ORG FORM !!!!!!!!")
-        console.log(formData)
-        submitOrgAuthForm(userSlice.userInfo.id, formData, {
-            callback: (data) => {
-                // navigate("/profile", { replace: true });
-            }
-        });
-        // how to append user Id?
+
+        if (approved) {
+            updateOrgAuthForm(theId, formData, {
+                callback: (data) => {
+                }
+            });
+        }
+        else {
+            submitOrgAuthForm(theId, formData, {
+                callback: (data) => {
+                }
+            });
+        }
+
     }
 
     return (
@@ -54,25 +89,31 @@ const OrgAuthForm = (props) => {
                         <div className="edit-info-button-group">
                             <button type="button" onClick={handleIsEditing} className="edit-info-button"> Edit Info</button>
                         </div>
-                        <input disabled={!isEditing} name="name" className="input-box"></input>
-                        <input disabled={!isEditing} name="EIN" className="input-box"></input>
+                        <input defaultValue={orgName} placeholder="Organization Name" disabled={!isEditing} name="name" className="input-box"></input>
+                        <input defaultValue={orgEIN} placeholder="Employment Identification Number" disabled={!isEditing} name="EIN" className="input-box"></input>
                         <div>
-                            <select disabled={!isEditing} name="category" id="category-select">
-                                <option>Animal</option>
-                                <option>Children</option>
+                            <select defaultValue={orgCategory} placeholder="Category" disabled={!isEditing} name="category" id="category-select">
+                                <option value="animal">Animal</option>
+                                <option value="children">Children</option>
                             </select>
                         </div>
-                        <input disabled={!isEditing} name="email" className="input-box"></input>
-                        <input disabled={!isEditing} name="phone" className="input-box"></input>
-                        <input disabled={!isEditing} name="location" className="input-box"></input>
-                        <input disabled={!isEditing} name="website" className="input-box"></input>
+                        <input defaultValue={orgEmail} placeholder="Email Address" disabled={!isEditing} name="email" className="input-box"></input>
+                        <input defaultValue={orgPhone} placeholder="Phone Number" disabled={!isEditing} name="phone" className="input-box"></input>
+                        <input defaultValue={orgLocation} placeholder="Location" disabled={!isEditing} name="location" className="input-box"></input>
+                        <input defaultValue={orgWebsite} placeholder="Website Address" disabled={!isEditing} name="website" className="input-box"></input>
 
                     </div>
 
                 </div>
                 <div id="warning"> * fields are mandatory</div>
 
-                <button type="submit" className="button-group submit-button">SUBMIT</button>
+                {
+                    approved ?
+                        <button disabled={!isEditing} onClick={handleIsEditing} type="submit" className="button-group submit-button">RE-SUBMIT</button>
+                        :
+                        <button disabled={!isEditing} onClick={handleIsEditing} type="submit" className="button-group submit-button">SUBMIT</button>
+
+                }
             </form>
         </div>
 
