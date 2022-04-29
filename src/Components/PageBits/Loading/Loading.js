@@ -15,7 +15,7 @@ const Loading = (props) => {
 	return (
 		<div>
 			{promise.promiseInProgress ? 
-				<Backdrop open={promise.promiseInProgress} sx={{color: "white"}}>
+				<Backdrop open={promise.promiseInProgress} sx={{color: "white", zIndex: (theme) => theme.zIndex.drawer + 1 }}>
 					<Stack alignItems="center" justifyContent="center" spacing={3}>
 						<Typography variant="h5">{slice.msg}</Typography>
 						
