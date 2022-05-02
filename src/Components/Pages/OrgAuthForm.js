@@ -24,31 +24,40 @@ const OrgAuthForm = (props) => {
     useEffect(() => {
         getOrgAuthForm(theId, {
             callback: (data) => {
-                console.log(data.form);
                 setOrgName(data.form.name)
                 setOrgEmail(data.form.email)
                 setOrgWebsite(data.form.website)
                 setOrgEIN(data.form.EIN)
-                setOrgCategory(data.form.orgCategory)
+                setOrgCategory(data.form.category)
                 setOrgPhone(data.form.phone)
                 setOrgLocation(data.form.location)
             }
         });
 
-
-    }, [isApproved])
+    },[isApproved])
 
     const handleIsEditing = (e) => { setIsEditing(!isEditing) }
-
-
     const navigate = useNavigate();
 
     const submitForm = (e) => {
         e.preventDefault();
-
         let formData = new FormData(e.currentTarget);
 
-        if (approved) {
+        console.log(e.currentTarget)
+        if (approved) 
+        {
+
+            // update org auth form's formData object being empty for some reason,
+            // so forced appending.
+            formData.append("EIN", orgEIN)
+            formData.append("name", orgName)
+            formData.append("category", orgCategory)
+            formData.append("website", orgWebsite)
+            formData.append("phone", orgPhone)
+            formData.append("location", orgLocation)
+            formData.append("email", orgEmail)
+
+
             updateOrgAuthForm(theId, formData, {
                 callback: (data) => {
                 }
@@ -62,6 +71,8 @@ const OrgAuthForm = (props) => {
         }
 
     }
+
+
 
     return (
         <div className="basic-div basic-form">
@@ -89,18 +100,18 @@ const OrgAuthForm = (props) => {
                         <div className="edit-info-button-group">
                             <button type="button" onClick={handleIsEditing} className="edit-info-button"> Edit Info</button>
                         </div>
-                        <input defaultValue={orgName} placeholder="Organization Name" disabled={!isEditing} name="name" className="input-box"></input>
-                        <input defaultValue={orgEIN} placeholder="Employment Identification Number" disabled={!isEditing} name="EIN" className="input-box"></input>
+                        <input value={orgName} onChange={(e)=> {setOrgName(e.target.value)}} placeholder="Organization Name" disabled={!isEditing} name="name" className="input-box"></input>
+                        <input value={orgEIN} onChange={(e) => {setOrgEIN(e.target.value)}} placeholder="Employment Identification Number" disabled={!isEditing} name="EIN" className="input-box"></input>
                         <div>
-                            <select defaultValue={orgCategory} placeholder="Category" disabled={!isEditing} name="category" id="category-select">
+                            <select value={orgCategory} onChange={(e) => {setOrgCategory(e.target.value)}} placeholder="Category" disabled={!isEditing} name="category" id="category-select">
                                 <option value="animal">Animal</option>
                                 <option value="children">Children</option>
                             </select>
                         </div>
-                        <input defaultValue={orgEmail} placeholder="Email Address" disabled={!isEditing} name="email" className="input-box"></input>
-                        <input defaultValue={orgPhone} placeholder="Phone Number" disabled={!isEditing} name="phone" className="input-box"></input>
-                        <input defaultValue={orgLocation} placeholder="Location" disabled={!isEditing} name="location" className="input-box"></input>
-                        <input defaultValue={orgWebsite} placeholder="Website Address" disabled={!isEditing} name="website" className="input-box"></input>
+                        <input value={orgEmail} onChange={(e)=>{setOrgEmail(e.target.value)}} placeholder="Email Address" disabled={!isEditing} name="email" className="input-box"></input>
+                        <input value={orgPhone} onChange={(e)=>{setOrgPhone(e.target.value)}} placeholder="Phone Number" disabled={!isEditing} name="phone" className="input-box"></input>
+                        <input value={orgLocation} onChange={(e)=>{setOrgLocation(e.target.value)}} placeholder="Location" disabled={!isEditing} name="location" className="input-box"></input>
+                        <input value={orgWebsite} onChange={(e)=>{setOrgWebsite(e.target.value)}} placeholder="Website Address" disabled={!isEditing} name="website" className="input-box"></input>
 
                     </div>
 
