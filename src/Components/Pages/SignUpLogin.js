@@ -29,36 +29,17 @@ const SignUpLogin = (props) => {
     const [ConfirmPasword, setConfirmPasword] = useState("");
     const [Role, setRole] = useState(false);
     const [errorMsg, setErrorMsg] = useState("")
-	
 
-    const onEmailHandler = (e) => {
-        setEmail(e.currentTarget.value);
-    };
 
-    const onUserNamerHandler = (e) => {
-        setName(e.currentTarget.value);
-    };
+    const onEmailHandler = (e) => {    setEmail(e.currentTarget.value);     };
 
-    const onPasswordHanlder = (e) => {
-        setPassword(e.currentTarget.value);
-    };
+    const onUserNamerHandler = (e) => {    setName(e.currentTarget.value);      };
 
-    const onRoleSwitch = (e) => {
-        setRole(e.currentTarget.checked);
-    }
-    /*
-        let state = {
-            isDonor: "donor",
-            isOrg: "organization"
-        };
-    */
-    const onConfirmPasswordHandler = (e) => {
-        setConfirmPasword(e.currentTarget.value);
-		if(ConfirmPasword !== Password){
-			toggleLoginErrorOccured(true)
-			setErrorMsg("Passwords does not match.")
-		}
-    };
+    const onPasswordHanlder = (e) => {    setPassword(e.currentTarget.value);       };
+
+    const onRoleSwitch = (e) => {    setRole(e.currentTarget.checked);      }
+    
+    const onConfirmPasswordHandler = (e) => {    setConfirmPasword(e.currentTarget.value);      };
 
 
     const location = useLocation;
@@ -87,23 +68,28 @@ const SignUpLogin = (props) => {
 
         console.log(Role ? "organization" : "donor");
 
-        signUpUser(Email, UserName, Password, Role ? "organization" : "donor", {
-            callback: (data) => {
-                userReducers.userLoginFxn(data.user);
-                navigate("/profile", { replace: true });
-            }
-			, resHandler: async (response) => {
-				if (response.ok) {
-					return await response.json()
-				}else
-				{
-				   const signUpError = await response.json();
-				   setErrorMsg(signUpError.msg)
-				   toggleSignupErrorOccured(true)
-				   return Promise.reject(response.status);
-				}
-			   }
-        });
+        if (ConfirmPasword !== Password) {
+            toggleLoginErrorOccured(true)
+            setErrorMsg("Passwords does not match.")
+        } else {
+
+            signUpUser(Email, UserName, Password, Role ? "organization" : "donor", {
+                callback: (data) => {
+                    userReducers.userLoginFxn(data.user);
+                    navigate("/profile", { replace: true });
+                }
+                , resHandler: async (response) => {
+                    if (response.ok) {
+                        return await response.json()
+                    } else {
+                        const signUpError = await response.json();
+                        setErrorMsg(signUpError.msg)
+                        toggleSignupErrorOccured(true)
+                        return Promise.reject(response.status);
+                    }
+                }
+            });
+        }
     };
 
     /**
@@ -119,15 +105,14 @@ const SignUpLogin = (props) => {
                 navigate("/profile", { replace: true });
             }
             , resHandler: async (response) => {
-             if (response.ok) {
-				 return await response.json()
-			 }else
-             {
-                const loginError = await response.json();
-                setErrorMsg(loginError.msg)
-                toggleLoginErrorOccured(true)
-				return Promise.reject(response.status);
-             }
+                if (response.ok) {
+                    return await response.json()
+                } else {
+                    const loginError = await response.json();
+                    setErrorMsg(loginError.msg)
+                    toggleLoginErrorOccured(true)
+                    return Promise.reject(response.status);
+                }
 
             }
         });
@@ -172,8 +157,8 @@ const SignUpLogin = (props) => {
                             <br />
                             <button type="submit">Sign Up</button>
                         </form>
-						{signupErrorOccured ?
-                            <Alert severity="error">{errorMsg}</Alert>	:  <></>
+                        {signupErrorOccured ?
+                            <Alert severity="error">{errorMsg}</Alert> : <></>
                         }
                     </div>
                 </div>
@@ -205,7 +190,7 @@ const SignUpLogin = (props) => {
                             <button type="submit">Login</button>
                         </form>
                         {loginErrorOccured ?
-                            <Alert severity="error">{errorMsg}</Alert>	:	<></>
+                            <Alert severity="error">{errorMsg}</Alert> : <></>
                         }
                     </div>
 
