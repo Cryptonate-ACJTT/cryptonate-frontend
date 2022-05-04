@@ -3,23 +3,23 @@ import { reducerFxns } from "../Redux/Slices/SiteSlice";
 import { buildFetch, CONTENT_TYPES, FETCH_TYPE } from "./Fetcher";
 
 /*
-	API interactions go in here!
+    API interactions go in here!
 */
 
 
 /*******************************
-	REFERENCE VALUES
+    REFERENCE VALUES
 *******************************/
 
 /**
  * The APIs we're using
  */
 export const ADDRESSES = {
-	BACKEND: "http://localhost:4000/api/v1",
-	ALGORAND: "http://localhost:4001",
-	INDEXER: "http://localhost:8980",
-	KEYDAEMON: "http://localhost:4002"
-	//INDEXER: "https://algoindexer.algoexplorerapi.io"
+    BACKEND: "http://localhost:4000/api/v1",
+    ALGORAND: "http://localhost:4001",
+    INDEXER: "http://localhost:8980",
+    KEYDAEMON: "http://localhost:4002"
+    //INDEXER: "https://algoindexer.algoexplorerapi.io"
 }
 
 
@@ -27,109 +27,109 @@ export const ADDRESSES = {
  * Routes that the various API could take
  */
 export const API_ROUTES = {
-	FRONTEND: {
-		/* HOME/ABOUT/WHY */
-		HOME: "/home",
-		ABOUT: "/about",
-		WHY_CRYPTO: "/why-crypto",
-		
-		/* PROJECTS */
-		EXPLORE: "/explore",
-		PROJECT_PAGE: "explore/project/:id",
-		
-		/* FORMS */
-		ORG_AUTH: "/organization-auth-form",
-		PROJECT_FORM: "/project-form",
-		
-		/* USER STUFF */
-		LOGIN_SIGNUP: "/login-signup",
-		LOGIN: "/login",
-		LOGOUT: "/logout",
-		
-		PROFILE: "/profile",
-		WALLET: "/wallet",
+    FRONTEND: {
+        /* HOME/ABOUT/WHY */
+        HOME: "/home",
+        ABOUT: "/about",
+        WHY_CRYPTO: "/why-crypto",
+        
+        /* PROJECTS */
+        EXPLORE: "/explore",
+        PROJECT_PAGE: "explore/project/:id",
+        
+        /* FORMS */
+        ORG_AUTH: "/organization-auth-form",
+        PROJECT_FORM: "/project-form",
+        
+        /* USER STUFF */
+        LOGIN_SIGNUP: "/login-signup",
+        LOGIN: "/login",
+        LOGOUT: "/logout",
+        
+        PROFILE: "/profile",
+        WALLET: "/wallet",
 
-		/* DEFAULT */
-		DEFAULT: "*"
-	},
+        /* DEFAULT */
+        DEFAULT: "*"
+    },
 
-	BACKEND: {
-		/* MISC */
-		FRONTPAGE_STATS: "/project/frontpage",
-		
-		/* USER */
-		REGISTER_USER: "/user",
-		LOGIN_USER: "/user/login",
-		GET_LOGGED_IN: "/user/loggedIn",
-		LOGOUT_USER: "/user/logout",
+    BACKEND: {
+        /* MISC */
+        FRONTPAGE_STATS: "/project/frontpage",
+        
+        /* USER */
+        REGISTER_USER: "/user",
+        LOGIN_USER: "/user/login",
+        GET_LOGGED_IN: "/user/loggedIn",
+        LOGOUT_USER: "/user/logout",
 
-		/* USER - ORG FROM */
-		SUBMIT_ORG_FORM:"/user/submitOrgForm",
-		GET_ORG_FORM:"/user/orgForm",
-		UPDATE_ORG_FORM:"/user/updateOrgForm",
+        /* USER - ORG FROM */
+        SUBMIT_ORG_FORM:"/user/submitOrgForm",
+        GET_ORG_FORM:"/user/orgForm",
+        UPDATE_ORG_FORM:"/user/updateOrgForm",
 
-		/* PROJECTS */
-		GET_PROJECT: "/project",
-		ALL_PROJECT: "/project/explore",
-		CREATE_PROJECT: "/project/create",
-		EXPLORE_SEARCH: "/project/explore/search",
+        /* PROJECTS */
+        GET_PROJECT: "/project",
+        ALL_PROJECT: "/project/explore",
+        CREATE_PROJECT: "/project/create",
+        EXPLORE_SEARCH: "/project/explore/search",
 
-		/* CRYPTO */
-		CREATE_WALLET: "/crypto/newWallet",
-		CHECK_BALANCE: "/crypto/balance",
+        /* CRYPTO */
+        CREATE_WALLET: "/crypto/newWallet",
+        CHECK_BALANCE: "/crypto/balance",
 
-		TXN_BASIC: "/crypto/txn/basic",
+        TXN_BASIC: "/crypto/txn/basic",
 
 
-		/* INDEX */
-		GET_ACCOUNT_TXN: "/crypto/index/account"
-	},
+        /* INDEX */
+        GET_ACCOUNT_TXN: "/crypto/index/account"
+    },
 
-	ALGORAND: {
+    ALGORAND: {
 
-	},
+    },
 
-	INDEXER: {
-		HEALTH: "/health?pretty"
-	}	
+    INDEXER: {
+        HEALTH: "/health?pretty"
+    }   
 }
 
 
 /*******************************
-	BACKEND BASICS
+    BACKEND BASICS
 *******************************/
 
 /**
  * Send a GET request to the backend at /'path'.
- * -- OPTIONS:	-resHandler handles the response object,
- * 				-credentials injects a credentials header for auth functionality,
- * 				-callback replaces default callback function (which returns res.json()).
+ * -- OPTIONS:  -resHandler handles the response object,
+ *              -credentials injects a credentials header for auth functionality,
+ *              -callback replaces default callback function (which returns res.json()).
  * @param {string} path 
  * @param {*} options
  * @returns Promise
  */
 export const getFromBackend = (path, {callback, credentials, resHandler} = {}) => {
-	return buildFetch(FETCH_TYPE.GET, ADDRESSES.BACKEND + path, {callback: callback, credentials: credentials, resHandler: resHandler})
+    return buildFetch(FETCH_TYPE.GET, ADDRESSES.BACKEND + path, {callback: callback, credentials: credentials, resHandler: resHandler})
 }
 
 
 /**
  * Send a POST request to the backend at /'path' containing 'data'.
- * -- OPTIONS:	-resHandler handles the response object,
- * 				-credentials injects a credentials header for auth functionality,
- * 				-callback replaces default callback function (which returns res.json()).
+ * -- OPTIONS:  -resHandler handles the response object,
+ *              -credentials injects a credentials header for auth functionality,
+ *              -callback replaces default callback function (which returns res.json()).
  * @param {string} path 
  * @param {*} data
  * @param {*} options
  * @returns Promise
  */
 export const postToBackend = (path, data, {callback, credentials, resHandler, contentType} = {}) => {
-	return buildFetch(FETCH_TYPE.POST, ADDRESSES.BACKEND + path, {callback: callback, credentials, data: data, resHandler: resHandler, contentType: contentType});
+    return buildFetch(FETCH_TYPE.POST, ADDRESSES.BACKEND + path, {callback: callback, credentials, data: data, resHandler: resHandler, contentType: contentType});
 }
 
 
 /*******************************
-	HOME PAGE
+    HOME PAGE
 *******************************/
 
 /**
@@ -138,12 +138,12 @@ export const postToBackend = (path, data, {callback, credentials, resHandler, co
  * @returns 
  */
 export const getFPStats = ({callback} = {}) => {
-	return getFromBackend(API_ROUTES.BACKEND.FRONTPAGE_STATS, {callback: callback});
+    return getFromBackend(API_ROUTES.BACKEND.FRONTPAGE_STATS, {callback: callback});
 }
 
 
 /*******************************
-	SIGN UP/LOGIN
+    SIGN UP/LOGIN
 *******************************/
 
 /**
@@ -155,13 +155,13 @@ export const getFPStats = ({callback} = {}) => {
  * @param {*} param4 
  * @returns 
  */
-export const signUpUser = (email, username, password, role, {callback} = {}) => {
-	return postToBackend(API_ROUTES.BACKEND.REGISTER_USER, {
-		email: email,
-		password: password,
-		username: username,
-		role: role
-	}, {callback: callback, credentials: true});
+export const signUpUser = (email, username, password, role, {callback, resHandler} = {}) => {
+    return postToBackend(API_ROUTES.BACKEND.REGISTER_USER, {
+        email: email,
+        password: password,
+        username: username,
+        role: role
+    }, {callback: callback, credentials: true, resHandler: resHandler});
 }
 
 /**
@@ -173,13 +173,13 @@ export const signUpUser = (email, username, password, role, {callback} = {}) => 
  * @param {*} param4 
  * @returns 
  */
-export const loginUser = (email, username, password, role, {callback} = {}) => {
-	return postToBackend(API_ROUTES.BACKEND.LOGIN_USER, {
-		email: email,
-		password: password,
-		username: username,
-		role: role
-	}, {callback: callback, credentials: true});
+export const loginUser = (email, username, password, role, {callback, resHandler} = {}) => {
+    return postToBackend(API_ROUTES.BACKEND.LOGIN_USER, {
+        email: email,
+        password: password,
+        username: username,
+        role: role
+    }, {callback: callback, credentials: true, resHandler: resHandler});
 }
 
 /**
@@ -188,7 +188,7 @@ export const loginUser = (email, username, password, role, {callback} = {}) => {
  * @returns 
  */
 export const logoutUser = ({callback} = {}) => {
-	return postToBackend(API_ROUTES.BACKEND.LOGOUT_USER, {}, {callback: callback, credentials: true});
+    return postToBackend(API_ROUTES.BACKEND.LOGOUT_USER, {}, {callback: callback, credentials: true});
 }
 
 
@@ -200,47 +200,47 @@ export const logoutUser = ({callback} = {}) => {
  * @returns 
  */
 export const getLoggedIn = (username, role, {callback} = {}) => {
-	return postToBackend(API_ROUTES.BACKEND.GET_LOGGED_IN, {username: username, role:role}, {callback: callback, credentials: true});
+    return postToBackend(API_ROUTES.BACKEND.GET_LOGGED_IN, {username: username, role:role}, {callback: callback, credentials: true});
 }
 
 /*******************************
-	PROJECT FORM
+    PROJECT FORM
 *******************************/
 
 export const submitProjectForm = (userInfo, formData, {callback} = {}) => {
-	formData.append("userInfo", userInfo); // userInfo not in form
-	return postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
+    formData.append("userInfo", userInfo); // userInfo not in form
+    return postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
 }
 
 /************************************
-	ORGANIZATION AUTHORIZATION FORM
+    ORGANIZATION AUTHORIZATION FORM
 *************************************/
 
 export const submitOrgAuthForm = (orgId, formData, {callback} = {}) => {
-	formData.append("orgId", orgId); 
-	return postToBackend(API_ROUTES.BACKEND.SUBMIT_ORG_FORM, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
+    formData.append("orgId", orgId); 
+    return postToBackend(API_ROUTES.BACKEND.SUBMIT_ORG_FORM, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
 }
 
 export const getOrgAuthForm = (orgId, {callback} = {}) => {
-	return postToBackend(API_ROUTES.BACKEND.GET_ORG_FORM, {orgId: orgId}, {callback: callback, credentials: true});
+    return postToBackend(API_ROUTES.BACKEND.GET_ORG_FORM, {orgId: orgId}, {callback: callback, credentials: true});
 }
 
 export const updateOrgAuthForm = (orgId, formData, {callback} = {}) => {
-	formData.append("orgId", orgId); 
-	return postToBackend(API_ROUTES.BACKEND.UPDATE_ORG_FORM, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
+    formData.append("orgId", orgId); 
+    return postToBackend(API_ROUTES.BACKEND.UPDATE_ORG_FORM, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
 }
 /************************************
-	PROJECT PAGE
+    PROJECT PAGE
 *************************************/
 
 export const grabProjectData = (id, {callback} = {}) => {
-	return trackPromise(
-		postToBackend(API_ROUTES.BACKEND.GET_PROJECT, {id: id}, {callback: callback})
-	);
+    return trackPromise(
+        postToBackend(API_ROUTES.BACKEND.GET_PROJECT, {id: id}, {callback: callback})
+    );
 }
 
 /*******************************
-	CRYPTO TRANSACTIONS
+    CRYPTO TRANSACTIONS
 *******************************/
 
 /**
@@ -248,16 +248,16 @@ export const grabProjectData = (id, {callback} = {}) => {
  * @returns Promise
  */
 export const txnBasic = (userInfo, sender, receiver, amount, {callback} = {}) => {
-	return trackPromise(
-		postToBackend(API_ROUTES.BACKEND.TXN_BASIC, {
-			email: userInfo.email,
-			role: userInfo.role,
-			wallet: userInfo.wallet.id,
-			sender: sender,
-			receiver: receiver,
-			amount: amount
-		}, {callback: callback, credentials: true})
-	);
+    return trackPromise(
+        postToBackend(API_ROUTES.BACKEND.TXN_BASIC, {
+            email: userInfo.email,
+            role: userInfo.role,
+            wallet: userInfo.wallet.id,
+            sender: sender,
+            receiver: receiver,
+            amount: amount
+        }, {callback: callback, credentials: true})
+    );
 }
 
 /**
@@ -267,16 +267,16 @@ export const txnBasic = (userInfo, sender, receiver, amount, {callback} = {}) =>
  * @returns 
  */
 export const getAccountBalances = (addrs, {callback} = {}) => {
-	return trackPromise(postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, {addresses: addrs}, {callback: callback}));
+    return trackPromise(postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, {addresses: addrs}, {callback: callback}));
 }
 
 
 /*******************************
-	INDEXER
+    INDEXER
 *******************************/
 
 export const getAccountTxns = (address, {callback} = {}) => {
-	return trackPromise(
-		postToBackend(API_ROUTES.BACKEND.GET_ACCOUNT_TXN, {address: address}, {callback: callback})
-	);
+    return trackPromise(
+        postToBackend(API_ROUTES.BACKEND.GET_ACCOUNT_TXN, {address: address}, {callback: callback})
+    );
 }

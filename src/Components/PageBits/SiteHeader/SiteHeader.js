@@ -50,7 +50,11 @@ const SiteHeader = (props) => {
                         <div className="dropdown-content">
                             <Link to ="/profile"> Profile</Link>
                             <Link to ="/wallet"> Wallet</Link>
+                            {(slice.userInfo.role === "donor") ?
+                                <></>
+                            :
                             <Link to ="/organization-auth-form"> Form</Link>
+                            }
 							<Link to ="/logout" onClick={handleLogout}>Log Out</Link>
                             
                         </div>
