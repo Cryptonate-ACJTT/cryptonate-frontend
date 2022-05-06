@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_ROUTES, submitProjectForm } from "../../Fetch/ApiFetches";
 import { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
+import Alert from '@mui/material/Alert'
+
 
 import './ProjectForm.css'
 
 const ProjectForm = (props) => {
 
 	const navigate = useNavigate();
+
+    const [errorOccured, setErrorOccured] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("")
 
 	const submitForm = (e) => {
 		e.preventDefault();
@@ -16,7 +21,17 @@ const ProjectForm = (props) => {
 		submitProjectForm(JSON.stringify(props.userSlice.userInfo), formData, {callback: (data) => {
 			userReducers.userWalletFxn(data.wallet);
 			navigate("/explore/project/" + data.project._id);
-		}});
+		} , resHandler: async (response) => {
+            if (response.ok) {
+                return await response.json()
+            } else {
+                const error = await response.json();
+                setErrorMsg(error.msg)
+                setErrorOccured(true)
+                return Promise.reject(response.status);
+            }
+
+        }});
 	}
 
 	//action="http://localhost:4000/api/v1/project/create" method="POST" enctype="multipart/form-data" class="project-form-group">
@@ -91,7 +106,10 @@ const ProjectForm = (props) => {
                 </div>
 
                 <button id="submit-button" type="submit" className="submit-button button-group" >SUBMIT</button>
-
+                {
+                    errorOccured ?
+                        <Alert severity="error">{errorMsg}</Alert> : <></>
+                }
             </form>
 
 

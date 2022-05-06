@@ -16,8 +16,13 @@ const Profile = (props) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
-
     const userSlice = UserSlice.useSlice();
+
+    useEffect(() => { 
+        // setIsApproved(userSlice.userInfo.approved)
+        return UserSlice.unsubscribe();
+    },[])
+
 
     let userRole = userSlice.userInfo.role;
     let userEmail = userSlice.userInfo.email;
@@ -108,7 +113,7 @@ const Profile = (props) => {
                 </div>
 
                 <div className="user-status">
-                    {userSlice.userInfo.approved == true ?
+                    {userSlice.userInfo.approved ?
                         <p className="approved-tag">{userRole}</p>
                         :
                         <p className="not-approved-tag">{userRole}</p>

@@ -207,18 +207,18 @@ export const getLoggedIn = (username, role, {callback} = {}) => {
     PROJECT FORM
 *******************************/
 
-export const submitProjectForm = (userInfo, formData, {callback} = {}) => {
+export const submitProjectForm = (userInfo, formData, {callback, resHandler} = {}) => {
     formData.append("userInfo", userInfo); // userInfo not in form
-    return postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
+    return postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {callback: callback, resHandler: resHandler, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
 }
 
 /************************************
     ORGANIZATION AUTHORIZATION FORM
 *************************************/
 
-export const submitOrgAuthForm = (orgId, formData, {callback} = {}) => {
+export const submitOrgAuthForm = (orgId, formData, {callback, resHandler} = {}) => {
     formData.append("orgId", orgId); 
-    return postToBackend(API_ROUTES.BACKEND.SUBMIT_ORG_FORM, formData, {callback: callback, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
+    return postToBackend(API_ROUTES.BACKEND.SUBMIT_ORG_FORM, formData, {callback: callback, resHandler: resHandler, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
 }
 
 export const getOrgAuthForm = (orgId, {callback} = {}) => {

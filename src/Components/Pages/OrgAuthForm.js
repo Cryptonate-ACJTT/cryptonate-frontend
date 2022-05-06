@@ -3,13 +3,15 @@ import "./OrgAuthForm.css";
 import { ADDRESSES, getOrgAuthForm, updateOrgAuthForm, submitOrgAuthForm } from "../../Fetch/ApiFetches";
 import { useNavigate } from "react-router-dom";
 import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
-
+import Alert from '@mui/material/Alert'
+import { circularProgressClasses } from "@mui/material";
 
 const OrgAuthForm = (props) => {
 
     const userSlice = UserSlice.useSlice();
     const theId = userSlice.userInfo.id
     let approved = userSlice.userInfo.approved
+
     const [isEditing, setIsEditing] = useState(!approved);
     const [isApproved, setIsApproved] = useState(approved)
     const [orgName, setOrgName] = useState("")
@@ -19,6 +21,9 @@ const OrgAuthForm = (props) => {
     const [orgEIN, setOrgEIN] = useState("")
     const [orgPhone, setOrgPhone] = useState("")
     const [orgLocation, setOrgLocation] = useState("")
+
+    const [errorOccured, setErrorOccured] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("")
 
 
     useEffect(() => {
@@ -31,10 +36,10 @@ const OrgAuthForm = (props) => {
                 setOrgCategory(data.form.category)
                 setOrgPhone(data.form.phone)
                 setOrgLocation(data.form.location)
+                setIsApproved(data.form.approved)
             }
         });
-
-    },[isApproved])
+    }, [userSlice.userInfo])
 
     const handleIsEditing = (e) => { setIsEditing(!isEditing) }
     const navigate = useNavigate();
@@ -43,20 +48,18 @@ const OrgAuthForm = (props) => {
         e.preventDefault();
         let formData = new FormData(e.currentTarget);
 
-        console.log(e.currentTarget)
-        if (approved) 
-        {
+        // update org auth form's formData object being empty for some reason,
+        // so forced appending.
 
-            // update org auth form's formData object being empty for some reason,
-            // so forced appending.
-            formData.append("EIN", orgEIN)
-            formData.append("name", orgName)
-            formData.append("category", orgCategory)
-            formData.append("website", orgWebsite)
-            formData.append("phone", orgPhone)
-            formData.append("location", orgLocation)
-            formData.append("email", orgEmail)
+        formData.append("EIN", orgEIN)
+        formData.append("name", orgName)
+        formData.append("category", orgCategory)
+        formData.append("website", orgWebsite)
+        formData.append("phone", orgPhone)
+        formData.append("location", orgLocation)
+        formData.append("email", orgEmail)
 
+        if (isApproved) {
 
             updateOrgAuthForm(theId, formData, {
                 callback: (data) => {
@@ -67,9 +70,29 @@ const OrgAuthForm = (props) => {
             submitOrgAuthForm(theId, formData, {
                 callback: (data) => {
                 }
-            });
-        }
+                , resHandler: async (response) => {
+                    if (response.ok) {
+                        setErrorOccured(false)
+                        return await response.json()
+                    } else {
+                        const error = await response.json();
+                        setErrorMsg(error.msg)
+                        setErrorOccured(true)
+                        return Promise.reject(response.status);
+                    }
+                }
+            }).then(() => {
 
+                getOrgAuthForm(theId, {
+                    callback: (data) => {
+                        setIsApproved(data.form.approved)
+                        userReducers.userApprovedFxn(data.form.approved)
+                        setIsEditing(false)
+                    }
+                });
+                // have to update the userSlice since approved status is updated
+            })
+        }
     }
 
 
@@ -82,7 +105,7 @@ const OrgAuthForm = (props) => {
                     <div className="input-tag-group">
                         <div>
                             <label id="org-username">[ {userSlice.userInfo.username} ]</label>
-                            {userSlice.userInfo.approved == true ?
+                            {isApproved ?
                                 <p className="approved-tag">Approved</p>
                                 :
                                 <p className="not-approved-tag">Not Approved</p>
@@ -100,18 +123,18 @@ const OrgAuthForm = (props) => {
                         <div className="edit-info-button-group">
                             <button type="button" onClick={handleIsEditing} className="edit-info-button"> Edit Info</button>
                         </div>
-                        <input value={orgName} onChange={(e)=> {setOrgName(e.target.value)}} placeholder="Organization Name" disabled={!isEditing} name="name" className="input-box"></input>
-                        <input value={orgEIN} onChange={(e) => {setOrgEIN(e.target.value)}} placeholder="Employment Identification Number" disabled={!isEditing} name="EIN" className="input-box"></input>
+                        <input value={orgName} onChange={(e) => { setOrgName(e.target.value) }} placeholder="Organization Name" disabled={!isEditing} name="name" className="input-box"></input>
+                        <input value={orgEIN} onChange={(e) => { setOrgEIN(e.target.value) }} placeholder="Employment Identification Number" disabled={!isEditing} name="EIN" className="input-box"></input>
                         <div>
-                            <select value={orgCategory} onChange={(e) => {setOrgCategory(e.target.value)}} placeholder="Category" disabled={!isEditing} name="category" id="category-select">
+                            <select value={orgCategory} onChange={(e) => { setOrgCategory(e.target.value) }} placeholder="Category" disabled={!isEditing} name="category" id="category-select">
                                 <option value="animal">Animal</option>
                                 <option value="children">Children</option>
                             </select>
                         </div>
-                        <input value={orgEmail} onChange={(e)=>{setOrgEmail(e.target.value)}} placeholder="Email Address" disabled={!isEditing} name="email" className="input-box"></input>
-                        <input value={orgPhone} onChange={(e)=>{setOrgPhone(e.target.value)}} placeholder="Phone Number" disabled={!isEditing} name="phone" className="input-box"></input>
-                        <input value={orgLocation} onChange={(e)=>{setOrgLocation(e.target.value)}} placeholder="Location" disabled={!isEditing} name="location" className="input-box"></input>
-                        <input value={orgWebsite} onChange={(e)=>{setOrgWebsite(e.target.value)}} placeholder="Website Address" disabled={!isEditing} name="website" className="input-box"></input>
+                        <input value={orgEmail} onChange={(e) => { setOrgEmail(e.target.value) }} placeholder="Email Address" disabled={!isEditing} name="email" className="input-box"></input>
+                        <input value={orgPhone} onChange={(e) => { setOrgPhone(e.target.value) }} placeholder="Phone Number" disabled={!isEditing} name="phone" className="input-box"></input>
+                        <input value={orgLocation} onChange={(e) => { setOrgLocation(e.target.value) }} placeholder="Location" disabled={!isEditing} name="location" className="input-box"></input>
+                        <input value={orgWebsite} onChange={(e) => { setOrgWebsite(e.target.value) }} placeholder="Website Address" disabled={!isEditing} name="website" className="input-box"></input>
 
                     </div>
 
@@ -119,7 +142,12 @@ const OrgAuthForm = (props) => {
                 <div id="warning"> * fields are mandatory</div>
 
                 {
-                    approved ?
+                    errorOccured ?
+                        <Alert severity="error">{errorMsg}</Alert> : <></>
+                }
+
+                {
+                    isApproved ?
                         <button disabled={!isEditing} onClick={handleIsEditing} type="submit" className="button-group submit-button">RE-SUBMIT</button>
                         :
                         <button disabled={!isEditing} onClick={handleIsEditing} type="submit" className="button-group submit-button">SUBMIT</button>
