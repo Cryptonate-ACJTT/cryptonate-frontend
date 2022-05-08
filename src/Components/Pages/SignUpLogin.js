@@ -3,6 +3,8 @@ import Alert from '@mui/material/Alert'
 import './SignUpLogin.css'
 import { useNavigate, useLocation } from "react-router-dom";
 import { loginUser, signUpUser } from "../../Fetch/ApiFetches";
+import { FormControlLabel, FormGroup, Checkbox, Typography, Button, Box, Tab, TextField } from '@mui/material';
+import { TabList, TabContext, TabPanel } from '@mui/lab';
 
 import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
 
@@ -31,15 +33,15 @@ const SignUpLogin = (props) => {
     const [errorMsg, setErrorMsg] = useState("")
 
 
-    const onEmailHandler = (e) => {    setEmail(e.currentTarget.value);     };
+    const onEmailHandler = (e) => { setEmail(e.currentTarget.value); };
 
-    const onUserNamerHandler = (e) => {    setName(e.currentTarget.value);      };
+    const onUserNamerHandler = (e) => { setName(e.currentTarget.value); };
 
-    const onPasswordHanlder = (e) => {    setPassword(e.currentTarget.value);       };
+    const onPasswordHanlder = (e) => { setPassword(e.currentTarget.value); };
 
-    const onRoleSwitch = (e) => {    setRole(e.currentTarget.checked);      }
-    
-    const onConfirmPasswordHandler = (e) => {    setConfirmPasword(e.currentTarget.value);      };
+    const onRoleSwitch = (e) => { setRole(e.currentTarget.checked); }
+
+    const onConfirmPasswordHandler = (e) => { setConfirmPasword(e.currentTarget.value); };
 
 
     const location = useLocation;
@@ -118,86 +120,65 @@ const SignUpLogin = (props) => {
         });
     };
 
-    if (!loginTabClicked) {
+    const [value, setValue] = useState('login')
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+    return (
+        <div className="basic-div basic-form">
 
-        return (
-            <div className="basic-div basic-form">
-
-                <div id="signup">
-                    <div className="tab-container">
-                        <p id="login-tab" className="basic-tab not-active" onClick={handleTabSwitch} >LOGIN</p>
-                        <p id="signup-tab" className="basic-tab active" onClick={handleTabSwitch}> SIGN UP</p>
-                    </div>
-
+            <Box sx={{ display: 'contents', width: '100%', typography: 'body1' }}>
+                <TabContext value={value}>
+                    <Box >
+                        <TabList onChange={handleChange} centered aria-label="lab API tabs example">
+                            <Tab sx={{ fontSize: 'xx-large' }} label="LOGIN" value="login" />
+                            <Tab sx={{ fontSize: 'xx-large' }} label="SIGN UP" value="signup" />
+                        </TabList>
+                    </Box>
                     <div className="signup-login-group basic-group">
 
-                        <form
-                            onSubmit={SignUpHandler}
-                            style={{ display: "flex", flexDirection: "column" }}>
-                            <label>Email</label>
-                            <input type="email" value={Email} onChange={onEmailHandler} />
+                        <TabPanel value="login">
+                            {loginErrorOccured ?
+                                <Alert severity="error">{errorMsg}</Alert> : <></>
+                            }
+                            <form
+                                onSubmit={LoginHandler}
+                                style={{ display: "flex", flexDirection: "column" }}>
+                                <TextField label="Email" variant="standard" type="email" value={Email} onChange={onEmailHandler} sx={{ margin: '10px' }} />
+                                <TextField label="Password" variant="standard" type="password" value={Password} onChange={onPasswordHanlder} sx={{ margin: '10px' }} />
+                                <br />
+                                <Button variant="contained" type="submit">Login</Button>
+                            </form>
 
-                            <label>UserName</label>
-                            <input type="test" value={UserName} onChange={onUserNamerHandler} />
 
-                            <label>Password</label>
-                            <input type="password" value={Password} onChange={onPasswordHanlder} />
+                        </TabPanel>
+                        <TabPanel value="signup">
+                            {signupErrorOccured ?
+                                <Alert severity="error">{errorMsg}</Alert> : <></>
+                            }
+                            <form
+                                onSubmit={SignUpHandler}
+                                style={{ display: "flex", flexDirection: "column" }}>
 
-                            <label>ConfirmPasword</label>
-                            <input
-                                type="password"
-                                value={ConfirmPasword}
-                                onChange={onConfirmPasswordHandler}
-                            />
-                            <div className="question-container">
-                                <div className="are-you-an-organization">Are you an organization?</div>
-                                <input type="checkbox" onChange={onRoleSwitch} />
+                                <TextField label="Email" variant="standard" type="email" value={Email} onChange={onEmailHandler} sx={{ margin: '10px' }} />
+                                <TextField label="User Name" variant="standard" type="test" value={UserName} onChange={onUserNamerHandler} sx={{ margin: '10px' }} />
+                                <TextField label="Password" variant="standard" type="password" value={Password} onChange={onPasswordHanlder} sx={{ margin: '10px' }} />
+                                <TextField label="Confirm Password" variant="standard" type="password" value={ConfirmPasword} onChange={onConfirmPasswordHandler}  sx={{ margin: '10px' }}/>
+                                  
+                                <FormControlLabel control={<Checkbox onChange={onRoleSwitch} />} label="Are you an organization?" labelPlacement="start" sx={{alignSelf:'center', marginRight:'0'}}/>
+                                <br />
+                                <Button variant="contained" type="submit">Sign Up</Button>
+                            </form>
 
-                            </div>
-                            <br />
-                            <button type="submit">Sign Up</button>
-                        </form>
-                        {signupErrorOccured ?
-                            <Alert severity="error">{errorMsg}</Alert> : <></>
-                        }
-                    </div>
-                </div>
-            </div>);
-    }
-    else {
-        return (
-            <div className="basic-div basic-form">
 
-                <div id="login" >
-
-                    <div className="tab-container">
-                        <p className="basic-tab active" onClick={handleTabSwitch} >LOGIN</p>
-                        <p className="basic-tab not-active" onClick={handleTabSwitch} >SIGN UP</p>
+                        </TabPanel>
                     </div>
 
-                    <div className="signup-login-group basic-group">
+                </TabContext>
+            </Box>
 
-                        <form
-                            onSubmit={LoginHandler}
-                            style={{ display: "flex", flexDirection: "column" }}>
-                            <label>Email</label>
-                            <input type="email" value={Email} onChange={onEmailHandler} />
-
-                            <label>Password</label>
-                            <input type="password" value={Password} onChange={onPasswordHanlder} />
-
-                            <br />
-                            <button type="submit">Login</button>
-                        </form>
-                        {loginErrorOccured ?
-                            <Alert severity="error">{errorMsg}</Alert> : <></>
-                        }
-                    </div>
-
-                </div>
-            </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default SignUpLogin;

@@ -140,7 +140,7 @@ html, body {
     border-radius: 25px;
     min-height: fit-content;
     left: 0;
-    width: fit-content;
+    min-width: fit-content;
 }
 
 .warning{

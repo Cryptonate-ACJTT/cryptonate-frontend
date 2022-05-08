@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import NumberFormat from 'react-number-format';
 import "./OrgAuthForm.css";
+
+import PropTypes from 'prop-types';
 import { ADDRESSES, getOrgAuthForm, updateOrgAuthForm, submitOrgAuthForm } from "../../Fetch/ApiFetches";
 import { useNavigate } from "react-router-dom";
 import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
-import Alert from '@mui/material/Alert'
-import { circularProgressClasses } from "@mui/material";
+import { Grid, Typography, FormControlLabel, FormGroup, Switch, Button, Select, Alert, MenuItem, TextField } from "@mui/material";
 
 const OrgAuthForm = (props) => {
 
@@ -96,8 +98,8 @@ const OrgAuthForm = (props) => {
     }
 
 
-
     return (
+            
         <div className="basic-div basic-form">
             <p className="account-page-title">Information Form for Authentication</p>
             <form onSubmit={submitForm} className="form-group basic-group" encType="multipart/form-data">
@@ -111,30 +113,31 @@ const OrgAuthForm = (props) => {
                                 <p className="not-approved-tag">Not Approved</p>
                             }
                         </div>
-                        <p className="input-tag">1. Organization Name*</p>
-                        <p className="input-tag">2. Employment Identification Number*</p>
-                        <p className="input-tag">3. Category*</p>
-                        <p className="input-tag">4. Organization Email*</p>
-                        <p className="input-tag">5. Organization Phone Number</p>
-                        <p className="input-tag">6. Location</p>
-                        <p className="input-tag">7. Website Address*</p>
+                        <Typography className="input-tag">1. Organization Name*</Typography>
+                        <Typography className="input-tag">2. Employment Identification Number*</Typography>
+                        <Typography className="input-tag">3. Category*</Typography>
+                        <Typography className="input-tag">4. Organization Email*</Typography>
+                        <Typography className="input-tag">5. Organization Phone Number</Typography>
+                        <Typography className="input-tag">6. Location</Typography>
+                        <Typography className="input-tag">7. Website Address*</Typography>
                     </div>
                     <div className="input-group">
                         <div className="edit-info-button-group">
-                            <button type="button" onClick={handleIsEditing} className="edit-info-button"> Edit Info</button>
+                            <FormGroup>
+                                <FormControlLabel labelPlacement="start" control={<Switch checked={isEditing} onChange={handleIsEditing} />} label="Edit Info" />
+                            </FormGroup>
                         </div>
-                        <input value={orgName} onChange={(e) => { setOrgName(e.target.value) }} placeholder="Organization Name" disabled={!isEditing} name="name" className="input-box"></input>
-                        <input value={orgEIN} onChange={(e) => { setOrgEIN(e.target.value) }} placeholder="Employment Identification Number" disabled={!isEditing} name="EIN" className="input-box"></input>
-                        <div>
-                            <select value={orgCategory} onChange={(e) => { setOrgCategory(e.target.value) }} placeholder="Category" disabled={!isEditing} name="category" id="category-select">
-                                <option value="animal">Animal</option>
-                                <option value="children">Children</option>
-                            </select>
-                        </div>
-                        <input value={orgEmail} onChange={(e) => { setOrgEmail(e.target.value) }} placeholder="Email Address" disabled={!isEditing} name="email" className="input-box"></input>
-                        <input value={orgPhone} onChange={(e) => { setOrgPhone(e.target.value) }} placeholder="Phone Number" disabled={!isEditing} name="phone" className="input-box"></input>
-                        <input value={orgLocation} onChange={(e) => { setOrgLocation(e.target.value) }} placeholder="Location" disabled={!isEditing} name="location" className="input-box"></input>
-                        <input value={orgWebsite} onChange={(e) => { setOrgWebsite(e.target.value) }} placeholder="Website Address" disabled={!isEditing} name="website" className="input-box"></input>
+                        <TextField value={orgName} onChange={(e) => { setOrgName(e.target.value) }} placeholder="Organization Name" disabled={!isEditing} name="name" ></TextField>
+                        <NumberFormat customInput={TextField} format="##-#######" allowEmptyFormatting mask="_" value={orgEIN} onChange={(e) => { setOrgEIN(e.target.value) }} disabled={!isEditing} name="EIN" ></NumberFormat>
+                        <Select value={orgCategory} onChange={(e) => { setOrgCategory(e.target.value) }} placeholder="Category" disabled={!isEditing} name="category" >
+                            <MenuItem value="animal">Animal</MenuItem>
+                            <MenuItem value="children">Children</MenuItem>
+                        </Select>
+                        <TextField value={orgEmail} onChange={(e) => { setOrgEmail(e.target.value) }} placeholder="Email Address" disabled={!isEditing} name="email"></TextField>
+                        <NumberFormat value={orgPhone} onChange={(e) => { setOrgPhone(e.target.value) }} placeholder="Phone Number" disabled={!isEditing} name="phone" customInput={TextField} format="+1 (###) ###-####" allowEmptyFormatting mask="_" />
+                        
+                        <TextField value={orgLocation} onChange={(e) => { setOrgLocation(e.target.value) }} placeholder="Location" disabled={!isEditing} name="location" ></TextField>
+                        <TextField value={orgWebsite} onChange={(e) => { setOrgWebsite(e.target.value) }} placeholder="Website Address" disabled={!isEditing} name="website" ></TextField>
 
                     </div>
 
@@ -148,13 +151,16 @@ const OrgAuthForm = (props) => {
 
                 {
                     isApproved ?
-                        <button disabled={!isEditing} onClick={handleIsEditing} type="submit" className="button-group submit-button">RE-SUBMIT</button>
+                        <Button variant="contained" disabled={!isEditing} onClick={handleIsEditing} type="submit" className="button-group submit-button">RE-SUBMIT</Button>
                         :
-                        <button disabled={!isEditing} onClick={handleIsEditing} type="submit" className="button-group submit-button">SUBMIT</button>
+                        <Button variant="contained" disabled={!isEditing} onClick={handleIsEditing} type="submit" className="button-group submit-button">SUBMIT</Button>
 
                 }
-            </form>
-        </div>
+            </form >
+        </div >
+
+
+                
 
     );
 }
