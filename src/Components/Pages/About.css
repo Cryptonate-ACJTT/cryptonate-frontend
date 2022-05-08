@@ -1,9 +1,6 @@
 #about-us-image {
   height: 300px;
   object-fit: cover;
-  position: absolute;
-  top: 55%;
-  left:40%;
   width: 300px;
 }
 

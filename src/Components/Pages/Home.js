@@ -1,8 +1,6 @@
-import { Grid, Typography, Box } from "@mui/material";
-
+import { Grid, Typography, Box,CardMedia } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { getFPStats } from "../../Fetch/ApiFetches";
-import './Home.css'
 import image from './Images/image1.png'
 
 const Home = (props) => {
@@ -16,16 +14,13 @@ const Home = (props) => {
 	}, []);
 
     return (	
-		<Grid container spacing={2} alignItems="center" mt="20vh">
-			<Grid item xs={9}>
+		<Grid sx={{pr:"3.5vw",pl:"3.5vw"}}>
+		<Grid container alignItems="center" >
+			<Grid item xs={7} sx={{pt:"3vw"}} >
 				<Typography variant="title">CHANGE THE WORLD<br/> WITH <b>CRYPTONATE</b></Typography>
 					<br/><br/>
 				<Typography variant="tagline">blockchain for a better tomorrow</Typography>
-				<img className="home-screen-image" src={image} alt="img" />
-			</Grid>
-			<Grid item xs={3}/>
-			<Grid item xs={9}>
-				<Box ml="15vw" mr="15vw" pt="2vh" sx={{borderTop: "3px dotted rgba(0,0,0,0.2)"}}>
+				<Box ml="10vw" mr="10vw" pt="2vh" sx={{borderTop: "3px dotted rgba(0,0,0,0.2)"}}>
 					<Grid container spacing={3}>
 						<Grid item xs={4}>
 							<Typography variant="stats">Fundraisers</Typography>
@@ -48,37 +43,15 @@ const Home = (props) => {
 					</Grid>
 				</Box>
 			</Grid>
+			<Grid item xs={5}>
+				<Box>
+				<CardMedia  component="img" image={image} alt="img" />
+				</Box>
+			</Grid>
+		</Grid>
 		</Grid>
     )
 }
-
-/*<div className="basic-div container-center">
-            <div>
-                <h1 className="title">CHANGE THE WORLD <br/>WITH CRYPTONATE</h1>
-                <h2 className="tagline">blockchain for a better tomorrow</h2>
-            <img className="home-screen-image" src={image} alt="img" />
-            </div>
-
-			<div className="home-stats">
-				
-				<table>
-					<thead>
-						<tr>
-							<th>{stats ? stats.fundraiserCount : 0}</th>
-							<th>{stats ? stats.total : 0}</th>
-							<th>{stats ? stats.donorCount : 0}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Open Fundraisers</td>
-							<td>Donated</td>
-							<td>Donors</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-        </div>*/
 
 export default Home;
 
