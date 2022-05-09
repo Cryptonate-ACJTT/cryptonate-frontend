@@ -20,6 +20,7 @@ const ProjectForm = (props) => {
 		
 		submitProjectForm(JSON.stringify(props.userSlice.userInfo), formData, {callback: (data) => {
 			userReducers.userWalletFxn(data.wallet);
+            userReducers.userProjectFxn(data.project)
 			navigate("/explore/project/" + data.project._id);
 		} , resHandler: async (response) => {
             if (response.ok) {
@@ -31,7 +32,7 @@ const ProjectForm = (props) => {
                 return Promise.reject(response.status);
             }
 
-        }});
+        }})
 	}
 
 	//action="http://localhost:4000/api/v1/project/create" method="POST" enctype="multipart/form-data" class="project-form-group">
@@ -42,8 +43,13 @@ const ProjectForm = (props) => {
             <div className="account-page-title">Project Form</div>
 
             <form onSubmit={submitForm} className="project-form-group"> 
+            {
+                    errorOccured ?
+                        <Alert severity="error">{errorMsg}</Alert> : <></>
+                }
 
                 <div className="project-form-container">
+                
 
                     <div className="form-left">
                         <div id="the-form" name="project-form">
@@ -106,10 +112,7 @@ const ProjectForm = (props) => {
                 </div>
 
                 <button id="submit-button" type="submit" className="submit-button button-group" >SUBMIT</button>
-                {
-                    errorOccured ?
-                        <Alert severity="error">{errorMsg}</Alert> : <></>
-                }
+                
             </form>
 
 

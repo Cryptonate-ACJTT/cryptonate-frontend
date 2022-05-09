@@ -4,7 +4,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
 import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Alert, Box, Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
 
 
 
@@ -13,16 +13,9 @@ const Profile = (props) => {
     const [passwordEditing, togglePasswordEditing] = useState(false);
     const [nameEditing, toggleNameEditing] = useState(false);
     const [emailEditing, toggleEmailEditing] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
     const userSlice = UserSlice.useSlice();
-
-    useEffect(() => { 
-        // setIsApproved(userSlice.userInfo.approved)
-        return UserSlice.unsubscribe();
-    },[])
-
 
     let userRole = userSlice.userInfo.role;
     let userEmail = userSlice.userInfo.email;
@@ -34,6 +27,13 @@ const Profile = (props) => {
     let projectsInProg = []
     let projectsCompleted = []
 
+    useEffect(() => { 
+        // setIsApproved(userSlice.userInfo.approved)
+        return UserSlice.unsubscribe();
+    },[])
+
+
+    
     for (const project of projects) {
         if (project.projectOpen == true) {
             projectsInProg.push(project)
@@ -43,26 +43,9 @@ const Profile = (props) => {
         }
     }
 
-
-    if (userRole == "admin") {
-        setIsAdmin(true)
-    }
-
     const handlePasswordEditing = async (e) => { togglePasswordEditing(!passwordEditing); }
     const handleNameEditing = async (e) => { toggleNameEditing(!nameEditing); }
     const handleEmailEditing = async (e) => { toggleEmailEditing(!emailEditing); }
-
-    let projectInProgressLabel = ""
-    let projectCompletedLabel = ""
-
-    if (userRole == "admin") {
-        projectInProgressLabel = "Organizations To Be Authorized"
-        projectCompletedLabel = "Authorizaed Organizations"
-    }
-    else {
-        projectInProgressLabel = "My Projects In Progress"
-        projectCompletedLabel = "My Projects Completed"
-    }
 
     const [approvedDialog, setApprovedDialog] = useState(!approved);
 
@@ -120,8 +103,8 @@ const Profile = (props) => {
                     }
                 </div>
 
-                <div className="project-inprogress profile-label">{projectInProgressLabel}</div>
-                <div className="project-completed profile-label">{projectCompletedLabel}</div>
+                <div className="project-inprogress profile-label">My Projects In Progress</div>
+                <div className="project-completed profile-label">My Projects Completed</div>
 
 
                 <div className="project-inprogress-box">

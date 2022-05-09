@@ -11,15 +11,7 @@ import StoreSlice from "../StoreSlice";
 const userApprovedReducer = (state, approved) => {
 	return Object.assign({}, state, {
 		userInfo: {
-			id: state.userInfo.id,
-			username: state.userInfo.username,
-			email: state.userInfo.email,
-			role: state.userInfo.role,
-			wallet: {
-				id: state.userInfo.wallet.id,
-				accounts: state.userInfo.wallet.accounts
-			},
-			projects: state.userInfo.projects,
+			...state.userInfo,
 			approved: approved
 		}
 	});
@@ -27,6 +19,19 @@ const userApprovedReducer = (state, approved) => {
 
 const userApprovedFxn = (approved) => {
 	Store.dispatch({ type: "userApprovedReducer", payload: approved })
+}
+
+const userProjectReducer = (state, project) => {
+	return Object.assign({}, state, {
+		userInfo: {
+			...state.userInfo,
+			projects: state.userInfo.projects.concat(project)
+		}
+	});
+}
+
+const userProjectFxn = (project) => {
+	Store.dispatch({ type: "userProjectReducer", payload: project })
 }
 
 const userLoginReducer = (state, loginInfo) => {
@@ -92,14 +97,16 @@ const reducers = {
 	userLoginReducer,
 	userLogoutReducer,
 	userWalletReducer,
-	userApprovedReducer
+	userApprovedReducer,
+	userProjectReducer
 };
 
 export const reducerFxns = {
 	userLoginFxn,
 	userLogoutFxn,
 	userWalletFxn,
-	userApprovedFxn
+	userApprovedFxn,
+	userProjectFxn
 };
 
 const UserSlice = new StoreSlice(storeKey, initState, reducers, reducerFxns);

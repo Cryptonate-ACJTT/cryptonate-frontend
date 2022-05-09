@@ -76,8 +76,7 @@ a:link { text-decoration: none; }
     display: inline-block;
 }
 .dropdown-content {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
     display: none;
     position: absolute;
     background-color: #f9f9f9;
@@ -94,13 +93,14 @@ a:link { text-decoration: none; }
     padding: 10px 13px;
     text-decoration: none;
     display: block;
-    min-width: 120px;
+    min-width: max-content;
 }
 .dropdown-content a:hover {
     background-color: #f1f1f1
 }
 .dropdown:hover .dropdown-content {
     display: block;
+    border-radius: 5%;
 }
 /* .dropdown:hover .dropbtn {
     background-color: #3e8e41;

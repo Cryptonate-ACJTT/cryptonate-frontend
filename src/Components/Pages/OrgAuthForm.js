@@ -41,6 +41,9 @@ const OrgAuthForm = (props) => {
                 setIsApproved(data.form.approved)
             }
         });
+        return (() => {	// runs on unmount
+			UserSlice.unsubscribe();
+		});
     }, [userSlice.userInfo])
 
     const handleIsEditing = (e) => { setIsEditing(!isEditing) }
