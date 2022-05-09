@@ -99,7 +99,7 @@ const OrgAuthForm = (props) => {
 
 
     return (
-            
+
         <div className="basic-div basic-form">
             <p className="account-page-title">Information Form for Authentication</p>
             <form onSubmit={submitForm} className="form-group basic-group" encType="multipart/form-data">
@@ -128,14 +128,17 @@ const OrgAuthForm = (props) => {
                             </FormGroup>
                         </div>
                         <TextField value={orgName} onChange={(e) => { setOrgName(e.target.value) }} placeholder="Organization Name" disabled={!isEditing} name="name" ></TextField>
-                        <NumberFormat customInput={TextField} format="##-#######" allowEmptyFormatting mask="_" value={orgEIN} onChange={(e) => { setOrgEIN(e.target.value) }} disabled={!isEditing} name="EIN" ></NumberFormat>
+                        <NumberFormat customInput={TextField} format="##-#######" allowEmptyFormatting mask="_" value={orgEIN} onValueChange={(values) => { setOrgEIN(values.value) }} disabled={!isEditing} name="EIN" ></NumberFormat>
                         <Select value={orgCategory} onChange={(e) => { setOrgCategory(e.target.value) }} placeholder="Category" disabled={!isEditing} name="category" >
+                            <MenuItem disabled value="">
+                                <em>Please select a category.</em>
+                            </MenuItem>
                             <MenuItem value="animal">Animal</MenuItem>
                             <MenuItem value="children">Children</MenuItem>
                         </Select>
                         <TextField value={orgEmail} onChange={(e) => { setOrgEmail(e.target.value) }} placeholder="Email Address" disabled={!isEditing} name="email"></TextField>
                         <NumberFormat value={orgPhone} onChange={(e) => { setOrgPhone(e.target.value) }} placeholder="Phone Number" disabled={!isEditing} name="phone" customInput={TextField} format="+1 (###) ###-####" allowEmptyFormatting mask="_" />
-                        
+
                         <TextField value={orgLocation} onChange={(e) => { setOrgLocation(e.target.value) }} placeholder="Location" disabled={!isEditing} name="location" ></TextField>
                         <TextField value={orgWebsite} onChange={(e) => { setOrgWebsite(e.target.value) }} placeholder="Website Address" disabled={!isEditing} name="website" ></TextField>
 
@@ -160,7 +163,7 @@ const OrgAuthForm = (props) => {
         </div >
 
 
-                
+
 
     );
 }
