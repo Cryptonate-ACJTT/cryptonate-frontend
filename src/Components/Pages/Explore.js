@@ -253,6 +253,7 @@ const ExploreTiling = (props) => {
 					progress = {Math.floor(project.totalSaved/project.goalAmount) * 100}
 					date = {project.updatedAt}
 					verified = {project.verified}	// UPDATE THIS LATER
+					open = {project.projectOpen}
 				/>
 			);
 		}
@@ -308,7 +309,7 @@ const ExploreTile = (props) => {
 		<Grid item xs={4}>
 			<Link to={"/explore/project/" + props.id}>
 				<Card variant="outlined" sx={{background:"white", borderRadius:"15px", ":hover":{cursor: "pointer", boxShadow:"5px 5px rgba(0, 0, 0, 0.2)"}}}>
-					<CardContent sx={{background:"#1C3E64", color:"white", borderBottom:"5px solid rgba(0,0,0,0.2)"}}>
+					<CardContent sx={{background: props.open ? "#1C3E64" : "#080808", color:"white", borderBottom:"5px solid rgba(0,0,0,0.2)"}}>
 						<Typography variant="h4">{props.title}</Typography>
 					</CardContent>
 					
