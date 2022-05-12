@@ -80,6 +80,7 @@ export const API_ROUTES = {
 
         TXN_BASIC: "/crypto/txn/basic",
 		TXN_DONATE: "/crypto/txn/donate",
+		TXN_DELETE: "/project/delete",
 
 
         /* INDEX */
@@ -283,7 +284,17 @@ export const txnDonate = (userInfo, sender, projectAddress, projectID, amount, {
 			projectID: projectID,
 			amount: amount
 		}, {callback: callback, credentials: true})
-	)
+	);
+}
+
+
+export const txnDelete = (userInfo, appID, {callback} = {}) => {
+	return trackPromise(
+		postToBackend(API_ROUTES.BACKEND.TXN_DELETE, {
+			userInfo: userInfo,
+			appID: appID
+		}, {callback: callback, credentials: true})
+	);
 }
 
 /*******************************

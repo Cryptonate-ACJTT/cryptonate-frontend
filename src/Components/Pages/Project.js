@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import "./Project.css"
-import { ADDRESSES, API_ROUTES, getFromBackend, grabProjectData, postToBackend, txnBasic, txnDonate } from "../../Fetch/ApiFetches";
+import { ADDRESSES, API_ROUTES, getFromBackend, grabProjectData, postToBackend, txnBasic, txnDelete, txnDonate } from "../../Fetch/ApiFetches";
 import FourOhFour from "./FourOhFour";
 import { Alert, Box, Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, InputAdornment, DialogContentText, DialogTitle, FormControl, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { AlgoIcon } from "../PageBits/Icons/Icons";
@@ -9,6 +9,7 @@ import UserSlice from "../../Redux/Slices/UserSlice";
 import PageContainer from "../PageBits/PageContainer/PageContainer";
 import Image from "mui-image"
 import { UnverifiedIcon, VerifiedIcon } from "../PageBits/Icons/Icons";
+import Visualizer from "../PageBits/Visualize/Visualize";
 
 
 const Project = (props) => {
@@ -55,10 +56,26 @@ const Project = (props) => {
 
 	const deleteProjectButton = () => {
 
-		let contains = 0;
-		if(slice.userInfo.id === projectData.creatorID) {
-			// deletebutton
+		const deleteProjectAttempt = () => {
+			txnDelete(slice.userInfo, projectData.appID, {callback: (data) => {
+				console.log(data);
+				if(data) {
+					return <Navigate replace to={API_ROUTES.FRONTEND.EXPLORE}/>;
+				}
+			}});
 		}
+
+		if(slice.userInfo) {
+			if(slice.userInfo.id === projectData.creatorID) {
+				return (
+					<Button onClick={deleteProjectAttempt} fullWidth color="secondary" variant="contained" sx={{color:"white", pb:"2vh", pt:"2vh", mb: "1vh", borderRadius:"5px 10px 5px 10px"}}>
+						<b>Delete Project</b>
+					</Button>
+				);
+			}
+		}
+
+		return null;
 	}
 
 
@@ -70,6 +87,7 @@ const Project = (props) => {
 				<Box>
 					<Grid container spacing={2} >
 						<Grid item xs={7}>
+							{deleteProjectButton()}
 							<Box sx={{background: "white", borderRadius: "20px"}}>
 								<Box sx={{background:"#1C3E64", borderRadius:"20px 20px 0 0", borderBottom:"10px solid rgba(0,0,0,0.2)", pt:"2vh", pb:"1vh"}}>
 									<Typography variant="h3" sx={{color: "white"}}>{projectData.projectName}</Typography>
@@ -80,8 +98,9 @@ const Project = (props) => {
 									<Image src={ADDRESSES.BACKEND + projectData.image} width="100%" height="400px" fit="cover" sx={{borderBottom:"10px groove rgba(0,0,0,0.5)"}}/>
 								</Box>
 								<Box p="2vh 2vw 2vh 2vw" sx={{background:"white", borderBottom:"3px dashed rgba(0,0,0,0.2)"}}>
+									<Typography textAlign="left" variant="h5">About {projectData.projectName}</Typography>
 									<Typography textAlign="left" variant="body1">
-										<Typography variant="h5">About {projectData.projectName}</Typography>
+										
 										{projectData.solution}
 									</Typography>
 								</Box>
@@ -119,9 +138,14 @@ const Project = (props) => {
 										</Grid>
 									</Grid>
 								</Box>
-								<Button onClick={dialogHandler} variant="contained" color="secondary" fullwidth sx={{width: "100%", borderRadius:"0 0 20px 20px", p:"1vh 0 1vh 0", border:"5px groove rgba(255,255,255,0.2)", ":hover":{border:"5px ridge rgba(255,255,255,0.2)"}}}>
+								<Button onClick={dialogHandler} variant="contained" color="secondary" fullwidth="true" sx={{width: "100%", borderRadius:"0 0 20px 20px", p:"1vh 0 1vh 0", border:"5px groove rgba(255,255,255,0.2)", ":hover":{border:"5px ridge rgba(255,255,255,0.2)"}}}>
 									<Typography fontSize="30px" variant="data" sx={{color:"white"}}><b>DONATE</b></Typography>							
 								</Button>
+							</Box>
+							<Box sx={{background:"white", borderRadius:"20px 20px 20px 20px"}}>
+								<Box sx={{p:"2vh 2vw"}}>
+									<Visualizer/>
+								</Box>
 							</Box>
 						</Grid>
 					</Grid>
@@ -165,7 +189,7 @@ const DonateModal = (props) => {
 	}
 
 	return (
-		<Dialog open={props.open} onClose={props.close} fullWidth maxWidth="md" PaperProps={{sx:{borderRadius: "20px"}}}>
+		<Dialog open={props.open} onClose={props.close} fullwidth="true" maxWidth="md" PaperProps={{sx:{borderRadius: "20px"}}}>
 			<form onSubmit={handleSubmit}>
 			<Grid container spacing={2}>
 				<Grid item xs={9}>
@@ -197,7 +221,7 @@ const DonateModal = (props) => {
 					</Grid>
 					<Grid item xs={8}>
 						<Box sx={{p:"1.5vh 1vw 0 0"}}>
-							{props.accounts ? <Select fullWidth name="account" value={props.accounts[0]}>
+							{props.accounts ? <Select fullwidth="true" name="account" value={props.accounts[0]}>
 								{makeAccountSelect(props.accounts)}
 							</Select> : null}
 						</Box>
@@ -209,11 +233,11 @@ const DonateModal = (props) => {
 					</Grid>
 					<Grid item xs={8}>
 						<Box sx={{p:"0.5vh 1vw 0 0 "}}>
-							<TextField name="amount" type="text" inputProps={{inputMode: 'decimal', pattern: '[0-9].*' }} step="0.01" fullWidth variant="outlined" placeholder="0" InputProps={{startAdornment:(<InputAdornment position="start"><AlgoIcon/></InputAdornment>)}}></TextField>
+							<TextField name="amount" type="text" inputProps={{inputMode: 'decimal', pattern: '[0-9].*' }} step="0.01" fullwidth="true" variant="outlined" placeholder="0" InputProps={{startAdornment:(<InputAdornment position="start"><AlgoIcon/></InputAdornment>)}}></TextField>
 						</Box>
 					</Grid>
 					<Grid item xs={12}>
-						<Button type="submit" variant="contained" color="secondary" fullwidth sx={{width: "100%", borderRadius:"0 0 20px 20px", p:"1vh 0 1vh 0", border:"5px groove rgba(255,255,255,0.2)", ":hover":{border:"5px ridge rgba(255,255,255,0.2)"}}}>
+						<Button type="submit" variant="contained" color="secondary" fullwidth="true" sx={{width: "100%", borderRadius:"0 0 20px 20px", p:"1vh 0 1vh 0", border:"5px groove rgba(255,255,255,0.2)", ":hover":{border:"5px ridge rgba(255,255,255,0.2)"}}}>
 							<Typography fontSize="30px" variant="data" sx={{color:"white"}}><b>SEND</b></Typography>							
 						</Button>
 					</Grid>
