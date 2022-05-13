@@ -79,6 +79,8 @@ export const API_ROUTES = {
         CHECK_BALANCE: "/crypto/balance",
 
         TXN_BASIC: "/crypto/txn/basic",
+		TXN_DONATE: "/crypto/txn/donate",
+		TXN_DELETE: "/project/delete",
 
 
         /* INDEX */
@@ -273,6 +275,30 @@ export const getAccountBalances = (addrs, {callback} = {}) => {
     return trackPromise(postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, {addresses: addrs}, {callback: callback}));
 }
 
+
+export const txnDonate = (userInfo, sender, projectAddress, projectID, amount, {callback} = {}) => {
+	return trackPromise(
+		postToBackend(API_ROUTES.BACKEND.TXN_DONATE, {
+			email: userInfo.email,
+			role: userInfo.role,
+			wallet: userInfo.wallet.id,
+			sender: sender,
+			projectAddress: projectAddress,
+			projectID: projectID,
+			amount: amount
+		}, {callback: callback, credentials: true})
+	);
+}
+
+
+export const txnDelete = (userInfo, appID, {callback} = {}) => {
+	return trackPromise(
+		postToBackend(API_ROUTES.BACKEND.TXN_DELETE, {
+			userInfo: userInfo,
+			appID: appID
+		}, {callback: callback, credentials: true})
+	);
+}
 
 /*******************************
     INDEXER

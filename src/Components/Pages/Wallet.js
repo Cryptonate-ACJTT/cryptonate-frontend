@@ -50,7 +50,7 @@ const Wallet = (props) => {
 	const testTxn = (e) => {
 		console.log(e.target.value);
 		console.log(slice.userInfo);
-		txnBasic(slice.userInfo, slice.userInfo.wallet.accounts[0], "MGTGN4OD5PFCOSDAQK5OP6S2PKOU2K6L3CVDYZNPCSIP2BBSQ46TX2HUEE", 10000, {callback: (data) => {
+		txnBasic(slice.userInfo, slice.userInfo.wallet.accounts[0], "MGTGN4OD5PFCOSDAQK5OP6S2PKOU2K6L3CVDYZNPCSIP2BBSQ46TX2HUEE", 0.01, {callback: (data) => {
 			console.log(data);
 		}})
 	}
@@ -73,13 +73,6 @@ const Wallet = (props) => {
 			</div>
 		}/>
 	)
-	/*
-		<Box className="page-container">
-			<Typography variant="h3" sx={{mb: "3vh", borderBottom: "3px dotted rgba(0,0,0,0.2)"}}>My Wallet</Typography>
-			
-			
-	*/
-	
 }
 
 const WalletAccordion = (props) => {
