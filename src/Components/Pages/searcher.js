@@ -36,7 +36,7 @@ export default class PersonForm extends React.Component {
         orgText: context.state.lastName
       },
       success: function(response) {
-        alert("Successfully 
+        alert("Successfully" 
       },
       error: function(response) {
         alert("Error");
