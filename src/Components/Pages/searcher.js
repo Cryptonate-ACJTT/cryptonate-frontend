@@ -28,7 +28,7 @@ export default class PersonForm extends React.Component {
     var context = this;
 
     $.ajax({
-      url: "http://localhost:3000/api/v1",
+      url: "http://localhost:3000/api/v1/people/save",
       method: "POST",
       data: {
         id: context.state.id,
@@ -43,6 +43,31 @@ export default class PersonForm extends React.Component {
       }
     });
   }
+ ProfilePage({ resource }) {
+  return (
+    <Suspense fallback={<h1>Loading profile...</h1>}>
+      <ProfileDetails resource={resource} />
+      <Suspense fallback={<h1>Loading posts...</h1>}>
+        <ProfileTimeline resource={resource} />
+      </Suspense>
+    </Suspense>
+  );
+}
+
+ProfileDetails({ resource }) {
+  const user = resource.user.read();
+  return <h1>{user.name}</h1>;
+}
+
+ ProfileTimeline({ resource }) {
+  const posts = resource.posts.read();
+  return (
+    <ul>
+      {posts.map(post => (
+        <li key={post.id}>{post.text}</li>
+      ))}
+    </ul>
+  );}
 
   render() {
     return (
@@ -54,7 +79,7 @@ export default class PersonForm extends React.Component {
         <hr/>
 
         <button onClick={this.save.bind(this)}>
-          see org
+          next
         </button>
       </div>
     );
