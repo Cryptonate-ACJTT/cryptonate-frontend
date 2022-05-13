@@ -49,20 +49,6 @@
 a:visited { text-decoration: none; }
 a:link { text-decoration: none; }
 
-/* 
-.dropdown-menu { background-color: #FFDAB9; padding: 8px; font-size: 15px; border: none; cursor: pointer;}
-.dropdown { position: relative; display: inline-block; }
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #FFDAB9;
-    min-width: 70px;
-    padding: 8px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-.dropdown:hover .dropdown-content { display: block; }
-.dropdown-content a:hover { background-color: #CD853F; }
- */
 
  .dropbtn {
     padding-left: 20px;
@@ -102,9 +88,9 @@ a:link { text-decoration: none; }
     display: block;
     border-radius: 5%;
 }
-/* .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-} */
+#logout{
+    border-top: 1px solid rgba(0,0,0,0.2);
+}
 
 svg {
     vertical-align: -moz-middle-with-baseline;

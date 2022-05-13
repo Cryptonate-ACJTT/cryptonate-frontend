@@ -16,6 +16,9 @@ const ProjectForm = (props) => {
     const [errorMsg, setErrorMsg] = useState("")
     const [orgName, setOrgName] = useState("")
 
+    const categories = ['Animals', 'Children', 'Climate Change', 'Disaster Recovery', 'Economic Development',
+        'Education', 'Health', 'Human Rights', 'Humanitarian Assistance', 'Hunger', 'Water', 'Etc.'];
+
     getOrgAuthForm(theId, {
         callback: (data) => {
             setOrgName(data.form.name)
@@ -70,7 +73,7 @@ const ProjectForm = (props) => {
                             </div>
                             <div className="form-input-group">
                                 <label htmlFor="org-input" className="form-label">Org name</label>
-                                <TextareaAutosize className="form-input-textarea" id="org-input" minRows={2} cols="50" name="orgName" value={orgName} disabled={orgName.length === 0 ? false: true} required />
+                                <TextareaAutosize className="form-input-textarea" id="org-input" minRows={2} cols="50" name="orgName" value={orgName} disabled={orgName.length === 0 ? false : true} required />
                             </div>
 
                             <div className="form-input-group">
@@ -90,8 +93,8 @@ const ProjectForm = (props) => {
 
                             <div>
                                 <label className="header-label" >Image</label>
-                                <Input accept="image/*" id="contained-button-file" type="file" />
-                                
+                                <Input name="image" accept="image/*" id="contained-button-file" type="file" />
+
                             </div>
 
                         </div>
@@ -115,8 +118,9 @@ const ProjectForm = (props) => {
                                     <MenuItem disabled value="">
                                         <em>Please select a category.</em>
                                     </MenuItem>
-                                    <MenuItem value="animal">Animal</MenuItem>
-                                    <MenuItem value="children">Children</MenuItem>
+                                    {categories.map((category) => (
+                                        <MenuItem key={category} value={category}> {category} </MenuItem>
+                                    ))}
                                 </Select>
                             </div>
 

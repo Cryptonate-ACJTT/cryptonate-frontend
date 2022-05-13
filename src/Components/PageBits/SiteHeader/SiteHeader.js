@@ -55,7 +55,7 @@ const SiteHeader = (props) => {
                             :
                             <Link to ="/organization-auth-form"> Form</Link>
                             }
-							<Link to ="/logout" onClick={handleLogout}>Log Out</Link>
+							<Link to ="/logout" id="logout" onClick={handleLogout}>Log Out</Link>
                             
                         </div>
                     </div>
