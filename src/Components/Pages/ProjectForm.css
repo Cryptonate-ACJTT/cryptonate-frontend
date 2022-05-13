@@ -20,8 +20,8 @@
     font-weight: 600;
 }
 
-.form-input-group{  margin-bottom: 17px;    }
-
+.form-input-group{  margin-bottom: 17px;  }
+.form-input-textarea {  resize: vertical;   }
 .header-label{
     font-weight: 600;
     margin-right: 10px;

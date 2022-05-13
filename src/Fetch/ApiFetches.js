@@ -156,12 +156,13 @@ export const getFPStats = ({callback} = {}) => {
  * @returns 
  */
 export const signUpUser = (email, username, password, role, {callback, resHandler} = {}) => {
-    return postToBackend(API_ROUTES.BACKEND.REGISTER_USER, {
+    return trackPromise(
+        postToBackend(API_ROUTES.BACKEND.REGISTER_USER, {
         email: email,
         password: password,
         username: username,
         role: role
-    }, {callback: callback, credentials: true, resHandler: resHandler});
+    }, {callback: callback, credentials: true, resHandler: resHandler}));
 }
 
 /**
@@ -209,7 +210,9 @@ export const getLoggedIn = (username, role, {callback} = {}) => {
 
 export const submitProjectForm = (userInfo, formData, {callback, resHandler} = {}) => {
     formData.append("userInfo", userInfo); // userInfo not in form
-    return postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {callback: callback, resHandler: resHandler, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
+    return trackPromise(
+    postToBackend(API_ROUTES.BACKEND.CREATE_PROJECT, formData, {callback: callback, resHandler: resHandler, credentials: true, contentType: CONTENT_TYPES.FORM_DATA})
+    );
 }
 
 /************************************

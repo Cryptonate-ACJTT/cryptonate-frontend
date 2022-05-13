@@ -14,20 +14,6 @@ const OrgAuthForm = (props) => {
     const theId = userSlice.userInfo.id
     let approved = userSlice.userInfo.approved
 
-    const [isEditing, setIsEditing] = useState(!approved);
-    const [isApproved, setIsApproved] = useState(approved)
-    const [orgName, setOrgName] = useState("")
-    const [orgEmail, setOrgEmail] = useState("")
-    const [orgCategory, setOrgCategory] = useState("")
-    const [orgWebsite, setOrgWebsite] = useState("")
-    const [orgEIN, setOrgEIN] = useState("")
-    const [orgPhone, setOrgPhone] = useState("")
-    const [orgLocation, setOrgLocation] = useState("")
-
-    const [errorOccured, setErrorOccured] = useState(false);
-    const [errorMsg, setErrorMsg] = useState("")
-
-
     useEffect(() => {
         getOrgAuthForm(theId, {
             callback: (data) => {
@@ -42,12 +28,27 @@ const OrgAuthForm = (props) => {
             }
         });
         return (() => {	// runs on unmount
-			UserSlice.unsubscribe();
-		});
+            UserSlice.unsubscribe();
+        });
     }, [userSlice.userInfo])
 
+    const [isEditing, setIsEditing] = useState(!approved);
+    const [isApproved, setIsApproved] = useState(approved)
+    const [orgName, setOrgName] = useState("")
+    const [orgEmail, setOrgEmail] = useState("")
+    const [orgCategory, setOrgCategory] = useState("")
+    const [orgWebsite, setOrgWebsite] = useState("")
+    const [orgEIN, setOrgEIN] = useState("")
+    const [orgPhone, setOrgPhone] = useState("")
+    const [orgLocation, setOrgLocation] = useState("")
+
+    const [errorOccured, setErrorOccured] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("")
     const handleIsEditing = (e) => { setIsEditing(!isEditing) }
     const navigate = useNavigate();
+
+    const categories = ['Animals','Children','Climate Change','Disaster Recovery','Economic Development',
+        'Education','Health','Human Rights','Humanitarian Assistance','Hunger','Water','Etc.'];
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -78,6 +79,7 @@ const OrgAuthForm = (props) => {
                 , resHandler: async (response) => {
                     if (response.ok) {
                         setErrorOccured(false)
+                        navigate("/profile", { replace: true });
                         return await response.json()
                     } else {
                         const error = await response.json();
@@ -95,7 +97,6 @@ const OrgAuthForm = (props) => {
                         setIsEditing(false)
                     }
                 });
-                // have to update the userSlice since approved status is updated
             })
         }
     }
@@ -130,31 +131,29 @@ const OrgAuthForm = (props) => {
                                 <FormControlLabel labelPlacement="start" control={<Switch checked={isEditing} onChange={handleIsEditing} />} label="Edit Info" />
                             </FormGroup>
                         </div>
-                        <TextField value={orgName} onChange={(e) => { setOrgName(e.target.value) }} placeholder="Organization Name" disabled={!isEditing} name="name" ></TextField>
-                        <NumberFormat customInput={TextField} format="##-#######" allowEmptyFormatting mask="_" value={orgEIN} onValueChange={(values) => { setOrgEIN(values.value) }} disabled={!isEditing} name="EIN" ></NumberFormat>
-                        <Select value={orgCategory} onChange={(e) => { setOrgCategory(e.target.value) }} placeholder="Category" disabled={!isEditing} name="category" >
+                        <TextField required value={orgName} onChange={(e) => { setOrgName(e.target.value) }} placeholder="Organization Name" disabled={!isEditing} name="name" ></TextField>
+                        <NumberFormat required customInput={TextField} format="##-#######" allowEmptyFormatting mask="_" value={orgEIN} onValueChange={(values) => { setOrgEIN(values.value) }} disabled={!isEditing} name="EIN" ></NumberFormat>
+                        <Select required value={orgCategory} onChange={(e) => { setOrgCategory(e.target.value) }} placeholder="Category" disabled={!isEditing} name="category" >
                             <MenuItem disabled value="">
                                 <em>Please select a category.</em>
                             </MenuItem>
-                            <MenuItem value="animal">Animal</MenuItem>
-                            <MenuItem value="children">Children</MenuItem>
+                            {categories.map((category) => (
+                                <MenuItem  key={category}  value={category}> {category} </MenuItem>
+                            ))}
                         </Select>
-                        <TextField value={orgEmail} onChange={(e) => { setOrgEmail(e.target.value) }} placeholder="Email Address" disabled={!isEditing} name="email"></TextField>
-                        <NumberFormat value={orgPhone} onChange={(e) => { setOrgPhone(e.target.value) }} placeholder="Phone Number" disabled={!isEditing} name="phone" customInput={TextField} format="+1 (###) ###-####" allowEmptyFormatting mask="_" />
-
-                        <TextField value={orgLocation} onChange={(e) => { setOrgLocation(e.target.value) }} placeholder="Location" disabled={!isEditing} name="location" ></TextField>
-                        <TextField value={orgWebsite} onChange={(e) => { setOrgWebsite(e.target.value) }} placeholder="Website Address" disabled={!isEditing} name="website" ></TextField>
+                        <TextField required value={orgEmail} onChange={(e) => { setOrgEmail(e.target.value) }} placeholder="Email Address" disabled={!isEditing} name="email"></TextField>
+                        <NumberFormat required value={orgPhone} onChange={(e) => { setOrgPhone(e.target.value) }} placeholder="Phone Number" disabled={!isEditing} name="phone" customInput={TextField} format="+1 (###) ###-####" allowEmptyFormatting mask="_" />
+                        <TextField required value={orgLocation} onChange={(e) => { setOrgLocation(e.target.value) }} placeholder="Location" disabled={!isEditing} name="location" ></TextField>
+                        <TextField required value={orgWebsite} onChange={(e) => { setOrgWebsite(e.target.value) }} placeholder="Website Address" disabled={!isEditing} name="website" ></TextField>
 
                     </div>
-
                 </div>
                 <div id="warning"> * fields are mandatory</div>
 
                 {
                     errorOccured ?
-                        <Alert severity="error">{errorMsg}</Alert> : <></>
+                        <Alert sx={{ alignSelf: "center" }} severity="error">{errorMsg}</Alert> : <></>
                 }
-
                 {
                     isApproved ?
                         <Button variant="contained" disabled={!isEditing} onClick={handleIsEditing} type="submit" className="button-group submit-button">RE-SUBMIT</Button>

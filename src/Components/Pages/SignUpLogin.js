@@ -71,7 +71,7 @@ const SignUpLogin = (props) => {
         console.log(Role ? "organization" : "donor");
 
         if (ConfirmPasword !== Password) {
-            toggleLoginErrorOccured(true)
+            toggleSignupErrorOccured(true)
             setErrorMsg("Passwords does not match.")
         } else {
 
@@ -160,7 +160,7 @@ const SignUpLogin = (props) => {
                                 onSubmit={SignUpHandler}
                                 style={{ display: "flex", flexDirection: "column" }}>
 
-                                <TextField label="Email" variant="standard" type="email" value={Email} onChange={onEmailHandler} sx={{ margin: '10px' }} />
+                                <TextField label="Email"  autocomplete="off" variant="standard" type="email" value={Email} onChange={onEmailHandler} sx={{ margin: '10px' }} />
                                 <TextField label="User Name" variant="standard" type="test" value={UserName} onChange={onUserNamerHandler} sx={{ margin: '10px' }} />
                                 <TextField label="Password" variant="standard" type="password" value={Password} onChange={onPasswordHanlder} sx={{ margin: '10px' }} />
                                 <TextField label="Confirm Password" variant="standard" type="password" value={ConfirmPasword} onChange={onConfirmPasswordHandler}  sx={{ margin: '10px' }}/>

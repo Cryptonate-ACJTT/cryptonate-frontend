@@ -195,7 +195,7 @@ const ProjectTile = (props) => {
     return (
         <Link to={"/explore/project/" + props.id}>
             <div className="project-list-item">
-                <div className="project-list-title">[ {props.title} ]</div>
+                <div className="project-list-title">[ {props.title.length > 63 ? props.title.substring(0,64) + "..." : props.title} ]</div>
                 <div className="project-list-item-prog">{props.progress}%</div>
             </div>
         </Link>

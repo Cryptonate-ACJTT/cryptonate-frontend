@@ -54,6 +54,8 @@
   font-size: larger;
   font-weight: bolder;
   color: black;
+  margin-top: 5px;
+  margin-bottom: 5px
 }
 
 .no-project{
