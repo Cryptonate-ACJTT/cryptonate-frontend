@@ -47,14 +47,6 @@ const Wallet = (props) => {
 		return accountsReturned;
 	}
 
-	const testTxn = (e) => {
-		console.log(e.target.value);
-		console.log(slice.userInfo);
-		txnBasic(slice.userInfo, slice.userInfo.wallet.accounts[0], "MGTGN4OD5PFCOSDAQK5OP6S2PKOU2K6L3CVDYZNPCSIP2BBSQ46TX2HUEE", 0.01, {callback: (data) => {
-			console.log(data);
-		}})
-	}
-
 	return (
 		<PageContainer title={"My Wallet"} content={
 			<div>
@@ -69,7 +61,6 @@ const Wallet = (props) => {
 				</Grid>
 				</Paper>
 				{addWalletAccounts(accounts)}
-				<button onClick={testTxn}>Test send</button>
 			</div>
 		}/>
 	)
