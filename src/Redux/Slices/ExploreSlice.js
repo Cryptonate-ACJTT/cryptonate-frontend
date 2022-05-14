@@ -10,14 +10,19 @@ import StoreSlice from "../StoreSlice";
  * Types of sortings the user can select on the explore page.
  */
 export const SORTINGS = [
-	{name: "Close to Goal", fxn: ((a, b) => { return (Math.floor(a.totalSaved / a.goalAmount) - Math.floor(b.totalSaved / b.totalAmount)) })},
+	{name: "Close to Goal", fxn: ((a, b) => { return (Math.floor((a.totalSaved / a.goalAmount)*100) - Math.floor((b.totalSaved / b.totalAmount)*100)) })},
 	{name: "Recently Added", fxn: ((a, b) => { return (new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()) })}
 ];
 
 /**
  * Categories the user can select on the explore page.
  */
-export const CATEGORIES = [{name: "Animal", checked: false}];
+export const CATEGORIES = [{name: "Animal", checked: false}, {name:"Children",checked:false},
+{name:"Climate Change", checked:false},{name:"Disaster Recovery", checked:false},
+{name:"Economic Development",checked:false},{name: "Education", checked: false},
+{name: "Health", checked: false}, {name: "Human Rights", checked: false},
+{name: "Humanitarian Assistance", checked: false}, {name: "Hunger", checked: false},
+{name: "Water", checked: false}, {name: "Etc.", checked: false}];
 
 const initState = {
 	sorting: SORTINGS[0],

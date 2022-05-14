@@ -171,29 +171,34 @@ const ExploreSideBar = (props) => {
 						<TextField fullWidth name="searchy" type="text" variant="outlined" label="Search by Keyword" style={{borderRadius:"10px 0 0 10px"}}/>
 					</Grid>
 					<Grid item xs={4} style={{paddingLeft:"0px"}}>
-						<Button type="submit" value="search" variant="contained" sx={{width:"100%", height:"100%", borderRadius:"0 10px 10px 0"}}>Search</Button>
-					</Grid>
-					<Grid item xs={12}>
-						<Box sx={{borderBottom: "1px solid rgba(0,0,0,0.2)"}}/>
+						<Button type="submit" value="search" variant="contained" sx={{width:"100%", height:"100%", borderRadius:"0 10px 10px 0", mb:"2vh"}}>Search</Button>
 					</Grid>
 				</Grid>
 			</form>
 
 			<Grid container spacing={2}>
+				<Grid item xs={12}>
+						<Box sx={{borderBottom: "1px solid rgba(0,0,0,0.2)"}}/>
+					</Grid>
 				<Grid item xs={4} sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
 					<Typography variant="stats">Sort By</Typography>
 				</Grid>	
 				<Grid item xs={8}>
-					<Select fullWidth id="sort-select" onChange={exploreSortIntercept} label="sort">
+					<Select defaultValue={"Close to Goal"} fullWidth id="sort-select" onChange={exploreSortIntercept}>
+						<MenuItem disabled value="">
+							<em>Select Sort Option</em>
+						</MenuItem>
 						{addSortOptions(props.sorts)}
 					</Select>
 				</Grid>
-
-				<Grid item xs={4} sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+				<Grid item xs={12}>
+						<Box sx={{borderTop: "1px solid rgba(0,0,0,0.2)"}}/>
+					</Grid>
+				<Grid item xs={12} sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
 					<Typography variant="stats">Categories</Typography>
 				</Grid>
-				<Grid item xs={8}>
-					<FormGroup sx={{alignItems:"center"}}>
+				<Grid item xs={12}>
+					<FormGroup sx={{display:"grid",alignItems:"center"}}>
 						{addCategories(props.categories)}
 					</FormGroup>
 				</Grid>
@@ -250,13 +255,16 @@ const ExploreTiling = (props) => {
 					title = {project.projectName}
 					image = {project.image}
 					desc = {project.summary}
-					progress = {Math.floor(project.totalSaved/project.goalAmount) * 100}
+					progress = {Math.floor((project.totalSaved/project.goalAmount) * 100)}
 					date = {project.updatedAt}
 					verified = {project.verified}	// UPDATE THIS LATER
 					open = {project.projectOpen}
 				/>
 			);
+
+
 		}
+
 
 		return tiling;
 	}

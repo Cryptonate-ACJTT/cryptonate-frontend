@@ -13,56 +13,95 @@ const Wallet = (props) => {
 	const slice = props.userSlice;
 
 	const [accounts, setAccounts] = useState([]);
+	const [mainWalletInfo, setMainWalletInfo] = useState([]);
 
 	/**
 	 * Get account balances;
 	 */
 	useEffect(() => {
 		let acc = [];
+		let mainWallet = [];
 
 		(async () => {
 			let addrs = slice.userInfo.wallet.accounts;
-			await postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, {addresses: addrs}, {callback: (data) => {
-				for(let account of data.balances) {
-					acc.push(account);
+			await postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, { addresses: addrs }, {
+				callback: (data) => {
+					for (let account of data.balances) {
+						acc.push(account);
+					}
+					mainWallet.push(acc[0])
+					setMainWalletInfo(mainWallet)
+
 				}
-			}});
-			
+			});
 			setAccounts(acc);
+
 		})();
 
 	}, [slice.userInfo.wallet.accounts]);
 
 
 
-	const addWalletAccounts = (accounts) => {
+	const addProjectWalletAccounts = (accounts) => {
 		let accountsReturned = [];
 
-		for(let i = 0; i < accounts.length; i++) {
+		for (let i = 1; i < accounts.length; i++) {
 			accountsReturned.push(
-				<WalletAccordion key={i} address={accounts[i].address} balance={accounts[i].balance}/>
+				<WalletAccordion key={i} isProject={true} projectTitle={slice.userInfo.projects[i - 1].projectName} address={accounts[i].address} balance={accounts[i].balance} />
 			);
 		}
 
 		return accountsReturned;
 	}
 
+	const addMainWalletAccounts = (mainWalletInfo) => {
+		let accountsReturned = [];
+		accountsReturned.push(
+			<WalletAccordion key={0} isProject={false} address={mainWalletInfo.address} balance={mainWalletInfo.balance} />
+		);
+		return accountsReturned;
+	}
 	return (
-		<PageContainer title={"My Wallet"} content={
-			<div>
-				<Paper elevation={1} mt="100px" pb="3vh" sx={{backgroundColor: "#1C3E64", color: "white"}}>
-				<Grid container spacing={2} pb="1vh">
-					<Grid item xs={8}>
-						<Typography variant="h4">Account</Typography>
-					</Grid>
-					<Grid item xs={4}>
-						<Typography variant="h4">Balance</Typography>
-					</Grid>
-				</Grid>
-				</Paper>
-				{addWalletAccounts(accounts)}
-			</div>
-		}/>
+		<div>
+			<PageContainer title={"My Wallet"} content={
+				<div>
+					<Paper elevation={1} mt="100px" pb="3vh" sx={{ backgroundColor: "#1C3E64", color: "white" }}>
+						<Grid container spacing={2} pb="1vh">
+							<Grid item xs={8}>
+								<Typography variant="h4">Account</Typography>
+							</Grid>
+							<Grid item xs={4}>
+								<Typography variant="h4">Balance</Typography>
+							</Grid>
+						</Grid>
+					</Paper>
+					{/* {addMainWalletAccounts(mainWalletInfo)} */}
+				</div>
+			} />
+			<Box sx={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }} />
+			{slice.userInfo.role === "donor" ?
+				<></>
+				:
+				<PageContainer title={"My Project Wallet"} content={
+					<div>
+						<Paper elevation={1} mt="100px" pb="3vh" sx={{ backgroundColor: "#1C3E64", color: "white" }}>
+							<Grid container spacing={2} pb="1vh">
+								<Grid item xs={8}>
+									<Typography variant="h4">Account</Typography>
+								</Grid>
+								<Grid item xs={4}>
+									<Typography variant="h4">Balance</Typography>
+								</Grid>
+							</Grid>
+						</Paper>
+						{addProjectWalletAccounts(accounts)}
+					</div>
+				} />
+
+
+			}
+
+		</div>
 	)
 }
 
@@ -77,15 +116,17 @@ const WalletAccordion = (props) => {
 	 * Open/close the accordion, and populate data to it if none yet exists.
 	 */
 	const openAccordion = () => {
-		if(!open) {
+		if (!open) {
 			setOpen(true);
 
-			if(accData === null) {
-				getAccountTxns(props.address, {callback: (data) => {
-					let filtered = data.txns.transactions.filter(txn => txn["tx-type"] == "pay");
-					setAccData(filtered);
-					dataExploration(filtered);
-				}});
+			if (accData === null) {
+				getAccountTxns(props.address, {
+					callback: (data) => {
+						let filtered = data.txns.transactions.filter(txn => txn["tx-type"] == "pay");
+						setAccData(filtered);
+						dataExploration(filtered);
+					}
+				});
 			}
 		} else {
 			setOpen(false);
@@ -108,8 +149,8 @@ const WalletAccordion = (props) => {
 
 		let tbData = [];
 
-		
-		for(let i = 0; i < txns.length; i++) {
+
+		for (let i = 0; i < txns.length; i++) {
 			tbData.push({
 				id: txns[i].id,
 				toFrom: txns[i].sender === props.address ? "Outgoing ->" : "Incoming <-",
@@ -122,7 +163,7 @@ const WalletAccordion = (props) => {
 
 
 		setTableData(
-			<div style={{display:"flex", height:"320px", width:"100%"}}>
+			<div style={{ display: "flex", height: "320px", width: "100%" }}>
 				<DataGrid
 					rows={tbData}
 					columns={dataCols}
@@ -139,17 +180,24 @@ const WalletAccordion = (props) => {
 
 	return (
 		<Accordion expanded={open}>
-			<AccordionSummary expandIcon={<ExpandMoreRounded/>} onClick={openAccordion}>
+			<AccordionSummary expandIcon={<ExpandMoreRounded />} onClick={openAccordion}>
 				<Grid container spacing={2}>
 					<Grid item xs={8}>
 						<Typography variant="data" fontSize="18px">{props.address}</Typography>
 					</Grid>
 					<Grid item xs={4}>
-						<Typography variant="data" fontSize="18px"><AlgoIcon/>{(props.balance).toFixed(4)}</Typography>
+						<Typography variant="data" fontSize="18px"><AlgoIcon />{(props.balance).toFixed(4)}</Typography>
 					</Grid>
+					{props.isProject ?
+						<Grid item xs={12}>
+							<Typography variant="h5">[{props.projectTitle}]</Typography>
+						</Grid>
+						:
+						<></>
+					}
 				</Grid>
 			</AccordionSummary>
-			<AccordionDetails sx={{borderTop: "3px dotted rgba(0,0,0,0.2)"}}>
+			<AccordionDetails sx={{ borderTop: "3px dotted rgba(0,0,0,0.2)" }}>
 				<Grid container spacing={2}>
 					<Grid item xs={8}>
 						<Typography variant="h6">Transaction History</Typography>
@@ -157,7 +205,7 @@ const WalletAccordion = (props) => {
 					</Grid>
 					<Grid item xs={4}>
 						<Typography variant="h6">Visualization</Typography>
-						<Visualizer variant="mini" height="320px"/>
+						<Visualizer variant="mini" height="320px" />
 					</Grid>
 				</Grid>
 			</AccordionDetails>

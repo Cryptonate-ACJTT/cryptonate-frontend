@@ -47,7 +47,7 @@ const Profile = (props) => {
     const handleNameEditing = async (e) => { toggleNameEditing(!nameEditing); }
     const handleEmailEditing = async (e) => { toggleEmailEditing(!emailEditing); }
 
-    const [approvedDialog, setApprovedDialog] = useState(!approved);
+    const [approvedDialog, setApprovedDialog] = useState(!approved && userRole === "organization");
 
     const handleApprovedDialog = () => {
         if (approvedDialog) { setApprovedDialog(false); }
@@ -96,7 +96,7 @@ const Profile = (props) => {
                 </div>
 
                 <div className="user-status">
-                    {userSlice.userInfo.approved ?
+                    {(userRole === "donor" || approved) ?
                         <p className="approved-tag">{userRole}</p>
                         :
                         <p className="not-approved-tag">{userRole}</p>

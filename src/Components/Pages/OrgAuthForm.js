@@ -70,6 +70,18 @@ const OrgAuthForm = (props) => {
             updateOrgAuthForm(theId, formData, {
                 callback: (data) => {
                 }
+                , resHandler: async (response) => {
+                    if (response.ok) {
+                        setErrorOccured(false)
+                        navigate("/profile", { replace: true });
+                        return await response.json()
+                    } else {
+                        const error = await response.json();
+                        setErrorMsg(error.msg)
+                        setErrorOccured(true)
+                        return Promise.reject(response.status);
+                    }
+                }
             });
         }
         else {
