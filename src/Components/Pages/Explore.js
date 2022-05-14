@@ -16,8 +16,6 @@ const Explore = () => {
 	const slice = ExploreSlice.useSlice();
 	const uSlice = UserSlice.useSlice();
 
-	console.log(uSlice);
-
 	/**
 	 * Watches for changes in slice.search, slice.categories and then searches based on that!
 	 */
@@ -58,7 +56,6 @@ const Explore = () => {
 		}
 
 		getFromBackend(route, { callback: (data) => {
-			console.log(data);
 			reducerFxns.exploreProjectsFxn(data.projects);
 		}});
 	}
@@ -220,7 +217,6 @@ const ExploreTiling = (props) => {
 	 */
 	useEffect(() => {
 		maxPages.current = Math.ceil(props.slice.projects.length / PROJECTS_PER_PAGE);
-		console.log(maxPages.current)
 	}, [props.slice.projects]);
 
 
@@ -274,7 +270,6 @@ const ExploreTiling = (props) => {
 	 */
 	const sortTiles = () => {
 		let sorted = [...props.slice.projects].sort(props.slice.sorting.fxn);
-		console.log(sorted);
 		reducerFxns.exploreProjectsFxn(sorted);
 	}
 

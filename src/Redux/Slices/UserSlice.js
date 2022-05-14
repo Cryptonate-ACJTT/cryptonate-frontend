@@ -71,7 +71,6 @@ const userLogoutFxn = () => {
 
 
 const userWalletReducer = (state, wallet) => {
-	console.log("in fxn ", state);
 	return Object.assign({}, state, {
 		userInfo: {
 			...state.userInfo,

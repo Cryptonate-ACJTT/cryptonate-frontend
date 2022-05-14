@@ -1,4 +1,4 @@
-import { Box, createSvgIcon, Icon, SvgIcon } from "@mui/material";
+import {createSvgIcon, SvgIcon } from "@mui/material";
 
 /* Thanks to https://materialdesignicons.com/ and algorand for the icons used here. */
 

@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import NumberFormat from 'react-number-format';
 import "./OrgAuthForm.css";
 
-import PropTypes from 'prop-types';
-import { ADDRESSES, getOrgAuthForm, updateOrgAuthForm, submitOrgAuthForm } from "../../Fetch/ApiFetches";
+import { getOrgAuthForm, updateOrgAuthForm, submitOrgAuthForm } from "../../Fetch/ApiFetches";
 import { useNavigate } from "react-router-dom";
 import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
-import { Grid, Typography, FormControlLabel, FormGroup, Switch, Button, Select, Alert, MenuItem, TextField } from "@mui/material";
+import { Typography, FormControlLabel, FormGroup, Switch, Button, Select, Alert, MenuItem, TextField } from "@mui/material";
 
 const OrgAuthForm = (props) => {
 

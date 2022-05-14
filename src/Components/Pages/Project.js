@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import "./Project.css"
-import { ADDRESSES, API_ROUTES, getFromBackend, grabProjectData, postToBackend, txnBasic, txnDelete, txnDonate } from "../../Fetch/ApiFetches";
-import FourOhFour from "./FourOhFour";
-import { Alert, Box, Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, InputAdornment, DialogContentText, DialogTitle, FormControl, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { ADDRESSES, API_ROUTES, grabProjectData, txnDelete, txnDonate } from "../../Fetch/ApiFetches";
+
+import { Box, Button, Dialog, DialogContent, InputAdornment, DialogContentText, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { AlgoIcon } from "../PageBits/Icons/Icons";
 import UserSlice from "../../Redux/Slices/UserSlice";
 import PageContainer from "../PageBits/PageContainer/PageContainer";
@@ -25,7 +25,6 @@ const Project = (props) => {
 	
 	useEffect(() => {
 		grabProjectData(id, {callback: (data) => {
-			console.log("PROJECT: ", data);
 			setProjectData(data.project);
 		}});
 
@@ -58,7 +57,6 @@ const Project = (props) => {
 
 		const deleteProjectAttempt = () => {
 			txnDelete(slice.userInfo, projectData.appID, {callback: (data) => {
-				console.log(data);
 				if(data) {
 					return <Navigate replace to={API_ROUTES.FRONTEND.EXPLORE}/>;
 				}
@@ -80,8 +78,6 @@ const Project = (props) => {
 
 
 	if(projectData) {
-		console.log(projectData);
-		console.log(slice);
 		return ( 
 			<PageContainer content={
 				<Box>
@@ -176,7 +172,6 @@ const DonateModal = (props) => {
 
 	const makeAccountSelect = (accounts) => {
 		let displayItems = [];
-		console.log("ACC", accounts)
 
 		for(let i = 0; i < accounts.length; i++) {
 			displayItems.push(

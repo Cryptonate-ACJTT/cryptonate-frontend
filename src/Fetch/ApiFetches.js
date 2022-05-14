@@ -1,5 +1,4 @@
 import { trackPromise } from "react-promise-tracker";
-import { reducerFxns } from "../Redux/Slices/SiteSlice";
 import { buildFetch, CONTENT_TYPES, FETCH_TYPE } from "./Fetcher";
 
 /*
@@ -15,10 +14,7 @@ import { buildFetch, CONTENT_TYPES, FETCH_TYPE } from "./Fetcher";
  * The APIs we're using
  */
 export const ADDRESSES = {
-    BACKEND: "http://localhost:4000/api/v1",
-    ALGORAND: "http://localhost:4001",
-    INDEXER: "http://localhost:8980",
-    KEYDAEMON: "http://localhost:4002"
+    BACKEND: "http://cryptonate.eastus.cloudapp.azure.com/api/v1",
     //INDEXER: "https://algoindexer.algoexplorerapi.io"
 }
 
