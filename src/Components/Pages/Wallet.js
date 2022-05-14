@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API_ROUTES, getAccountTxns, postToBackend } from "../../Fetch/ApiFetches";
-import { Accordion, AccordionSummary, AccordionDetails, Grid, Typography, Paper } from "@mui/material"
+import { Accordion, AccordionSummary, AccordionDetails, Grid, Typography, Paper, Box } from "@mui/material"
 import { DataGrid } from "@mui/x-data-grid"
 import { ExpandMoreRounded } from "@mui/icons-material";
 import Visualizer from "../PageBits/Visualize/Visualize";
