@@ -46,7 +46,7 @@ const OrgAuthForm = (props) => {
     const handleIsEditing = (e) => { setIsEditing(!isEditing) }
     const navigate = useNavigate();
 
-    const categories = ['Animals','Children','Climate Change','Disaster Recovery','Economic Development',
+    const categories = ['Animal','Children','Climate Change','Disaster Recovery','Economic Development',
         'Education','Health','Human Rights','Humanitarian Assistance','Hunger','Water','Etc.'];
 
     const submitForm = (e) => {

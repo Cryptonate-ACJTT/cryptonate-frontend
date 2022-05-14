@@ -16,7 +16,7 @@ const ProjectForm = (props) => {
     const [errorMsg, setErrorMsg] = useState("")
     const [orgName, setOrgName] = useState("")
 
-    const categories = ['Animals', 'Children', 'Climate Change', 'Disaster Recovery', 'Economic Development',
+    const categories = ['Animal', 'Children', 'Climate Change', 'Disaster Recovery', 'Economic Development',
         'Education', 'Health', 'Human Rights', 'Humanitarian Assistance', 'Hunger', 'Water', 'Etc.'];
 
     getOrgAuthForm(theId, {
