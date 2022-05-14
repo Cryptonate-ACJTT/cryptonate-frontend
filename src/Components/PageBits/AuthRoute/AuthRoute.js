@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { API_ROUTES } from "../../../Fetch/ApiFetches";
 import UserSlice from "../../../Redux/Slices/UserSlice";

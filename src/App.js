@@ -24,7 +24,6 @@ import { API_ROUTES, getLoggedIn } from './Fetch/ApiFetches';
 import Loading from './Components/PageBits/Loading/Loading';
 import UserSlice, {reducerFxns as userReducers} from './Redux/Slices/UserSlice';
 
-const PAGES = API_ROUTES.FRONTEND;
 
 
 

@@ -34,7 +34,6 @@ const buildPost = (data, contentType) => {
 		contentType = CONTENT_TYPES.JSON;
 	}
 
-	console.log("DATA:", data);
 
 	if(contentType == CONTENT_TYPES.JSON) {
 		return {

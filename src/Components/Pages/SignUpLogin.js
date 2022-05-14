@@ -68,7 +68,6 @@ const SignUpLogin = (props) => {
     const SignUpHandler = (e) => {
         e.preventDefault();
 
-        console.log(Role ? "organization" : "donor");
 
         if (ConfirmPasword !== Password) {
             toggleSignupErrorOccured(true)

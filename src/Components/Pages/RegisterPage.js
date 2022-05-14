@@ -2,7 +2,6 @@ import React from "react";
 import './RegisterPage.css'
 
 import "./Form.css";
-import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import Multiselect from 'react-widgets/lib/Multiselect'
 
