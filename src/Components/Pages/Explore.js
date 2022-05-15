@@ -248,7 +248,7 @@ const ExploreTiling = (props) => {
 					desc = {project.summary}
 					progress = {Math.floor(project.totalSaved/project.goalAmount) * 100}
 					date = {project.updatedAt}
-					verified = {project.verified}	// UPDATE THIS LATER
+					
 					open = {project.projectOpen}
 				/>
 			);
@@ -304,8 +304,8 @@ const ExploreTile = (props) => {
 		<Grid item xs={4}>
 			<Link to={"/explore/project/" + props.id}>
 				<Card variant="outlined" sx={{background:"white", borderRadius:"15px", ":hover":{cursor: "pointer", boxShadow:"5px 5px rgba(0, 0, 0, 0.2)"}}}>
-					<CardContent sx={{background: props.open ? "#1C3E64" : "#080808", color:"white", borderBottom:"5px solid rgba(0,0,0,0.2)"}}>
-						<Typography variant="h4">{props.title}</Typography>
+					<CardContent sx={{background: props.open ? "#1C3E64" : "#151515", color:"white", borderBottom:"5px solid rgba(0,0,0,0.2)"}}>
+						<Typography variant="h4">{props.open ? props.title : props.title + "[ CLOSED ]"}</Typography>
 					</CardContent>
 					
 					<CardMedia component="img" alt="" height="150" image={ADDRESSES.BACKEND + props.image} sx={{"borderRadius":"0 0 15px 15px", borderBottom:"5px groove rgba(0,0,0,0.5)"}}/>
@@ -331,13 +331,6 @@ const ExploreTile = (props) => {
 								<Typography fontSize="11px" variant="caption">{new Date(props.date).toDateString()}</Typography>
 							</Grid>
 							<Grid item xs={4} sx={{textAlign: "right"}} style={{paddingTop:"0"}}>
-								<Tooltip title={
-									<React.Fragment>
-										<Typography>{props.verified ? "This project has been verified!" : "Unverified as of " + new Date().toDateString()}</Typography>
-									</React.Fragment>}
-								>
-									<Typography variant="h6">{props.verified ? <VerifiedIcon color="primary"/>:<UnverifiedIcon color="secondary"/>}</Typography>	
-								</Tooltip>
 								
 							</Grid>
 						</Grid>
@@ -349,6 +342,17 @@ const ExploreTile = (props) => {
 		</Grid>
 	);
 }
+
+/*
+<Tooltip title={
+									<React.Fragment>
+										<Typography>{props.verified ? "This project has been verified!" : "Unverified as of " + new Date().toDateString()}</Typography>
+									</React.Fragment>}
+								>
+									<Typography variant="h6">{props.verified ? <VerifiedIcon color="primary"/>:<UnverifiedIcon color="secondary"/>}</Typography>	
+								</Tooltip>
+								
+*/
 
 
 export default Explore;
