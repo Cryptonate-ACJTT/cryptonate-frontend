@@ -305,7 +305,7 @@ const ExploreTile = (props) => {
 			<Link to={"/explore/project/" + props.id}>
 				<Card variant="outlined" sx={{background:"white", borderRadius:"15px", ":hover":{cursor: "pointer", boxShadow:"5px 5px rgba(0, 0, 0, 0.2)"}}}>
 					<CardContent sx={{background: props.open ? "#1C3E64" : "#151515", color:"white", borderBottom:"5px solid rgba(0,0,0,0.2)"}}>
-						<Typography variant="h4">{props.open ? props.title : props.title + "[ CLOSED ]"}</Typography>
+						<Typography variant="h4">{props.open ? props.title : props.title + " [CLOSED]"}</Typography>
 					</CardContent>
 					
 					<CardMedia component="img" alt="" height="150" image={ADDRESSES.BACKEND + props.image} sx={{"borderRadius":"0 0 15px 15px", borderBottom:"5px groove rgba(0,0,0,0.5)"}}/>
