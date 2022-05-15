@@ -14,7 +14,7 @@ import { buildFetch, CONTENT_TYPES, FETCH_TYPE } from "./Fetcher";
  * The APIs we're using
  */
 export const ADDRESSES = {
-    BACKEND: "http://cryptonate.eastus.cloudapp.azure.com/api/v1",
+    BACKEND: "https://cryptonate.eastus.cloudapp.azure.com/api/v1",
     //INDEXER: "https://algoindexer.algoexplorerapi.io"
 }
 
