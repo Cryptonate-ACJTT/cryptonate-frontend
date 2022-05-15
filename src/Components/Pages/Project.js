@@ -34,7 +34,7 @@ const Project = (props) => {
 	}, []);
 
 	const dialogHandler = () => {
-		if(slice.loggedIn) {
+		if(slice.loggedIn && projectData.projectOpen) {
 			if(donateOpen) {
 				setDonateOpen(false);
 			} else {
@@ -66,8 +66,8 @@ const Project = (props) => {
 		if(slice.userInfo) {
 			if(slice.userInfo.id === projectData.creatorID) {
 				return (
-					<Button onClick={deleteProjectAttempt} fullWidth color="secondary" variant="contained" sx={{color:"white", pb:"2vh", pt:"2vh", mb: "1vh", borderRadius:"5px 10px 5px 10px"}}>
-						<b>Delete Project</b>
+					<Button disabled={!projectData.projectOpen} onClick={deleteProjectAttempt} fullWidth color="secondary" variant="contained" sx={{color:"white", pb:"2vh", pt:"2vh", mb: "1vh", borderRadius:"5px 10px 5px 10px"}}>
+						<b>{projectData.projectOpen ? "Delete Project" : "Project Already Deleted"}</b>
 					</Button>
 				);
 			}
@@ -134,8 +134,8 @@ const Project = (props) => {
 										</Grid>
 									</Grid>
 								</Box>
-								<Button onClick={dialogHandler} variant="contained" color="secondary" fullwidth="true" sx={{width: "100%", borderRadius:"0 0 20px 20px", p:"1vh 0 1vh 0", border:"5px groove rgba(255,255,255,0.2)", ":hover":{border:"5px ridge rgba(255,255,255,0.2)"}}}>
-									<Typography fontSize="30px" variant="data" sx={{color:"white"}}><b>DONATE</b></Typography>							
+								<Button onClick={dialogHandler} disabled={!projectData.projectOpen} variant="contained" color="secondary" fullwidth="true" sx={{width: "100%", borderRadius:"0 0 20px 20px", p:"1vh 0 1vh 0", border:"5px groove rgba(255,255,255,0.2)", ":hover":{border:"5px ridge rgba(255,255,255,0.2)"}}}>
+									<Typography fontSize="30px" variant="data" sx={{color:"white"}}><b>{projectData.projectOpen ? "DONATE" : "PROJECT CLOSED"}</b></Typography>							
 								</Button>
 							</Box>
 							<Box sx={{background:"white", borderRadius:"20px 20px 20px 20px"}}>

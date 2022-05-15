@@ -20,24 +20,26 @@ const Wallet = (props) => {
 	 */
 	useEffect(() => {
 		let acc = [];
-		let mainWallet = [];
+		let mainWallet = null;
 
 		(async () => {
 			let addrs = slice.userInfo.wallet.accounts;
-			await postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, { addresses: addrs }, {
-				callback: (data) => {
+			await postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, { addresses: addrs }, {callback: (data) => {
+					let i = 0;
+					console.log("DATA:", data);
 					for (let account of data.balances) {
-						acc.push(account);
+						if(i === 0) {
+							mainWallet = account;
+							i++;
+						} else {
+							acc.push(account);
+						}
 					}
-					mainWallet.push(acc[0])
-					setMainWalletInfo(mainWallet)
+			}});
 
-				}
-			});
-			setAccounts(acc);
-
+			setMainWalletInfo([mainWallet])
+			setAccounts(acc);			
 		})();
-
 	}, [slice.userInfo.wallet.accounts]);
 
 
@@ -45,22 +47,25 @@ const Wallet = (props) => {
 	const addProjectWalletAccounts = (accounts) => {
 		let accountsReturned = [];
 
-		for (let i = 1; i < accounts.length; i++) {
+		for (let i = 0; i < accounts.length; i++) {
 			accountsReturned.push(
-				<WalletAccordion key={i} isProject={true} projectTitle={slice.userInfo.projects[i - 1].projectName} address={accounts[i].address} balance={accounts[i].balance} />
+				<WalletAccordion key={i} isProject={true} projectTitle={slice.userInfo.projects[i].projectName} address={accounts[i].address} balance={accounts[i].balance} />
 			);
 		}
 
 		return accountsReturned;
 	}
 
-	const addMainWalletAccounts = (mainWalletInfo) => {
+	const addMainWalletAccounts = (accounts) => {
 		let accountsReturned = [];
-		accountsReturned.push(
-			<WalletAccordion key={0} isProject={false} address={mainWalletInfo.address} balance={mainWalletInfo.balance} />
-		);
+		for (let i = 0; i < accounts.length; i++) {
+			accountsReturned.push(
+				<WalletAccordion key={i} isProject={false} address={accounts[i].address} balance={accounts[i].balance} />
+			);
+		}
 		return accountsReturned;
 	}
+
 	return (
 		<div>
 			<PageContainer title={"My Wallet"} content={
@@ -75,7 +80,7 @@ const Wallet = (props) => {
 							</Grid>
 						</Grid>
 					</Paper>
-					{/* {addMainWalletAccounts(mainWalletInfo)} */}
+					{addMainWalletAccounts(mainWalletInfo)}
 				</div>
 			} />
 			<Box sx={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }} />
