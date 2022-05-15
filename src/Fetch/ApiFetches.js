@@ -222,8 +222,8 @@ export const submitOrgAuthForm = (orgId, formData, {callback, resHandler} = {}) 
     return postToBackend(API_ROUTES.BACKEND.SUBMIT_ORG_FORM, formData, {callback: callback, resHandler: resHandler, credentials: true, contentType: CONTENT_TYPES.FORM_DATA});
 }
 
-export const getOrgAuthForm = (orgId, {callback} = {}) => {
-    return postToBackend(API_ROUTES.BACKEND.GET_ORG_FORM, {orgId: orgId}, {callback: callback, credentials: true});
+export const getOrgAuthForm = (orgId, {callback, resHandler} = {}) => {
+    return postToBackend(API_ROUTES.BACKEND.GET_ORG_FORM, {orgId: orgId}, {callback: callback, resHandler:resHandler, credentials: true});
 }
 
 export const updateOrgAuthForm = (orgId, formData, {callback, resHandler} = {}) => {

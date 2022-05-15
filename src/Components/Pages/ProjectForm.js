@@ -1,4 +1,4 @@
-import React, { useState, } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {  getOrgAuthForm, submitProjectForm } from "../../Fetch/ApiFetches";
 import UserSlice, { reducerFxns as userReducers } from "../../Redux/Slices/UserSlice";
@@ -19,12 +19,18 @@ const ProjectForm = (props) => {
     const categories = ['Animal', 'Children', 'Climate Change', 'Disaster Recovery', 'Economic Development',
         'Education', 'Health', 'Human Rights', 'Humanitarian Assistance', 'Hunger', 'Water', 'Etc.'];
 
-    getOrgAuthForm(theId, {
-        callback: (data) => {
-            setOrgName(data.form.name)
+    useEffect(() => {
+        if(userSlice.userInfo.approved){
+            getOrgAuthForm(theId, {
+                callback: (data) => {
+                    setOrgName(data.form.name)
+                }
+            });
         }
-    });
-
+        return UserSlice.unsubscribe();
+    })
+    
+    
     const submitForm = (e) => {
         e.preventDefault();
         let formData = new FormData(e.currentTarget);
