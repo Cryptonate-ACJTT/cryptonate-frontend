@@ -168,12 +168,13 @@ const ProjectTiling = (props) => {
     const makeTiles = (projects) => {
         let tiling = [];
         for (const project of projects) {
+
             tiling.push(
                 <ProjectTile
                     key={project._id}
                     id={project._id}
                     title={project.projectName}
-                    progress={Math.floor(project.totalSaved / project.goalAmount) * 100}
+                    // progress={Math.floor((project.totalSaved / project.goalAmount) * 100)}
                 />
             );
         }
@@ -196,7 +197,7 @@ const ProjectTile = (props) => {
         <Link to={"/explore/project/" + props.id}>
             <div className="project-list-item">
                 <div className="project-list-title">[ {props.title.length > 63 ? props.title.substring(0,64) + "..." : props.title} ]</div>
-                <div className="project-list-item-prog">{props.progress}%</div>
+                {/* <div className="project-list-item-prog">{props.progress}%</div> */}
             </div>
         </Link>
     );
