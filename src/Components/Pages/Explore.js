@@ -22,56 +22,58 @@ const Explore = () => {
 	useEffect(() => {
 		let search = slice.search.replace(/\s/g, "+");
 		let categories = "";
-		
-		for(const cat of slice.categories) {
+
+		for (const cat of slice.categories) {
 			categories += cat.name;
 		}
 
-		exploreSearchBackend({search: search, categories: categories});
+		exploreSearchBackend({ search: search, categories: categories });
 
 		return (() => {	// runs on unmount
 			ExploreSlice.unsubscribe();
 			UserSlice.unsubscribe();
 		});
 	}, [slice.search, slice.categories]);
-	
-	
-	const exploreSearchBackend = ({search, categories} = {}) => {
+
+
+	const exploreSearchBackend = ({ search, categories } = {}) => {
 		let route = API_ROUTES.BACKEND.ALL_PROJECT;
-		if(search || categories){ 
+		if (search || categories) {
 			route = API_ROUTES.BACKEND.EXPLORE_SEARCH;
 			route += "?";
 
-			if(categories) {
+			if (categories) {
 				route += "category=" + categories;
 			}
-	
-			if(categories && search) {
+
+			if (categories && search) {
 				route += "&";
 			}
-		
-			if(search) {
+
+			if (search) {
 				route += "search=" + search;
 			}
 		}
 
-		getFromBackend(route, { callback: (data) => {
-			reducerFxns.exploreProjectsFxn(data.projects);
-		}});
+		getFromBackend(route, {
+			callback: (data) => {
+				reducerFxns.exploreProjectsFxn(data.projects);
+			}
+		});
 	}
 
 	return (
 		<PageContainer title="Explore & Discover" content={
 			<Grid container spacing={2}>
 				<Grid item xs={3}>
-					<ExploreSideBar slice={uSlice} sorts={SORTINGS} categories={CATEGORIES}/>
-					
+					<ExploreSideBar slice={uSlice} sorts={SORTINGS} categories={CATEGORIES} />
+
 				</Grid>
 				<Grid item xs={9}>
-					<ExploreTiling slice={slice}/>
+					<ExploreTiling slice={slice} />
 				</Grid>
 			</Grid>
-		}/>
+		} />
 	);
 }
 
@@ -84,15 +86,15 @@ const ExploreSideBar = (props) => {
 	 */
 	const addSortOptions = (sortOptions) => {
 		let sortOptionsReturned = [];
-		
-		for(let i = 0; i < sortOptions.length; i++) {
+
+		for (let i = 0; i < sortOptions.length; i++) {
 			sortOptionsReturned.push(
 				<MenuItem key={"option" + i} value={sortOptions[i].name}>{sortOptions[i].name}</MenuItem>
 			)
 		}
 		return sortOptionsReturned;
 	}
-	
+
 	/**
 	 * Adds categories to the categories section.
 	 * @param {*} categories 
@@ -111,17 +113,17 @@ const ExploreSideBar = (props) => {
 			reducerFxns.exploreCategoriesFxn(categories.filter(cat => cat.checked === true));
 		}
 
-		for(let i = 0; i < categories.length; i++) {
+		for (let i = 0; i < categories.length; i++) {
 			categoriesReturned.push(
 				<FormControlLabel key={"cat" + i} control={
-					<Checkbox onChange={((e) => {checkBoxHandler(e, i)})}/>
+					<Checkbox onChange={((e) => { checkBoxHandler(e, i) })} />
 				} label={<Typography fontSize="15px" variant="data"><b>{categories[i].name}</b></Typography>} />
 			)
 		}
 
 		return categoriesReturned;
 	}
-	
+
 	/**
 	 * intercepts the onchange
 	 * @param {*} e 
@@ -135,7 +137,7 @@ const ExploreSideBar = (props) => {
 	 * Intercepts onSubmit; cleans input and sends it to slice
 	 * @param {*} e 
 	 */
-	 const exploreSearchIntercept = (e) => {
+	const exploreSearchIntercept = (e) => {
 		e.preventDefault();
 		let val = "" + e.target.searchy.value;	// string for safety
 		//e.target.searchy.value = "";
@@ -144,15 +146,17 @@ const ExploreSideBar = (props) => {
 	}
 
 	const createProjectButton = () => {
-		if(props.slice.userInfo) {
-			if(props.slice.userInfo.role === "organization") {
-				return (
-					<Link to={API_ROUTES.FRONTEND.PROJECT_FORM}>
-						<Button fullWidth color="secondary" variant="contained" sx={{color:"white", pb:"2vh", pt:"2vh", mb: "1vh", borderRadius:"5px 10px 5px 10px"}}>
+		if (props.slice.userInfo) {
+			if (props.slice.userInfo.role === "organization") {
+				if (props.slice.userInfo.approved === true) {
+					return (
+						<Link to={API_ROUTES.FRONTEND.PROJECT_FORM}>
+							<Button fullWidth color="secondary" variant="contained" sx={{ color: "white", pb: "2vh", pt: "2vh", mb: "1vh", borderRadius: "10px 10px 10px 10px" }}>
 								<b>Create New Project</b>
-						</Button>
-					</Link>
-				);
+							</Button>
+						</Link>
+					);
+				}
 			}
 		}
 
@@ -160,26 +164,26 @@ const ExploreSideBar = (props) => {
 	}
 
 	return (
-		<Stack  sx={{background:"rgba(255,255,255,0.5)", p:"2vh", borderRadius:"5px 10px 5px 10px"}}>
+		<Stack sx={{ background: "rgba(255,255,255,0.5)", p: "2vh", borderRadius: "10px 10px 10px 10px" }}>
 			{createProjectButton()}
 			<form onSubmit={exploreSearchIntercept}>
-				<Grid container spacing={2} sx={{pb:"1vh", mb: "1vh"}}>
+				<Grid container spacing={2} sx={{ pb: "1vh", mb: "1vh" }}>
 					<Grid item xs={8}>
-						<TextField fullWidth name="searchy" type="text" variant="outlined" label="Search by Keyword" style={{borderRadius:"10px 0 0 10px"}}/>
+						<TextField fullWidth name="searchy" type="text" variant="outlined" label="Search by Keyword" style={{ borderRadius: "10px 0 0 10px" }} />
 					</Grid>
-					<Grid item xs={4} style={{paddingLeft:"0px"}}>
-						<Button type="submit" value="search" variant="contained" sx={{width:"100%", height:"100%", borderRadius:"0 10px 10px 0", mb:"2vh"}}>Search</Button>
+					<Grid item xs={4} style={{ paddingLeft: "0px" }}>
+						<Button type="submit" value="search" variant="contained" sx={{ width: "100%", height: "100%", borderRadius: "0 10px 10px 0", mb: "2vh" }}>Search</Button>
 					</Grid>
 				</Grid>
 			</form>
 
 			<Grid container spacing={2}>
 				<Grid item xs={12}>
-						<Box sx={{borderBottom: "1px solid rgba(0,0,0,0.2)"}}/>
-					</Grid>
-				<Grid item xs={4} sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+					<Box sx={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }} />
+				</Grid>
+				<Grid item xs={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 					<Typography variant="stats">Sort By</Typography>
-				</Grid>	
+				</Grid>
 				<Grid item xs={8}>
 					<Select defaultValue={"Close to Goal"} fullWidth id="sort-select" onChange={exploreSortIntercept}>
 						<MenuItem disabled value="">
@@ -189,17 +193,17 @@ const ExploreSideBar = (props) => {
 					</Select>
 				</Grid>
 				<Grid item xs={12}>
-						<Box sx={{borderTop: "1px solid rgba(0,0,0,0.2)"}}/>
-					</Grid>
-				<Grid item xs={12} sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+					<Box sx={{ borderTop: "1px solid rgba(0,0,0,0.2)" }} />
+				</Grid>
+				<Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 					<Typography variant="stats">Categories</Typography>
 				</Grid>
 				<Grid item xs={12}>
-					<FormGroup sx={{display:"grid",alignItems:"center"}}>
+					<FormGroup sx={{ display: "grid", alignItems: "center" }}>
 						{addCategories(props.categories)}
 					</FormGroup>
 				</Grid>
-				
+
 			</Grid>
 		</Stack>
 	);
@@ -223,7 +227,7 @@ const ExploreTiling = (props) => {
 	/**
 	 * Listen for page change and update tiles accordingly.
 	 */
-	useEffect(() => {		
+	useEffect(() => {
 		setTiles(makeTiles(props.slice.projects.slice((page - 1) * PROJECTS_PER_PAGE, page * PROJECTS_PER_PAGE)));
 	}, [page, props.slice.projects]);
 
@@ -243,18 +247,18 @@ const ExploreTiling = (props) => {
 	 */
 	const makeTiles = (projects) => {
 		let tiling = [];
-		for(const project of projects) {
+		for (const project of projects) {
 			tiling.push(
 				<ExploreTile
-					key = {project._id}
-					id = {project._id}
-					title = {project.projectName}
-					image = {project.image}
-					desc = {project.summary}
-					progress = {Math.floor((project.totalSaved/project.goalAmount) * 100)}
-					date = {project.updatedAt}
-					
-					open = {project.projectOpen}
+					key={project._id}
+					id={project._id}
+					title={project.projectName}
+					image={project.image}
+					desc={project.summary}
+					progress={Math.floor((project.totalSaved / project.goalAmount) * 100)}
+					date={project.updatedAt}
+
+					open={project.projectOpen}
 				/>
 			);
 
@@ -275,19 +279,19 @@ const ExploreTiling = (props) => {
 
 
 	const nextPage = (e) => {
-		if(page < maxPages.current) {
+		if (page < maxPages.current) {
 			setPage(page + 1);
 		}
 	}
 
 
 	const prevPage = (e) => {
-		if(page > 1) {
+		if (page > 1) {
 			setPage(page - 1);
 		}
 	}
 
-	
+
 	return (
 		<Stack>
 			<Grid container spacing={3}>
@@ -295,7 +299,7 @@ const ExploreTiling = (props) => {
 			</Grid>
 			<Box pt="1vh">
 				<Button pr="1vw" variant="contained" onClick={prevPage}><b>{"<"}</b></Button>
-					<span><Typography variant="stats" sx={{paddingLeft: "1vw", paddingRight: "1vw"}}>{page} of {maxPages.current}</Typography></span>
+				<span><Typography variant="stats" sx={{ paddingLeft: "1vw", paddingRight: "1vw" }}>{page} of {maxPages.current}</Typography></span>
 				<Button variant="contained" onClick={nextPage}><b>{">"}</b></Button>
 			</Box>
 		</Stack>
@@ -311,42 +315,42 @@ const ExploreTile = (props) => {
 	return (
 		<Grid item xs={4}>
 			<Link to={"/explore/project/" + props.id}>
-				<Card variant="outlined" sx={{background:"white", borderRadius:"15px", ":hover":{cursor: "pointer", boxShadow:"5px 5px rgba(0, 0, 0, 0.2)"}}}>
-					<CardContent sx={{background: props.open ? "#1C3E64" : "#151515", color:"white", borderBottom:"5px solid rgba(0,0,0,0.2)"}}>
+				<Card variant="outlined" sx={{ background: "white", borderRadius: "15px", ":hover": { cursor: "pointer", boxShadow: "5px 5px rgba(0, 0, 0, 0.2)" } }}>
+					<CardContent sx={{ background: props.open ? "#1C3E64" : "#151515", color: "white", borderBottom: "5px solid rgba(0,0,0,0.2)" }}>
 						<Typography variant="h4">{props.open ? props.title : props.title + " [CLOSED]"}</Typography>
 					</CardContent>
-					
-					<CardMedia component="img" alt="" height="150" image={ADDRESSES.BACKEND + props.image} sx={{"borderRadius":"0 0 15px 15px", borderBottom:"5px groove rgba(0,0,0,0.5)"}}/>
-					<CardContent style={{"paddingBottom": 0}}>
+
+					<CardMedia component="img" alt="" height="150" image={ADDRESSES.BACKEND + props.image} sx={{ "borderRadius": "0 0 15px 15px", borderBottom: "5px groove rgba(0,0,0,0.5)" }} />
+					<CardContent style={{ "paddingBottom": 0 }}>
 						<Grid container spacing={2}>
 							<Grid item xs={8}>
-								<Typography maxHeight="75px" minHeight="75px" variant="body2" sx={{overflowWrap:"break-word", overflow:"hidden", textOverflow:"ellipsis", textAlign:"left"}}>{props.desc}</Typography>
+								<Typography maxHeight="75px" minHeight="75px" variant="body2" sx={{ overflowWrap: "break-word", overflow: "hidden", textOverflow: "ellipsis", textAlign: "left" }}>{props.desc}</Typography>
 							</Grid>
 
 							<Grid item xs={4}>
 								<Box sx={{ position: 'relative', display: 'inline-flex' }}>
-									<CircularProgress variant="determinate" value={100} size={"75px"} thickness={7} sx={{"position": "absolute", color:"lightgray"}}/>
-									<CircularProgress variant="determinate" value={props.progress} size={"75px"} thickness={7}/>
-									<Box sx={{inset: "0 0 0 0", position: "absolute", display: "flex", alignItems: "center", justifyContent: "center"}}>
+									<CircularProgress variant="determinate" value={100} size={"75px"} thickness={7} sx={{ "position": "absolute", color: "lightgray" }} />
+									<CircularProgress variant="determinate" value={props.progress} size={"75px"} thickness={7} />
+									<Box sx={{ inset: "0 0 0 0", position: "absolute", display: "flex", alignItems: "center", justifyContent: "center" }}>
 										<Typography variant="caption">{props.progress}%</Typography>
 									</Box>
 								</Box>
 							</Grid>
 							<Grid item xs={12}>
-								<Box sx={{borderBottom: "1px solid rgba(0,0,0,0.2)"}}/>
+								<Box sx={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }} />
 							</Grid>
-							<Grid item xs={8} sx={{display:"flex", justifyContent:"left", alignItems:"center"}} style={{paddingTop:"0"}}>
+							<Grid item xs={8} sx={{ display: "flex", justifyContent: "left", alignItems: "center" }} style={{ paddingTop: "0" }}>
 								<Typography fontSize="11px" variant="caption">{new Date(props.date).toDateString()}</Typography>
 							</Grid>
-							<Grid item xs={4} sx={{textAlign: "right"}} style={{paddingTop:"0"}}>
-								
+							<Grid item xs={4} sx={{ textAlign: "right" }} style={{ paddingTop: "0" }}>
+
 							</Grid>
 						</Grid>
 					</CardContent>
-					
+
 				</Card>
 			</Link>
-		
+
 		</Grid>
 	);
 }

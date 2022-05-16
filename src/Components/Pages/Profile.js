@@ -10,9 +10,9 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 
 const Profile = (props) => {
 
-    const [passwordEditing, togglePasswordEditing] = useState(false);
-    const [nameEditing, toggleNameEditing] = useState(false);
-    const [emailEditing, toggleEmailEditing] = useState(false);
+    // const [passwordEditing, togglePasswordEditing] = useState(false);
+    // const [nameEditing, toggleNameEditing] = useState(false);
+    // const [emailEditing, toggleEmailEditing] = useState(false);
     const navigate = useNavigate();
 
     const userSlice = UserSlice.useSlice();
@@ -43,9 +43,9 @@ const Profile = (props) => {
         }
     }
 
-    const handlePasswordEditing = async (e) => { togglePasswordEditing(!passwordEditing); }
-    const handleNameEditing = async (e) => { toggleNameEditing(!nameEditing); }
-    const handleEmailEditing = async (e) => { toggleEmailEditing(!emailEditing); }
+    // const handlePasswordEditing = async (e) => { togglePasswordEditing(!passwordEditing); }
+    // const handleNameEditing = async (e) => { toggleNameEditing(!nameEditing); }
+    // const handleEmailEditing = async (e) => { toggleEmailEditing(!emailEditing); }
 
     const [approvedDialog, setApprovedDialog] = useState(!approved && userRole === "organization");
 
@@ -87,12 +87,12 @@ const Profile = (props) => {
             <p className="account-page-title">My Profile</p>
             <div className="profile-container basic-group">
                 <div className="p-user-name-area ">
-                    {nameEditing ?
+                    {/* {nameEditing ?
                         <input id="p-user-name-input" onBlur={handleNameEditing}></input>
-                        :
+                        : */}
                         <p className="profile-label" id="p-user-name">[ {userName} ]</p>
-                    }
-                    <p onClick={handleNameEditing} className="edit-info">edit</p>
+                    {/* } */}
+                    {/* <p onClick={handleNameEditing} className="edit-info">edit</p> */}
                 </div>
 
                 <div className="user-status">
@@ -131,12 +131,12 @@ const Profile = (props) => {
                 </div>
                 <div className="email-label profile-label">Email</div>
                 <div className="p-email">
-                    {emailEditing ?
+                    {/* {emailEditing ?
                         <input id="p-email-input" onBlur={handleEmailEditing}></input>
-                        :
+                        : */}
                         <p id="p-email">{userEmail}</p>
-                    }
-                    <p onClick={handleEmailEditing} className="edit-info">edit</p>
+                    {/* } */}
+                    {/* <p onClick={handleEmailEditing} className="edit-info">edit</p> */}
                 </div>
                 {/* <div class="password-label profile-label">Password</div> */}
                 {/* <div class="p-password"> */}

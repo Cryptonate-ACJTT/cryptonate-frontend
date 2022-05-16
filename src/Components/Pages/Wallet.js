@@ -3,7 +3,6 @@ import { API_ROUTES, getAccountTxns, postToBackend } from "../../Fetch/ApiFetche
 import { Accordion, AccordionSummary, AccordionDetails, Grid, Typography, Paper, Box } from "@mui/material"
 import { DataGrid } from "@mui/x-data-grid"
 import { ExpandMoreRounded } from "@mui/icons-material";
-import Visualizer from "../PageBits/Visualize/Visualize";
 import PageContainer from "../PageBits/PageContainer/PageContainer";
 import { AlgoIcon } from "../PageBits/Icons/Icons";
 //import logo from "./Images/algorand_logo_mark_black.svg";
@@ -204,14 +203,14 @@ const WalletAccordion = (props) => {
 			</AccordionSummary>
 			<AccordionDetails sx={{ borderTop: "3px dotted rgba(0,0,0,0.2)" }}>
 				<Grid container spacing={2}>
-					<Grid item xs={8}>
+					<Grid item xs={12}>
 						<Typography variant="h6">Transaction History</Typography>
 						{open ? tableData : null}
 					</Grid>
-					<Grid item xs={4}>
+					{/* <Grid item xs={4}>
 						<Typography variant="h6">Visualization</Typography>
 						<Visualizer variant="mini" height="320px" />
-					</Grid>
+					</Grid> */}
 				</Grid>
 			</AccordionDetails>
 		</Accordion>
