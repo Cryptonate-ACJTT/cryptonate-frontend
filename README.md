@@ -1,6 +1,7 @@
 # Cryptonate Front-End 
 
-## Content Table
+## Table of Contents
+
 1. [About the Project](#about)
 2. [Implemented Techniques](#tech)
 3. [Page Description](#page)
