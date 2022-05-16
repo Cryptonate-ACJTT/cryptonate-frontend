@@ -21,7 +21,7 @@ Cryptonate is a donation platform that allows Algorand.
 
 ## <a name="page"></a>Page Description
 - Home : Displays the # of current donors and fundraisers, and amount of donated Alogrands
--
+
 - Explore : Displays open/closed projects that organizations posted. Only verified organizations are able to create projects.
 	- Project Page : Shows the details of the Project
 	
