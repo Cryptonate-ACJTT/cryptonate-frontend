@@ -28,13 +28,13 @@ const Project = (props) => {
 			callback: (data) => {
 
 				setProjectData(data.project);
-				console.log(data.project.creatorID)
-				getOrgAuthForm(data.project.creatorID, {
-						callback: (result) => {
-							setOrgData(result.form)
-							console.log(orgData)
-						}
-					});
+				// console.log(data.project.creatorID)
+				// getOrgAuthForm(data.project.creatorID, {
+				// 		callback: (result) => {
+				// 			setOrgData(result.form)
+				// 			console.log(orgData)
+				// 		}
+				// 	});
 				
 			}
 		});

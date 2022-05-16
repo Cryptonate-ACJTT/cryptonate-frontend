@@ -25,7 +25,7 @@ const Wallet = (props) => {
 			let addrs = slice.userInfo.wallet.accounts;
 			await postToBackend(API_ROUTES.BACKEND.CHECK_BALANCE, { addresses: addrs }, {callback: (data) => {
 					let i = 0;
-					console.log("DATA:", data);
+					// console.log("DATA:", data);
 					for (let account of data.balances) {
 						if(i === 0) {
 							mainWallet = account;
