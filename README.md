@@ -10,7 +10,7 @@
 
 ## <a name="about"></a>About the Project
 
-Cryptonate is a donation platform that allows Algorand.
+Cryptonate is a donation platform that allows Algorand, to utilize blockchain technology for transparency and credibility.
 
 
 ## <a name="tech"></a>Implemented Techniques
@@ -21,19 +21,19 @@ Cryptonate is a donation platform that allows Algorand.
 
 
 ## <a name="page"></a>Page Description
-- Home : Displays the # of current donors and fundraisers, and amount of donated Alogrands
+- Home Page : Displays the # of current donors and fundraisers, and amount of donated Alogrands
 
-- Explore : Displays open/closed projects that organizations posted. Only verified organizations are able to create projects.
-	- Project Page : Shows the details of the Project
+- Explore Page : Displays open/closed projects that organizations posted. Only verified organizations are able to create projects.
+	- Project Page : Shows the details of the project
 	
-- About Us : Displays an explanation of Cryptonate.
+- About Us Page : Displays an explanation of Cryptonate.
 
-- Why Crypto : Displays an explanation of the advantages of using cryptocurrency.
+- Why Crypto Page : Displays an explanation of the advantages of using cryptocurrency.
 
-- My Account
-	- Profile : Displays the username, address and projects.
-	- Wallet : Displays the wallet account address. (if organization, created projects will have separate addresses)
-	- Form (shown only if user is an organization) : Authorization form which is used for verifing.
+- My Account Page 
+	- Profile Page : Displays the username, address and projects.
+	- Wallet Page : Displays the wallet account address. (if organization, created projects will have separate addresses)
+	- Form Page (shown only if user is an organization) : Authorization form which is used for verifing.
 
 
 ## <a name="run"></a>How to Run the Project
