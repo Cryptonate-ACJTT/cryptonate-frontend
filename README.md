@@ -16,8 +16,18 @@ Cryptonate is a donation platform that allows Algorand, to utilize blockchain te
 ## <a name="tech"></a>Implemented Techniques
 
 - Sandbox & Testnet : used to mimic Algorand transfers between donors and non-profit organizations. 
-- PyTeal : used for smart contracts. 
-- API : https://projects.propublica.org/nonprofits/api used to verify EIN if they are tax-exempt(non-profit) organizations.
+
+- PyTeal 
+	used for smart contracts. 
+	contract's account can only be closed out under specific conditions; either the project goal is met or exceeded
+
+- APIs 
+	- REST APIs : Algorand provides three REST APIs which can be used to make HTTP requests to a running instance of the Sandbox
+		- Algod :  main endpoint used for interacting with the blockchain
+		- KMD :  used for creating and interacting with wallets and accounts
+		- Indexer : used to comb through the data on the blockchain
+		
+	- https://projects.propublica.org/nonprofits/api used to verify EIN if they are tax-exempt(non-profit) organizations.
 
 
 ## <a name="page"></a>Page Description
