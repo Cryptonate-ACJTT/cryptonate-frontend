@@ -1,6 +1,6 @@
 # Cryptonate Front-End 
 
-## Fort details, check our design document!
+## For details, check our design document!
 https://docs.google.com/document/d/1JanIrYKi1qnsd35ako7Bb2Ma6F0VMNa1e1zj3OhG4Z8/edit#
 
 ## Table of Contents
